@@ -7,11 +7,13 @@ sounds[3] = new Audio('./assets/sms3.mp3');
 sounds[4] = new Audio('./assets/sms4.mp3');
 sounds[5] = new Audio('./assets/sms5.mp3');
 
-// sound preferences
+// preferences
 
 let isSoundOn = true;
 let soundChoice = sounds[1];
 let soundVolume = 1;
+
+let isNotifyOn = false;
 
 // clock functions
 
@@ -25,7 +27,9 @@ function countTime() {
 
 function checkTime(minute, second) {
     if (second % 10 == 0) {
-        console.warn('beep boop');
+        if (Notification.permission === 'granted' && isNotifyOn) {
+            const notif = new Notification('beep boop');
+        }
         if (isSoundOn) soundChoice.play();
     }
 }
@@ -66,4 +70,28 @@ function changeVolume(v) {
     soundVolume = v;
     soundChoice.volume = soundVolume;
     console.warn('Changed volume of sound to ' + v);
+}
+
+// notifications
+
+function toggleNotify() {
+    isNotifyOn = isNotifyOn ? false : true;
+}
+
+function ask() {
+    Notification.requestPermission().then(permission => handle(permission));
+}
+
+function handle(permission) {
+    switch (permission) {
+        case 'default': console.warn('Request notification access?'); break;
+        case 'denied': console.warn('Notification access denied :-('); break;
+        case 'granted': console.warn('Notification access granted :-)');
+    }
+}
+
+if (!typeof Notification) {
+    console.warn('Notifications are not supported')
+} else {
+    handle(Notification.permission);
 }

@@ -1,6 +1,12 @@
 $test: 1px solid red;
 $stack: Helvetica, Arial, sans-serif;
 
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -12,8 +18,6 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     font-family: $stack;
 }
 
@@ -33,8 +37,6 @@ small {
 
 .clock {
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
     margin-bottom: 15px;
 }
 
@@ -61,43 +63,68 @@ small {
 .preferences {
     padding: 15px;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .row {
     display: flex;
     flex-direction: row;
     gap: 15px;
-    position: relative;
-} .left {
+}
+
+.left {
     width: 75px;
     min-width: 75px;
-    text-align: right;
-} .right {
+}
+
+.right {
     width: calc(100% - 75px);
 }
 
-input[type="number"] {
+.pref_delay_input {
     width: 50px;
 }
 
-select, input[type="range"] {
-    width: 100%;
+.pref_sound {
+    display: flex;
+    flex-direction: column;
 }
 
-.input_volume {
+.pref_sound_input {
+    margin-bottom: 5px;
+}
+
+.pref_volume {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.pref_volume_input {
+    width: 60%;
+}
+
+.pref_volume_test {
+    width: 40%;
+}
+
+.pref_notify {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 10px;
-    input {
-        width: calc(100% - 85px);
-    }
-    button {
-        width: 75px;
-    }
+    align-items: flex-start;
 }
 
-button {
+.pref_notify_status {
     width: 100%;
+    margin-bottom: 10px;
+}
+
+.pref_notify_biome-toggle {
+    margin-right: 10px;
+    margin-top: 1px;
+}
+
+.pref_notify_biome-text {
+    width: calc(100% - 50px);
 }

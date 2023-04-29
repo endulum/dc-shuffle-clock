@@ -89,6 +89,7 @@ volumeInput.addEventListener('input', e => {
     console.warn(`Sound volume changed to ${soundVolume}`);
 });
 
+if (!sounds[soundChoice]) testVolume.disabled = true;
 testVolume.addEventListener('click', () => {
     if (sounds[soundChoice]) {
         sounds[soundChoice].currentTime = 0;

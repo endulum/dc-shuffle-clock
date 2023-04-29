@@ -7,21 +7,27 @@
     <title>Shuffle Clock</title>
     <link rel="stylesheet" href="./styles/style.css">
 </head>
-<body>
-    <div class="clock">
+<body class="flex-center">
+    <div class="clock flex-center">
         <button id="pause-play">Play</button>
         <span id="minutes">00</span>
         <span id="seconds">00</span>
     </div>
     <div class="preferences">
         <div class="row">
-            <div class="left"><b>Delay</b></div>
-            <div class="right"><p>Warn me <input type="number" id="delay-input" min="1" max="59"> seconds before each shuffle.</p></div>
+            <div class="left">
+                <b>Delay</b>
+            </div>
+            <div class="right pref_delay">
+                <p>Warn me  <input type="number" id="delay-input" class="pref_delay_input" min="1" max="59"> seconds before each shuffle.</p>
+            </div>
         </div>
         <div class="row">
-            <div class="left"><b>Sound</b></div>
-            <div class="right">
-                <select id="sound-select">
+            <div class="left">
+                <b>Sound</b>
+            </div>
+            <div class="right pref_sound">
+                <select id="sound-select" class="pref_sound_input">
                     <option value="1">SMS Alert 1</option>
                     <option value="2">SMS Alert 2</option>
                     <option value="3">SMS Alert 3</option>
@@ -33,9 +39,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="left"><b>Volume</b></div>
-            <div class="right input_volume">
-                <input type="range" id="volume-input" min="1" max="100"><button id="test-volume">Test</button>
+            <div class="left">
+                <b>Volume</b>
+            </div>
+            <div class="right pref_volume">
+                <input type="range" id="volume-input" class="pref_volume_input" min="1" max="100">
+                <button id="test-volume" class="pref_volume_test">Test Sound</button>
             </div>
         </div>
         <div class="row">
@@ -44,8 +53,20 @@
                 <br>
                 <small>Experimental!</small>
             </div>
-            <div class="right">
-                <button id="notification-status"></button>
+            <div class="right pref_notify">
+                <button id="notification-status" class="pref_notify_status"></button>
+                <input type="checkbox" id="biome-toggle" class="pref_notify_biome-toggle">
+                <p class="pref_notify_biome-text">
+                    When notification is clicked on, take me to 
+                    <select id="biome-select">
+                        <option value="1">Alpine</option>
+                        <option value="2">Coast</option>
+                        <option value="3">Desert</option>
+                        <option value="4">Forest</option>
+                        <option value="5">Jungle</option>
+                        <option value="6">Volcano</option>
+                    </select>
+                </p>
             </div>
         </div>
     </div>

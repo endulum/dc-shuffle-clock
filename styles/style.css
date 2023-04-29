@@ -87,6 +87,19 @@ select, input[type=range] {
   width: 100%;
 }
 
+.input_volume {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.input_volume input {
+  width: calc(100% - 85px);
+}
+.input_volume button {
+  width: 75px;
+}
+
 button {
   width: 100%;
 }/*# sourceMappingURL=style.css.map */

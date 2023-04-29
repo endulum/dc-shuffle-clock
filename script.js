@@ -27,6 +27,9 @@ const delayInput = document.getElementById('delay-input');
 const soundSelect = document.getElementById('sound-select');
 const volumeInput = document.getElementById('volume-input');
 
+const notificationStatus = document.getElementById('notification-status');
+const testVolume = document.getElementById('test-volume');
+
 // local storage and preferences
 
 let delay; // int
@@ -46,7 +49,7 @@ if (!localStorage.getItem('soundVolume')) soundVolume = 1;
 else soundVolume = localStorage.getItem('soundVolume');
 
 let isNotifyOn; // bool
-if (!localStorage.getItem('isNotifyOn')) isNotifyOn = true;
+if (!localStorage.getItem('isNotifyOn')) isNotifyOn = false;
 else isNotifyOn = localStorage.getItem('isNotifyOn');
 
 // to test localstorage
@@ -68,8 +71,14 @@ soundSelect.addEventListener('input', e => {
     soundChoice = e.target.value;
     localStorage.setItem('soundChoice', soundChoice);
     console.warn(`Sound choice changed to ${soundChoice}`);
-    if (!sounds[soundChoice]) volumeInput.disabled = true;
-    else volumeInput.disabled = false;
+    if (!sounds[soundChoice]) {
+        volumeInput.disabled = true;
+        testVolume.disabled = true;
+    } 
+    else {
+        volumeInput.disabled = false;
+        testVolume.disabled = false;
+    }
 })
 
 volumeInput.value = soundVolume * 100;
@@ -79,6 +88,13 @@ volumeInput.addEventListener('input', e => {
     localStorage.setItem('soundVolume', soundVolume);
     console.warn(`Sound volume changed to ${soundVolume}`);
 });
+
+testVolume.addEventListener('click', () => {
+    if (sounds[soundChoice]) {
+        sounds[soundChoice].currentTime = 0;
+        sounds[soundChoice].play();
+    } 
+})
 
 // clock functions
 
@@ -93,7 +109,10 @@ function countTime() {
 function checkTime(minute, second) {
     if ((minute + 1) % 5 === 0 && 60 - delay == second) {
         if (Notification.permission === 'granted' && isNotifyOn) notify(minute);
-        if (sounds[soundChoice]) sounds[soundChoice].play();
+        if (sounds[soundChoice]) {
+            sounds[soundChoice].currentTime = 0;
+            sounds[soundChoice].play();
+        }
     }
 }
 
@@ -142,13 +161,42 @@ function notify(minute) {
 }
 
 function ask() {
+    console.log('asking');
     Notification.requestPermission().then(permission => handle(permission));
 }
 
 function handle(permission) {
-    // switch (permission) {
-    //     case 'denied': break;
-    //     case 'granted': break;
-    //     default:;
-    // }
+    switch (permission) {
+        case 'denied': 
+            notificationStatus.textContent = 'Notifications blocked';
+            notificationStatus.removeEventListener('click', ask);
+            notificationStatus.disabled = 'true';
+            break;
+        case 'granted':
+            notificationStatus.removeEventListener('click', ask);
+            if (isNotifyOn) notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
+            else notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
+            console.log(isNotifyOn);
+            notificationStatus.addEventListener('click', () => {
+                if (isNotifyOn) {
+                    isNotifyOn = false;
+                    localStorage.setItem('isNotifyOn', false);
+                    notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
+                    console.log(isNotifyOn);
+                } else {
+                    isNotifyOn = true;
+                    localStorage.setItem('isNotifyOn', true);
+                    notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
+                    console.log(isNotifyOn);
+                }
+            });
+            break;
+        default:
+            notificationStatus.textContent = 'Request notification permission';
+            notificationStatus.addEventListener('click', ask);
+    }
 }
+if (!typeof Notification) {
+    notificationStatus.textContent = 'Notifications not supported';
+    notificationStatus.disabled = true;
+} else handle(Notification.permission);

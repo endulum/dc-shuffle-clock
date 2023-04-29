@@ -14,6 +14,7 @@ $stack: Helvetica, Arial, sans-serif;
 }
 
 body {
+    background-color: lightgray;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -31,7 +32,6 @@ small {
     width: calc(100% - 20px);
     max-width: 400px;
     min-width: 315px;
-    border: $test;
     display: flex;
 }
 
@@ -61,6 +61,7 @@ small {
 }
 
 .preferences {
+    background-color: white;
     padding: 15px;
     flex-direction: column;
     gap: 25px;
@@ -73,12 +74,13 @@ small {
 }
 
 .left {
-    width: 75px;
-    min-width: 75px;
+    width: 65px;
+    min-width: 65px;
+    text-align: right;
 }
 
 .right {
-    width: calc(100% - 75px);
+    width: calc(100% - 65px);
 }
 
 .pref_delay_input {

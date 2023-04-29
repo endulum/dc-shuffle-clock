@@ -26,9 +26,11 @@ const secondDisplay = document.getElementById('seconds');
 const delayInput = document.getElementById('delay-input');
 const soundSelect = document.getElementById('sound-select');
 const volumeInput = document.getElementById('volume-input');
+const biomeInput = document.getElementById('biome-select');
 
 const notificationStatus = document.getElementById('notification-status');
 const testVolume = document.getElementById('test-volume');
+const biomeToggle = document.getElementById('biome-toggle');
 
 // local storage and preferences
 
@@ -41,7 +43,7 @@ if (!localStorage.getItem('soundChoice')) soundChoice = 0;
 else soundChoice = localStorage.getItem('soundChoice');
 
 let biomeChoice; // int
-if (!localStorage.getItem('biomeChoice')) biomeChoice = 6;
+if (!localStorage.getItem('biomeChoice')) biomeChoice = 0;
 else biomeChoice = localStorage.getItem('biomeChoice');
 
 let soundVolume; // float
@@ -52,25 +54,18 @@ let isNotifyOn; // bool
 if (!localStorage.getItem('isNotifyOn')) isNotifyOn = false;
 else isNotifyOn = localStorage.getItem('isNotifyOn');
 
-// to test localstorage
-
-// let prefs = [delay, soundChoice, biomeChoice, soundVolume, isNotifyOn];
-// for (let pref of prefs) console.log(pref);
-
 // input wiring
 
 delayInput.value = delay;
 delayInput.addEventListener('input', e => {
     delay = e.target.value;
     localStorage.setItem('delay', delay);
-    console.warn(`Delay changed to ${delay} seconds`);
 });
 
 soundSelect.value = soundChoice;
 soundSelect.addEventListener('input', e => {
     soundChoice = e.target.value;
     localStorage.setItem('soundChoice', soundChoice);
-    console.warn(`Sound choice changed to ${soundChoice}`);
     if (!sounds[soundChoice]) {
         volumeInput.disabled = true;
         testVolume.disabled = true;
@@ -86,8 +81,14 @@ if (!sounds[soundChoice]) volumeInput.disabled = true;
 volumeInput.addEventListener('input', e => {
     soundVolume = e.target.value / 100;
     localStorage.setItem('soundVolume', soundVolume);
-    console.warn(`Sound volume changed to ${soundVolume}`);
 });
+
+if (biomes[biomeChoice]) biomeInput.value = biomeChoice;
+else biomeInput.value = 1;
+biomeInput.addEventListener('input', e => {
+    biomeChoice = e.target.value;
+    localStorage.setItem('biomeChoice', biomeChoice);
+})
 
 if (!sounds[soundChoice]) testVolume.disabled = true;
 testVolume.addEventListener('click', () => {
@@ -95,6 +96,21 @@ testVolume.addEventListener('click', () => {
         sounds[soundChoice].currentTime = 0;
         sounds[soundChoice].play();
     } 
+})
+
+if (biomes[biomeChoice]) biomeToggle.checked = true;
+else biomeInput.disabled = true;
+biomeToggle.addEventListener('click', () => {
+    if (biomes[biomeChoice]) {
+        biomeChoice = 0;
+        localStorage.setItem('biomeChoice', biomeChoice);
+        biomeInput.value = 1;
+        biomeInput.disabled = true;
+    } else {
+        biomeChoice = 1;
+        localStorage.setItem('biomeChoice', biomeChoice);
+        biomeInput.disabled = false;
+    }
 })
 
 // clock functions
@@ -162,7 +178,6 @@ function notify(minute) {
 }
 
 function ask() {
-    console.log('asking');
     Notification.requestPermission().then(permission => handle(permission));
 }
 
@@ -177,18 +192,15 @@ function handle(permission) {
             notificationStatus.removeEventListener('click', ask);
             if (isNotifyOn) notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
             else notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
-            console.log(isNotifyOn);
             notificationStatus.addEventListener('click', () => {
                 if (isNotifyOn) {
                     isNotifyOn = false;
                     localStorage.setItem('isNotifyOn', false);
                     notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
-                    console.log(isNotifyOn);
                 } else {
                     isNotifyOn = true;
                     localStorage.setItem('isNotifyOn', true);
                     notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
-                    console.log(isNotifyOn);
                 }
             });
             break;
@@ -197,6 +209,7 @@ function handle(permission) {
             notificationStatus.addEventListener('click', ask);
     }
 }
+
 if (!typeof Notification) {
     notificationStatus.textContent = 'Notifications not supported';
     notificationStatus.disabled = true;

@@ -17,12 +17,38 @@ biomes[4] = 'https://dragcave.net/locations/3';
 biomes[5] = 'https://dragcave.net/locations/4';
 biomes[6] = 'https://dragcave.net/locations/6';
 
-// preferences
+// dom
 
-let soundChoice = sounds[0];
-let biomeChoice = biomes[1];
-let soundVolume = 1;
-let isNotifyOn = true;
+const pausePlay = document.getElementById('pause-play');
+const minuteDisplay = document.getElementById('minutes');
+const secondDisplay = document.getElementById('seconds');
+
+// local storage and preferences
+
+let delay; // int
+if (!localStorage.getItem('delay')) delay = 12;
+else delay = localStorage.getItem('delay');
+
+let soundChoice; // int
+if (!localStorage.getItem('soundChoice')) soundChoice = 0;
+else soundChoice = localStorage.getItem('soundChoice');
+
+let biomeChoice; // int
+if (!localStorage.getItem('biomeChoice')) biomeChoice = 6;
+else biomeChoice = localStorage.getItem('biomeChoice');
+
+let soundVolume; // float
+if (!localStorage.getItem('soundVolume')) soundVolume = 1;
+else soundVolume = localStorage.getItem('soundVolume');
+
+let isNotifyOn; // bool
+if (!localStorage.getItem('isNotifyOn')) isNotifyOn = true;
+else isNotifyOn = localStorage.getItem('isNotifyOn');
+
+// to test localstorage
+
+// let prefs = [delay, soundChoice, biomeChoice, soundVolume, isNotifyOn];
+// for (let pref of prefs) console.log(pref);
 
 // clock functions
 
@@ -31,92 +57,69 @@ function countTime() {
     const minute = parseInt(now.getMinutes());
     const second = parseInt(now.getSeconds());
     checkTime(minute, second);
-    printTime(minute, second);
+    displayTime(minute, second);
 }
 
 function checkTime(minute, second) {
-    if (second % 10 == 0) {
-        if (Notification.permission === 'granted' && isNotifyOn) {
-            const notif = new Notification('Cave Shuffle Clock', {
-                body: `The next cave shuffle will occur in __ seconds.`,
-            });
-            if (biomeChoice) notif.addEventListener('click', e => {
-                window.open(biomeChoice, '_blank');
-                e.preventDefault();
-            });
-        }
-        if (soundChoice) soundChoice.play();
+    if ((minute + 1) % 5 === 0 && 60 - delay == second) {
+        if (Notification.permission === 'granted' && isNotifyOn) notify(minute);
+        if (sounds[soundChoice]) sounds[soundChoice].play();
     }
 }
 
-function printTime(minute, second) {
+function displayTime(minute, second) {
     if (minute < 10) minute = "0" + minute;
     if (second < 10) second = "0" + second;
-    console.log(minute + ":" + second);
+    minuteDisplay.textContent = minute;
+    secondDisplay.textContent = second;
 }
 
 function start() {
     if (!intervalID) {
         countTime();
         intervalID = setInterval(countTime, 999);
-    } else console.warn('clock is already started');
+    }
 }
 
 function stop() {
     if (intervalID) {
         clearInterval(intervalID);
         intervalID = null;
-    } else console.warn('clock is already stopped');
-}
-
-// sound functions
-
-function changeSound(n) {
-    soundChoice = sounds[n];
-    if (soundChoice) {
-        soundChoice.volume = soundVolume;
-        console.warn('Changed choice of sound to choice #' + n);
-    } else console.warn('Sound off');
-}
-
-function changeVolume(v) {
-    soundVolume = v;
-    soundChoice.volume = soundVolume;
-    console.warn('Changed volume of sound to ' + v);
-}
-
-// notification functions
-
-function toggleNotify() {
-    isNotifyOn = isNotifyOn ? false : true;
-    console.warn(isNotifyOn ? 'Turned notifications on' : 'Turned notifications off');
-}
-
-function changeBiome(b) {
-    biomeChoice = biomes[b];
-    if (biomeChoice) console.warn('Changed choice of biome jump to choice #' + b);
-    else console.warn('Turned off biome jump');
-    
-}
-
-function handle(permission) {
-    switch (permission) {
-        case 'default': console.warn('Notification access unknown.'); break;
-        case 'denied': console.warn('Notification access denied :-('); break;
-        case 'granted': console.warn('Notification access granted :-)');
     }
 }
 
-// for console
+pausePlay.addEventListener('click', () => {
+    if (intervalID) {
+        stop();
+        pausePlay.textContent = 'Play';
+    } else if (!intervalID) {
+        start();
+        pausePlay.textContent = 'Pause';
+    }
+});
+
+// notification functions
+
+function notify(minute) {
+    let notifText;
+    if (minute == 59) notifText = `The hourly cave refresh will occur in about ${delay} seconds.`;
+    else notifText = `The next cave shuffle will occur in ${delay} seconds.`;
+    const notif = new Notification('Cave Shuffle Clock', {body: notifText,});
+    if (biomes[biomeChoice]) notif.addEventListener('click', e => {
+        e.preventDefault();
+        window.open(biomes[biomeChoice], '_blank');
+    });
+}
 
 function ask() {
     Notification.requestPermission().then(permission => handle(permission));
 }
 
-// init
-
-if (!typeof Notification) {
-    console.warn('Notifications are not supported.')
-} else {
-    handle(Notification.permission);
+function handle(permission) {
+    // switch (permission) {
+    //     case 'denied': break;
+    //     case 'granted': break;
+    //     default:;
+    // }
 }
+

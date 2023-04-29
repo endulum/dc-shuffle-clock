@@ -23,6 +23,10 @@ const pausePlay = document.getElementById('pause-play');
 const minuteDisplay = document.getElementById('minutes');
 const secondDisplay = document.getElementById('seconds');
 
+const delayInput = document.getElementById('delay-input');
+const soundSelect = document.getElementById('sound-select');
+const volumeInput = document.getElementById('volume-input');
+
 // local storage and preferences
 
 let delay; // int
@@ -49,6 +53,32 @@ else isNotifyOn = localStorage.getItem('isNotifyOn');
 
 // let prefs = [delay, soundChoice, biomeChoice, soundVolume, isNotifyOn];
 // for (let pref of prefs) console.log(pref);
+
+// input wiring
+
+delayInput.value = delay;
+delayInput.addEventListener('input', e => {
+    delay = e.target.value;
+    localStorage.setItem('delay', delay);
+    console.warn(`Delay changed to ${delay} seconds`);
+});
+
+soundSelect.value = soundChoice;
+soundSelect.addEventListener('input', e => {
+    soundChoice = e.target.value;
+    localStorage.setItem('soundChoice', soundChoice);
+    console.warn(`Sound choice changed to ${soundChoice}`);
+    if (!sounds[soundChoice]) volumeInput.disabled = true;
+    else volumeInput.disabled = false;
+})
+
+volumeInput.value = soundVolume * 100;
+if (!sounds[soundChoice]) volumeInput.disabled = true;
+volumeInput.addEventListener('input', e => {
+    soundVolume = e.target.value / 100;
+    localStorage.setItem('soundVolume', soundVolume);
+    console.warn(`Sound volume changed to ${soundVolume}`);
+});
 
 // clock functions
 
@@ -122,4 +152,3 @@ function handle(permission) {
     //     default:;
     // }
 }
-

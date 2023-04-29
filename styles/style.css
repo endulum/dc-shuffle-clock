@@ -14,6 +14,12 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
+small {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  font-style: italic;
+}
+
 .clock, .preferences, .footer {
   width: calc(100% - 20px);
   max-width: 400px;
@@ -48,4 +54,39 @@ body {
 }
 #minutes::before, #seconds::before {
   content: ":";
+}
+
+.preferences {
+  padding: 15px;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  position: relative;
+}
+
+.left {
+  width: 75px;
+  min-width: 75px;
+  text-align: right;
+}
+
+.right {
+  width: calc(100% - 75px);
+}
+
+input[type=number] {
+  width: 50px;
+}
+
+select, input[type=range] {
+  width: 100%;
+}
+
+button {
+  width: 100%;
 }/*# sourceMappingURL=style.css.map */

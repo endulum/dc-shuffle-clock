@@ -13,7 +13,42 @@
         <span id="minutes">00</span>
         <span id="seconds">00</span>
     </div>
-    <!-- <div class="preferences"></div> -->
+    <div class="preferences">
+        <div class="row">
+            <div class="left"><b>Delay</b></div>
+            <div class="right"><p>Warn me <input type="number" id="delay-input" min="1" max="59"> seconds before each shuffle.</p></div>
+        </div>
+        <div class="row">
+            <div class="left"><b>Sound</b></div>
+            <div class="right">
+                <select id="sound-select">
+                    <option value="1">SMS Alert 1</option>
+                    <option value="2">SMS Alert 2</option>
+                    <option value="3">SMS Alert 3</option>
+                    <option value="4">SMS Alert 4</option>
+                    <option value="5">SMS Alert 5</option>
+                    <option value="0">No sound, please</option>
+                </select>
+                <small>Sounds provided by SoundBible.</small>
+            </div>
+        </div>
+        <div class="row">
+            <div class="left"><b>Volume</b></div>
+            <div class="right">
+                <input type="range" id="volume-input" min="1" max="100">
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="left">
+                <b>Notify</b>
+                <br>
+                <small>Experimental!</small>
+            </div>
+            <div class="right">
+                <button id="notification-status"></button>
+            </div>
+        </div> -->
+    </div>
     <!-- <div class="footer"></div> -->
     <script src="script.js"></script>
 </body>

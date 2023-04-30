@@ -16,10 +16,16 @@ In Dragon Cave, eggs in each of the six biomes rotate out every five minutes on 
 
 * __Time is inaccurate:__ The tool uses your local time. Be sure that your device clocked is accurately synced.
 
-* __Link to biome in notification is enabled, but takes me nowhere:__ The notification opens your biome of choice in a new tab, which may be interpreted as a pop-up and promptly blocked by the browser. Allow pop-ups for this tool if this is the case.
+* __Link to biome in notification is enabled, but takes me nowhere:__ The notification opens your biome of choice in a new tab or window, which may be interpreted as a pop-up and promptly blocked by the browser. Allow pop-ups for this tool if this is the case.
 
 * __Notifications are automatically denied upon requesting access:__ Be sure you are not on Incognito or Private Browsing. Notification capability is automatically disabled for these browsing modes.
 
-* __Accidentally denied notifications:__ Reset site permissions for this tool (see specific instructions per browser on how to do this), and you should be able to answer the request prompt again.
+* __Accidentally denied notifications:__ Reset site permissions for this tool (look up specific instructions for your browser on how to do this), and you should be able to answer the request prompt again.
 
 * __Notifications do not work:__ See [here](https://frizbit.com/blog/troubleshooting-web-push-notifications-why-im-i-not-getting-notifications/) for several issues pertaining to browser notifications to check and fix.
+
+### Asset Credits
+
+* __Background__: Tim Ward, [Subtle Patterns](https://www.toptal.com/designers/subtlepatterns/brushed-alum-dark/)
+
+* __Sounds__: Daniel Simon, [SoundBible](https://soundbible.com/)

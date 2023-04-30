@@ -1,4 +1,9 @@
-$test: 1px solid red;
+@font-face {
+    font-family: 'Roboto';
+    src: url(../assets/RobotoCondensed-Regular.ttf);
+}
+
+$shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 $stack: Helvetica, Arial, sans-serif;
 
 .flex-center {
@@ -14,12 +19,12 @@ $stack: Helvetica, Arial, sans-serif;
 }
 
 body {
-    background-color: lightgray;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.6)), url(../assets/alum.png);
+    background-repeat: repeat;
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: $stack;
 }
 
 small {
@@ -38,23 +43,64 @@ small {
 .clock {
     flex-direction: row;
     margin-bottom: 15px;
+    height: 100px;
 }
 
-#pause-play, #minutes, #seconds {
+.clock_play, .clock_minutes, .clock_seconds {
     height: min-content;
 }
 
-#pause-play {
-    width: 75px;
-    height: 75px;
+.clock_play {
+    width: 80px;
+    height: 80px;
     margin-right: 10px;
+    appearance: none;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px;
+    box-shadow: $shadow;
+    transition: 0.3s box-shadow ease, 0.3s transform ease, 0.75s background-color ease;
+    &:hover {
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        transform: translateY(-3px);
+    } &:active {
+        box-shadow: $shadow;
+        transform: translateY(0px);
+    }
 }
 
-#minutes, #seconds {
+.icon_play {
+    filter: invert(100%);
+    width: 50px;
+    height: 50px;
+}
+
+.spin {
+    animation: spin 2s infinite ease;
+}
+
+@keyframes spin {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+}
+
+.playing {
+    background-color: crimson;
+}
+
+.pausing, .shuffling {
+    background-color: deepskyblue;
+}
+
+.clock_minutes, .clock_seconds {
+    font-family: $stack;
     font-weight: bold;
     font-size: 5rem;
     line-height: 4rem;
-    letter-spacing: -1px;
+    color: white;
+    text-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
     &::before {
         content: ':';
     }
@@ -62,9 +108,15 @@ small {
 
 .preferences {
     background-color: white;
-    padding: 15px;
+    box-shadow: $shadow;
+    border-radius: 5px;
+    padding: 20px;
     flex-direction: column;
     gap: 25px;
+}
+
+.preferences, button, input, select {
+    font-family: 'Roboto', $stack;
 }
 
 .row {
@@ -77,6 +129,7 @@ small {
     width: 65px;
     min-width: 65px;
     text-align: right;
+    line-height: 1.25rem;
 }
 
 .right {
@@ -108,6 +161,9 @@ small {
 
 .pref_volume_test {
     width: 40%;
+    &:hover {
+        border-color: black;
+    }
 }
 
 .pref_notify {
@@ -120,13 +176,55 @@ small {
 .pref_notify_status {
     width: 100%;
     margin-bottom: 10px;
+    transition: 0.3s background-color ease, 0.3s border-color ease, color 0.3s ease;
+    background-color: white;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+        color: white;
+    }
+}
+
+.notify-off {
+    border-color: crimson;
+    color: crimson;
+    &:hover {
+        background-color: rgba(220, 20, 60, 0.75);
+    }
+}
+
+.notify-on {
+    border-color: deepskyblue;
+    color: deepskyblue;
+    &:hover {
+        background-color: rgba(0, 191, 255, 0.75);
+    }
 }
 
 .pref_notify_biome-toggle {
     margin-right: 10px;
-    margin-top: 1px;
+    margin-top: 3px;
 }
 
 .pref_notify_biome-text {
     width: calc(100% - 50px);
+}
+
+input, select, button {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 3px 5px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+input:hover, select:hover {
+    border-color: black;
+}
+
+[disabled]:hover {
+    pointer-events: none;
+    cursor: auto;
+    border-color: rgba(0,0,0,0.25);
 }

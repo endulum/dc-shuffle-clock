@@ -130,6 +130,12 @@ function checkTime(minute, second) {
             sounds[soundChoice].currentTime = 0;
             sounds[soundChoice].play();
         }
+        pausePlay.classList.add('shuffling');
+        pausePlay.innerHTML = '<img src="./assets/shuffle.svg" class="icon_play spin" alt="">';
+        setTimeout(() => {
+            pausePlay.classList.remove('shuffling');
+            pausePlay.innerHTML = '<img src="./assets/pause.svg" class="icon_play" alt="">';
+        }, 2000);
     }
 }
 
@@ -154,13 +160,18 @@ function stop() {
     }
 }
 
+pausePlay.classList.add('pausing');
+pausePlay.innerHTML = '<img src="./assets/play.svg" class="icon_play" alt="">';
+
 pausePlay.addEventListener('click', () => {
     if (intervalID) {
         stop();
-        pausePlay.textContent = 'Play';
+        pausePlay.classList.replace('playing', 'pausing');
+        pausePlay.innerHTML = '<img src="./assets/play.svg" class="icon_play" alt="">';
     } else if (!intervalID) {
         start();
-        pausePlay.textContent = 'Pause';
+        pausePlay.classList.replace('pausing', 'playing');
+        pausePlay.innerHTML = '<img src="./assets/pause.svg" class="icon_play" alt="">';
     }
 });
 
@@ -190,16 +201,23 @@ function handle(permission) {
             break;
         case 'granted':
             notificationStatus.removeEventListener('click', ask);
-            if (isNotifyOn) notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
-            else notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
+            if (isNotifyOn) {
+                notificationStatus.classList.add('notify-on')
+                notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
+            } else {
+                notificationStatus.classList.add('notify-off');
+                notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
+            }
             notificationStatus.addEventListener('click', () => {
                 if (isNotifyOn) {
                     isNotifyOn = false;
                     localStorage.setItem('isNotifyOn', false);
+                    notificationStatus.classList.replace('notify-on', 'notify-off');
                     notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
                 } else {
                     isNotifyOn = true;
                     localStorage.setItem('isNotifyOn', true);
+                    notificationStatus.classList.replace('notify-off', 'notify-on');
                     notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
                 }
             });

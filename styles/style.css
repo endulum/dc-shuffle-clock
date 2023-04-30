@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Roboto";
+  src: url(../assets/RobotoCondensed-Regular.ttf);
+}
 .flex-center {
   display: flex;
   justify-content: center;
@@ -11,12 +15,12 @@
 }
 
 body {
-  background-color: lightgray;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6)), url(../assets/alum.png);
+  background-repeat: repeat;
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: Helvetica, Arial, sans-serif;
 }
 
 small {
@@ -35,34 +39,87 @@ small {
 .clock {
   flex-direction: row;
   margin-bottom: 15px;
+  height: 100px;
 }
 
-#pause-play, #minutes, #seconds {
+.clock_play, .clock_minutes, .clock_seconds {
   height: -moz-min-content;
   height: min-content;
 }
 
-#pause-play {
-  width: 75px;
-  height: 75px;
+.clock_play {
+  width: 80px;
+  height: 80px;
   margin-right: 10px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  transition: 0.3s box-shadow ease, 0.3s transform ease, 0.75s background-color ease;
+}
+.clock_play:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  transform: translateY(-3px);
+}
+.clock_play:active {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  transform: translateY(0px);
 }
 
-#minutes, #seconds {
+.icon_play {
+  filter: invert(100%);
+  width: 50px;
+  height: 50px;
+}
+
+.spin {
+  animation: spin 2s infinite ease;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.playing {
+  background-color: crimson;
+}
+
+.pausing, .shuffling {
+  background-color: deepskyblue;
+}
+
+.clock_minutes, .clock_seconds {
+  font-family: Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 5rem;
   line-height: 4rem;
-  letter-spacing: -1px;
+  color: white;
+  text-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
 }
-#minutes::before, #seconds::before {
+.clock_minutes::before, .clock_seconds::before {
   content: ":";
 }
 
 .preferences {
   background-color: white;
-  padding: 15px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  border-radius: 5px;
+  padding: 20px;
   flex-direction: column;
   gap: 25px;
+}
+
+.preferences, button, input, select {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
 }
 
 .row {
@@ -75,6 +132,7 @@ small {
   width: 65px;
   min-width: 65px;
   text-align: right;
+  line-height: 1.25rem;
 }
 
 .right {
@@ -107,6 +165,9 @@ small {
 .pref_volume_test {
   width: 40%;
 }
+.pref_volume_test:hover {
+  border-color: black;
+}
 
 .pref_notify {
   display: flex;
@@ -118,13 +179,55 @@ small {
 .pref_notify_status {
   width: 100%;
   margin-bottom: 10px;
+  transition: 0.3s background-color ease, 0.3s border-color ease, color 0.3s ease;
+  background-color: white;
+  font-weight: bold;
+}
+.pref_notify_status:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.notify-off {
+  border-color: crimson;
+  color: crimson;
+}
+.notify-off:hover {
+  background-color: rgba(220, 20, 60, 0.75);
+}
+
+.notify-on {
+  border-color: deepskyblue;
+  color: deepskyblue;
+}
+.notify-on:hover {
+  background-color: rgba(0, 191, 255, 0.75);
 }
 
 .pref_notify_biome-toggle {
   margin-right: 10px;
-  margin-top: 1px;
+  margin-top: 3px;
 }
 
 .pref_notify_biome-text {
   width: calc(100% - 50px);
+}
+
+input, select, button {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+input:hover, select:hover, button:hover {
+  cursor: pointer;
+}
+
+input:hover, select:hover {
+  border-color: black;
+}
+
+[disabled]:hover {
+  pointer-events: none;
+  cursor: auto;
+  border-color: rgba(0, 0, 0, 0.25);
 }/*# sourceMappingURL=style.css.map */

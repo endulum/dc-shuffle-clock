@@ -10,7 +10,8 @@ In Dragon Cave, eggs in each of the six biomes rotate out every five minutes on 
 * Uses your local time and omits the hour
 * Sends notifications (if supported) with a direct link to biome of choice
 * Alert preferences are locally stored and remembered by the browser
-* TaC-compliant and makes no requests to, nor interacts with, the Dragon Cave site itself
+
+_This tool was coded with ToC compliance in mind. The page makes no requests to Dragon Cave and does not interact with the site in any way._
 
 ### Troubleshooting
 

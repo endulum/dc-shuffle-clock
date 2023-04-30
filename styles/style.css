@@ -179,11 +179,14 @@ small {
 .pref_notify_status {
   width: 100%;
   margin-bottom: 10px;
+}
+
+.notify-off, .notify-on {
   transition: 0.3s background-color ease, 0.3s border-color ease, color 0.3s ease;
   background-color: white;
   font-weight: bold;
 }
-.pref_notify_status:hover {
+.notify-off:hover, .notify-on:hover {
   cursor: pointer;
   color: white;
 }

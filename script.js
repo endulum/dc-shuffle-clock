@@ -131,10 +131,10 @@ function checkTime(minute, second) {
             sounds[soundChoice].play();
         }
         pausePlay.classList.add('shuffling');
-        pausePlay.innerHTML = '<img src="./assets/shuffle.svg" class="icon_play spin" alt="">';
+        pausePlay.innerHTML = '<img src="./assets/shuffle.svg" class="icon_play spin">';
         setTimeout(() => {
             pausePlay.classList.remove('shuffling');
-            pausePlay.innerHTML = '<img src="./assets/pause.svg" class="icon_play" alt="">';
+            pausePlay.innerHTML = '<img src="./assets/pause.svg" class="icon_play">';
         }, 2000);
     }
 }
@@ -161,17 +161,17 @@ function stop() {
 }
 
 pausePlay.classList.add('pausing');
-pausePlay.innerHTML = '<img src="./assets/play.svg" class="icon_play" alt="">';
+pausePlay.innerHTML = '<img src="./assets/play.svg" class="icon_play">';
 
 pausePlay.addEventListener('click', () => {
     if (intervalID) {
         stop();
         pausePlay.classList.replace('playing', 'pausing');
-        pausePlay.innerHTML = '<img src="./assets/play.svg" class="icon_play" alt="">';
+        pausePlay.innerHTML = '<img src="./assets/play.svg" class="icon_play">';
     } else if (!intervalID) {
         start();
         pausePlay.classList.replace('pausing', 'playing');
-        pausePlay.innerHTML = '<img src="./assets/pause.svg" class="icon_play" alt="">';
+        pausePlay.innerHTML = '<img src="./assets/pause.svg" class="icon_play">';
     }
 });
 
@@ -186,6 +186,7 @@ function notify(minute) {
         e.preventDefault();
         window.open(biomes[biomeChoice], '_blank');
     });
+    console.log(`Notification should be sent at minute ${minute}.`);
 }
 
 function ask() {
@@ -198,8 +199,12 @@ function handle(permission) {
             notificationStatus.textContent = 'Notifications blocked';
             notificationStatus.removeEventListener('click', ask);
             notificationStatus.disabled = 'true';
+            biomeToggle.disabled = true;
+            biomeInput.disabled = true;
             break;
         case 'granted':
+            biomeToggle.disabled = false;
+            biomeInput.disabled = false;
             notificationStatus.removeEventListener('click', ask);
             if (isNotifyOn) {
                 notificationStatus.classList.add('notify-on')
@@ -225,10 +230,14 @@ function handle(permission) {
         default:
             notificationStatus.textContent = 'Request notification permission';
             notificationStatus.addEventListener('click', ask);
+            biomeToggle.disabled = true;
+            biomeInput.disabled = true;
     }
 }
 
 if (!typeof Notification) {
     notificationStatus.textContent = 'Notifications not supported';
     notificationStatus.disabled = true;
+    biomeToggle.disabled = true;
+    biomeInput.disabled = true;
 } else handle(Notification.permission);

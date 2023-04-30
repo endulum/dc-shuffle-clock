@@ -3,6 +3,11 @@
     src: url(../assets/RobotoCondensed-Regular.ttf);
 }
 
+@font-face {
+    font-family: 'Roboto Bold';
+    src: url(../assets/RobotoCondensed-Bold.ttf);
+}
+
 $shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 $shadow2: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
 $stack: Helvetica, Arial, sans-serif;
@@ -182,7 +187,7 @@ small {
 .notify-off, .notify-on {
     transition: 0.3s background-color ease, 0.3s border-color ease, color 0.3s ease;
     background-color: white;
-    font-weight: bold;
+    font-family: 'Roboto Bold', $stack;
     &:hover {
         cursor: pointer;
         color: white;
@@ -205,13 +210,18 @@ small {
     }
 }
 
-.pref_notify_biome-toggle {
-    margin-right: 10px;
-    margin-top: 3px;
+.pref_notify_biome-toggle, .pref_notify_close-toggle {
+    margin-right: 3%;
+    margin-top: 2px;
 }
 
-.pref_notify_biome-text {
-    width: calc(100% - 50px);
+.pref_notify_biome-text, .pref_notify_close-text {
+    width: calc(90%);
+    font-size: 0.9rem;
+}
+
+.pref_notify_select {
+    margin-bottom: 5px;
 }
 
 input, select, button {
@@ -242,6 +252,24 @@ input:hover, select:hover {
     text-shadow: $shadow2;
 }
 
+.footer_icons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.footer_icon {
+    width: 30px;
+    height: 30px;
+    filter: invert(100%);
+}
+
 a {
     color: white;
+}
+
+b {
+    font-weight: normal;
+    font-family: 'Roboto Bold', $stack;
 }

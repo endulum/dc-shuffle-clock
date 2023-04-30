@@ -31,6 +31,8 @@ const biomeInput = document.getElementById('biome-select');
 const notificationStatus = document.getElementById('notification-status');
 const testVolume = document.getElementById('test-volume');
 const biomeToggle = document.getElementById('biome-toggle');
+const popupSelect = document.getElementById('popup-select');
+const closeToggle = document.getElementById('close-toggle');
 
 // local storage and preferences
 
@@ -50,9 +52,17 @@ let soundVolume; // float
 if (!localStorage.getItem('soundVolume')) soundVolume = 1;
 else soundVolume = localStorage.getItem('soundVolume');
 
-let isNotifyOn; // bool
-if (!localStorage.getItem('isNotifyOn')) isNotifyOn = false;
+let isNotifyOn; // string
+if (!localStorage.getItem('isNotifyOn')) isNotifyOn = 'no';
 else isNotifyOn = localStorage.getItem('isNotifyOn');
+
+let popupType; // string
+if (!localStorage.getItem('popupType')) popupType = 'tab';
+else popupType = localStorage.getItem('popupType');
+
+let closeAutomatically; // string
+if (!localStorage.getItem('closeAutomatically')) closeAutomatically = 'no';
+else closeAutomatically = localStorage.getItem('closeAutomatically');
 
 // input wiring
 
@@ -99,18 +109,50 @@ testVolume.addEventListener('click', () => {
 })
 
 if (biomes[biomeChoice]) biomeToggle.checked = true;
-else biomeInput.disabled = true;
+else {
+    biomeInput.disabled = true;
+    popupSelect.disabled = true;
+}
+
 biomeToggle.addEventListener('click', () => {
     if (biomes[biomeChoice]) {
         biomeChoice = 0;
         localStorage.setItem('biomeChoice', biomeChoice);
         biomeInput.value = 1;
         biomeInput.disabled = true;
+        popupSelect.disabled = true;
     } else {
         biomeChoice = 1;
         localStorage.setItem('biomeChoice', biomeChoice);
         biomeInput.disabled = false;
+        popupSelect.disabled = false;
     }
+})
+
+popupSelect.addEventListener('input', e => {
+    switch (e.target.value) {
+        case 'window':
+            popupType = 'window';
+            localStorage.setItem('popupType', 'window');
+            break;
+        case 'tab':
+            popupType = 'tab';
+            localStorage.setItem('popupType', 'tab');
+            break;
+    }
+})
+
+if (closeAutomatically == 'yes') closeToggle.checked = true;
+else closeToggle.checked = false;
+closeToggle.addEventListener('click', () => {
+    if (closeAutomatically == 'yes') {
+        closeAutomatically = 'no';
+        localStorage.setItem('closeAutomatically', 'no');
+    } else {
+        closeAutomatically = 'yes';
+        localStorage.setItem('closeAutomatically', 'yes');
+    }
+    console.log(closeAutomatically);
 })
 
 // clock functions
@@ -124,8 +166,9 @@ function countTime() {
 }
 
 function checkTime(minute, second) {
+    // if (second % 10 == 0) { // for quick debugging
     if ((minute + 1) % 5 === 0 && 60 - delay == second) {
-        if (Notification.permission === 'granted' && isNotifyOn) notify(minute);
+        if (Notification.permission === 'granted' && isNotifyOn == 'yes') notify(minute);
         if (sounds[soundChoice]) {
             sounds[soundChoice].currentTime = 0;
             sounds[soundChoice].play();
@@ -184,9 +227,17 @@ function notify(minute) {
     const notif = new Notification('Cave Shuffle Clock', {body: notifText,});
     if (biomes[biomeChoice]) notif.addEventListener('click', e => {
         e.preventDefault();
-        window.open(biomes[biomeChoice], '_blank');
+        if (popupType === 'tab') {
+            window.open(biomes[biomeChoice], '_blank');
+        }
+        else if (popupType === 'window') {
+            window.open(biomes[biomeChoice], '', 'width=900,height=500');
+        }
     });
-    console.log(`Notification should be sent at minute ${minute}.`);
+    console.log(`Notification should be sent at minute :${minute}`);
+    if (closeAutomatically == 'yes') setTimeout(() => {
+        notif.close()
+    }, delay*1000);
 }
 
 function ask() {
@@ -201,12 +252,13 @@ function handle(permission) {
             notificationStatus.disabled = 'true';
             biomeToggle.disabled = true;
             biomeInput.disabled = true;
+            closeToggle.disabled = true;
             break;
         case 'granted':
             biomeToggle.disabled = false;
-            biomeInput.disabled = false;
+            closeToggle.disabled = false;
             notificationStatus.removeEventListener('click', ask);
-            if (isNotifyOn) {
+            if (isNotifyOn == 'yes') {
                 notificationStatus.classList.add('notify-on')
                 notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
             } else {
@@ -214,14 +266,14 @@ function handle(permission) {
                 notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
             }
             notificationStatus.addEventListener('click', () => {
-                if (isNotifyOn) {
-                    isNotifyOn = false;
-                    localStorage.setItem('isNotifyOn', false);
+                if (isNotifyOn == 'yes') {
+                    isNotifyOn = 'no';
+                    localStorage.setItem('isNotifyOn', 'no');
                     notificationStatus.classList.replace('notify-on', 'notify-off');
                     notificationStatus.textContent = 'Notifying is OFF, click to turn ON';
                 } else {
-                    isNotifyOn = true;
-                    localStorage.setItem('isNotifyOn', true);
+                    isNotifyOn = 'yes';
+                    localStorage.setItem('isNotifyOn', 'yes');
                     notificationStatus.classList.replace('notify-off', 'notify-on');
                     notificationStatus.textContent = 'Notifying is ON, click to turn OFF';
                 }
@@ -232,6 +284,7 @@ function handle(permission) {
             notificationStatus.addEventListener('click', ask);
             biomeToggle.disabled = true;
             biomeInput.disabled = true;
+            closeToggle.disabled = true;
     }
 }
 
@@ -240,4 +293,5 @@ if (!typeof Notification) {
     notificationStatus.disabled = true;
     biomeToggle.disabled = true;
     biomeInput.disabled = true;
+    closeToggle.disabled = true;
 } else handle(Notification.permission);

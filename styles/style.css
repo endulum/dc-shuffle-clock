@@ -2,6 +2,10 @@
   font-family: "Roboto";
   src: url(../assets/RobotoCondensed-Regular.ttf);
 }
+@font-face {
+  font-family: "Roboto Bold";
+  src: url(../assets/RobotoCondensed-Bold.ttf);
+}
 .flex-center {
   display: flex;
   justify-content: center;
@@ -184,7 +188,7 @@ small {
 .notify-off, .notify-on {
   transition: 0.3s background-color ease, 0.3s border-color ease, color 0.3s ease;
   background-color: white;
-  font-weight: bold;
+  font-family: "Roboto Bold", Helvetica, Arial, sans-serif;
 }
 .notify-off:hover, .notify-on:hover {
   cursor: pointer;
@@ -207,13 +211,18 @@ small {
   background-color: rgba(0, 191, 255, 0.75);
 }
 
-.pref_notify_biome-toggle {
-  margin-right: 10px;
-  margin-top: 3px;
+.pref_notify_biome-toggle, .pref_notify_close-toggle {
+  margin-right: 3%;
+  margin-top: 2px;
 }
 
-.pref_notify_biome-text {
-  width: calc(100% - 50px);
+.pref_notify_biome-text, .pref_notify_close-text {
+  width: 90%;
+  font-size: 0.9rem;
+}
+
+.pref_notify_select {
+  margin-bottom: 5px;
 }
 
 input, select, button {
@@ -244,6 +253,24 @@ input:hover, select:hover {
   text-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
 }
 
+.footer_icons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.footer_icon {
+  width: 30px;
+  height: 30px;
+  filter: invert(100%);
+}
+
 a {
   color: white;
+}
+
+b {
+  font-weight: normal;
+  font-family: "Roboto Bold", Helvetica, Arial, sans-serif;
 }/*# sourceMappingURL=style.css.map */

@@ -37,7 +37,6 @@
                     <option value="5">SMS Alert 5</option>
                     <option value="0">No sound, please</option>
                 </select>
-                <small>Sounds provided by SoundBible.</small>
             </div>
         </div>
         <div class="row">
@@ -59,7 +58,7 @@
                 <input type="checkbox" id="biome-toggle" class="pref_notify_biome-toggle">
                 <p class="pref_notify_biome-text">
                     When notification is clicked on, take me to 
-                    <select id="biome-select">
+                    <select id="biome-select" class="pref_notify_select">
                         <option value="1">Alpine</option>
                         <option value="2">Coast</option>
                         <option value="3">Desert</option>
@@ -67,14 +66,28 @@
                         <option value="5">Jungle</option>
                         <option value="6">Volcano</option>
                     </select>
+                    in a 
+                    <select id="popup-select" class="pref_notify_select">
+                        <option value="tab">new tab</option>
+                        <option value="window">new window</option>
+                    </select>
                 </p>
+                <input type="checkbox" id="close-toggle" class="pref_notify_close-toggle">
+                <p class="pref_notify_close-text">Automatically dismiss the notification when shuffle occurs</p>
             </div>
         </div>
     </div>
     <div class="footer flex-center">
-        <span>Cave Shuffle Clock</span>
+        <span><b>Cave Shuffle Clock</b> &copy; endulum/μ</span>
         <small>Simple alarm tool for use with Dragon Cave.</small>
-        <p>&copy; endulum/μ - <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10/">thread</a> - <a href="https://github.com/endulum/dc-shuffle-clock">repo</a></p>
+        <div class="footer_icons">
+            <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10/">
+                <img src="./assets/speech.svg" class="footer_icon" alt="Thread">
+            </a>
+            <a href="https://github.com/endulum/dc-shuffle-clock">
+                <img src="./assets/github.svg" class="footer_icon" alt="Repository">
+            </a>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

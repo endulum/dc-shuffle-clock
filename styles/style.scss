@@ -4,6 +4,7 @@
 }
 
 $shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+$shadow2: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
 $stack: Helvetica, Arial, sans-serif;
 
 .flex-center {
@@ -43,7 +44,7 @@ small {
 .clock {
     flex-direction: row;
     margin-bottom: 15px;
-    height: 100px;
+    height: 80px;
 }
 
 .clock_play, .clock_minutes, .clock_seconds {
@@ -100,7 +101,7 @@ small {
     font-size: 5rem;
     line-height: 4rem;
     color: white;
-    text-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
+    text-shadow: $shadow2;
     &::before {
         content: ':';
     }
@@ -115,7 +116,7 @@ small {
     gap: 25px;
 }
 
-.preferences, button, input, select {
+.preferences, button, input, select, .footer {
     font-family: 'Roboto', $stack;
 }
 
@@ -227,4 +228,17 @@ input:hover, select:hover {
     pointer-events: none;
     cursor: auto;
     border-color: rgba(0,0,0,0.25);
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 15px;
+    color: white;
+    text-shadow: $shadow2;
+}
+
+a {
+    color: white;
 }

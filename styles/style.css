@@ -39,7 +39,7 @@ small {
 .clock {
   flex-direction: row;
   margin-bottom: 15px;
-  height: 100px;
+  height: 80px;
 }
 
 .clock_play, .clock_minutes, .clock_seconds {
@@ -118,7 +118,7 @@ small {
   gap: 25px;
 }
 
-.preferences, button, input, select {
+.preferences, button, input, select, .footer {
   font-family: "Roboto", Helvetica, Arial, sans-serif;
 }
 
@@ -230,4 +230,17 @@ input:hover, select:hover {
   pointer-events: none;
   cursor: auto;
   border-color: rgba(0, 0, 0, 0.25);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 15px;
+  color: white;
+  text-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
+}
+
+a {
+  color: white;
 }/*# sourceMappingURL=style.css.map */

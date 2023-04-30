@@ -16,6 +16,8 @@ In Dragon Cave, eggs in each of the six biomes rotate out every five minutes on 
 
 * __Time is inaccurate:__ The tool uses your local time. Be sure that your device clocked is accurately synced.
 
+* __Link to biome in notification is enabled, but takes me nowhere:__ The notification opens your biome of choice in a new tab, which may be interpreted as a pop-up and promptly blocked by the browser. Allow pop-ups for this tool if this is the case.
+
 * __Notifications are automatically denied upon requesting access:__ Be sure you are not on Incognito or Private Browsing. Notification capability is automatically disabled for these browsing modes.
 
 * __Accidentally denied notifications:__ Reset site permissions for this tool (see specific instructions per browser on how to do this), and you should be able to answer the request prompt again.

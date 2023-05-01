@@ -29,6 +29,7 @@ body {
     background-repeat: repeat;
     width: 100vw;
     height: 100vh;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
 }
@@ -210,17 +211,18 @@ small {
     }
 }
 
-.pref_notify_biome-toggle, .pref_notify_close-toggle {
-    margin-right: 3%;
+.pref_notify_label {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.pref_notify_check {
     margin-top: 2px;
 }
 
-.pref_notify_biome-text, .pref_notify_close-text {
-    width: calc(90%);
-    font-size: 0.9rem;
-}
-
-.pref_notify_select {
+.pref_notify_desc {
     margin-bottom: 5px;
 }
 

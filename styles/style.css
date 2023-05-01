@@ -176,14 +176,12 @@ small {
 
 .pref_notify {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
+  flex-direction: column;
 }
 
 .pref_notify_status {
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .notify-off, .notify-on {
@@ -212,19 +210,13 @@ small {
   background-color: rgba(0, 191, 255, 0.75);
 }
 
-.pref_notify_label {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 10px;
+.options_row_check {
+  margin-right: 3px;
 }
 
-.pref_notify_check {
-  margin-top: 2px;
-}
-
-.pref_notify_desc {
-  margin-bottom: 5px;
+.options_subrow {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 
 input, select, button {

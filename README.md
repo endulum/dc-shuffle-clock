@@ -25,6 +25,8 @@ _This tool was coded with ToC compliance in mind. The page makes no requests to 
 
 * __Notifications do not work:__ See [here](https://frizbit.com/blog/troubleshooting-web-push-notifications-why-im-i-not-getting-notifications/) for several issues pertaining to browser notifications to check and fix.
 
+See [here](https://github.com/endulum/dc-shuffle-clock/issues) for known and yet unsolved issues.
+
 ### Asset Credits
 
 * __Background__: Tim Ward, [Subtle Patterns](https://www.toptal.com/designers/subtlepatterns/brushed-alum-dark/)

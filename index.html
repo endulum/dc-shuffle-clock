@@ -8,9 +8,42 @@
     <title>Cave Shuffle Clock</title>
     <link rel="stylesheet" href="./styles/style.css">
     <!-- <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon"> -->
+    <script src="script.js" defer></script>
 </head>
 <body class="flex-center">
-    <div class="clock flex-center">
+
+    <label for="delay-input">Delay</label>
+    <p>Warn me <input type="number" id="delay-input" class="input" min="1" max="59"> seconds before each shuffle.</p>
+
+    <label for="sound-select">Sound</label>
+    <select id="sound-select" class="input"></select>
+
+    <label for="volume-input">Volume</label>
+    <input type="range" id="volume-input" class="input" min="1" max="100">
+    <button type="button" id="test-sound">Test Sound</button>
+
+    <!-- <label for="notif-toggle">Notify</label>
+    <button type="button" id="notif-toggle"></button> -->
+
+    <div>
+        <input type="checkbox" id="jump-toggle">
+        <label for="jump-toggle">Jump to biome when clicked</label>
+        <div>
+            Take me to the 
+            <select title="Biome Selection" id="biome-select" class="input"></select> 
+            in a 
+            <select title="Tab Behavior Selection" id="popup-select" class="input">
+                <option value="tab">new tab</option>
+                <option value="window">new window</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <input type="checkbox" id="dismiss-toggle" class="input">
+        <label for="dismiss-toggle">Dismiss notification when shuffle occurs</label>
+    </div>
+    <!-- <div class="clock flex-center">
         <button id="pause-play" class="clock_play"></button>
         <span id="minutes" class="clock_minutes">00</span>
         <span id="seconds" class="clock_seconds">00</span>
@@ -97,7 +130,6 @@
                 <img src="./assets/github.svg" class="footer_icon" alt="Repository">
             </a>
         </div>
-    </div>
-    <script src="script.js"></script>
+    </div> -->
 </body>
 </html>

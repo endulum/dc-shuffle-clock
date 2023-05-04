@@ -11,6 +11,12 @@
     <script src="script.js" defer></script>
 </head>
 <body class="flex-center">
+    <div class="clock flex-center">
+        <button type="button" aria-label="pause or play the clock" id="pause-play" class="clock_button"></button>
+        <span id="minutes" class="clock_minutes">00</span>
+        <span id="seconds" class="clock_seconds">00</span>
+    </div>
+    
     <main>
 
         <div class="row">
@@ -68,36 +74,6 @@
         </div>
 
     </main>
-    <!-- <label for="delay-input">Delay</label>
-    <p>Warn me <input type="number" id="delay-input" class="input" min="1" max="59"> seconds before each shuffle.</p>
 
-    <label for="sound-select">Sound</label>
-    <select id="sound-select" class="input"></select>
-
-    <label for="volume-input">Volume</label>
-    <input type="range" id="volume-input" class="input" min="1" max="100">
-    <button type="button" id="test-sound">Test Sound</button>
-
-    <label for="notif-toggle">Notify</label>
-    <button type="button" id="notif-toggle"></button>
-
-    <div>
-        <input type="checkbox" id="jump-toggle" class="input">
-        <label for="jump-toggle">Jump to biome when clicked</label>
-        <div>
-            Take me to the 
-            <select title="Biome Selection" id="biome-select" class="input"></select> 
-            in a 
-            <select title="Tab Behavior Selection" id="popup-select" class="input">
-                <option value="tab">new tab</option>
-                <option value="window">new window</option>
-            </select>
-        </div>
-    </div>
-
-    <div>
-        <input type="checkbox" id="dismiss-toggle" class="input">
-        <label for="dismiss-toggle">Dismiss notification when shuffle occurs</label>
-    </div> -->
 </body>
 </html>

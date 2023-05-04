@@ -154,9 +154,11 @@ function checkIfJump() {
 function checkNotifStatus() {
     if (prefs.notif) {
         toggleNotifControls(true);
+        notifButton.classList.replace('notify_off', 'notify_on');
         notifButton.textContent = 'Notifying is ON, click to turn OFF';
     } else {
         toggleNotifControls(false);
+        notifButton.classList.replace('notify_on', 'notify_off');
         notifButton.textContent = 'Notifying is OFF, click to turn ON';
     }
 }
@@ -197,6 +199,8 @@ function handlePermission(permission) {
     } else if (permission == 'granted') {
         toggleNotifControls(true);
         notifButton.removeEventListener('click', askPermission);
+        if (prefs.notif) notifButton.classList.add('notify_on');
+        else notifButton.classList.add('notify_off');
         checkNotifStatus();
         notifButton.addEventListener('click', function() {
             if (prefs.notif) prefs.notif = setPref('notif', false)

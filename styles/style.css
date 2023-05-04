@@ -14,6 +14,8 @@
 }
 
 body {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6)), url(../assets/alum.png);
+  background-repeat: repeat;
   background-color: lightgray;
   width: 100vw;
   height: 100vh;
@@ -23,11 +25,33 @@ body {
 main {
   background-color: white;
   width: calc(100% - 20px);
-  max-width: 400px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  border-radius: 5px;
+}
+
+label {
+  padding: 3px 0px;
+}
+
+input, select, button {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+input:hover, select:hover, button:hover {
+  cursor: pointer;
+}
+input[disabled]:hover, select[disabled]:hover, button[disabled]:hover {
+  cursor: auto;
+}
+
+input:hover, select:hover, .volume_test:hover {
+  border-color: black;
 }
 
 .bold {
@@ -43,8 +67,8 @@ main {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 5px;
 }
+
 .row + .row {
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   padding-top: 15px;
@@ -52,7 +76,7 @@ main {
 
 .left, .right {
   width: 100%;
-  text-align: center;
+  display: flex;
 }
 
 .sound_input {
@@ -74,6 +98,31 @@ main {
   min-width: fit-content;
 }
 
+.notify_off, .notify_on {
+  transition: 0.3s background-color ease, 0.3s border-color ease, 0.3s color ease;
+  background-color: white;
+}
+.notify_off:hover, .notify_on:hover {
+  cursor: pointer;
+  color: white;
+}
+
+.notify_off {
+  border-color: crimson;
+  color: crimson;
+}
+.notify_off:hover {
+  background-color: rgba(220, 20, 60, 0.75);
+}
+
+.notify_on {
+  border-color: deepskyblue;
+  color: deepskyblue;
+}
+.notify_on:hover {
+  background-color: rgba(0, 191, 255, 0.75);
+}
+
 .notif_options {
   display: flex;
   flex-direction: column;
@@ -84,16 +133,26 @@ main {
   font-size: 0.9rem;
 }
 
-@media screen and (min-width: 420px) {
+@media screen and (min-width: 440px) {
+  label {
+    padding: 3px 5px;
+  }
   .row {
     gap: 10px;
   }
   .left {
     max-width: 65px;
-    text-align: right;
+    justify-content: flex-end;
   }
   .right {
     width: calc(100% - 75px);
-    text-align: left;
+  }
+}
+@media screen and (max-width: 300px) {
+  * {
+    font-size: 0.95rem;
+  }
+  input, select, button, .biome_adjust {
+    font-size: 0.85rem;
   }
 }/*# sourceMappingURL=style.css.map */

@@ -10,6 +10,7 @@
 
 $stack: Arial, Helvetica, sans-serif;
 $test: 1px solid red;
+$cardshadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 
 * { // reset
     margin: 0;
@@ -19,6 +20,8 @@ $test: 1px solid red;
 }
 
 body {
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.6)), url(../assets/alum.png);
+    background-repeat: repeat;
     background-color: lightgray;
     width: 100vw;
     height: 100vh;
@@ -28,11 +31,35 @@ body {
 main {
     background-color: white;
     width: calc(100% - 20px);
-    max-width: 400px;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding: 20px;
+    box-shadow: $cardshadow;
+    border-radius: 5px;
+}
+
+label {
+    padding: 3px 0px;
+}
+
+input, select, button {
+    border: 1px solid rgba(0,0,0,.25);
+    border-radius: 5px;
+    padding: 3px 5px;
+    &:hover {
+        cursor: pointer;
+    }
+    &[disabled]:hover {
+        cursor: auto;
+    }
+}
+
+input, select, .volume_test {
+    &:hover {
+        border-color: black;
+    }
 }
 
 .bold {
@@ -48,10 +75,6 @@ main {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 5px;
-    > div {
-        //border: $test;
-    }
 }
 
 .row + .row {
@@ -61,7 +84,7 @@ main {
 
 .left, .right {
     width: 100%;
-    text-align: center;
+    display: flex;
 }
 
 .sound_input {
@@ -82,6 +105,31 @@ main {
     min-width: fit-content;
 }
 
+.notify_off, .notify_on {
+    transition: 0.3s background-color ease, 0.3s border-color ease, 0.3s color ease;
+    background-color: white;
+    &:hover {
+        cursor: pointer;
+        color: white;
+    }
+}
+
+.notify_off {
+    border-color: crimson;
+    color: crimson;
+    &:hover {
+        background-color: rgba(220, 20, 60, .75);
+    }
+}
+
+.notify_on {
+    border-color: deepskyblue;
+    color: deepskyblue;
+    &:hover {
+        background-color: rgba(0,191,255,.75);
+    }
+}
+
 .notif_options {
     display: flex;
     flex-direction: column;
@@ -92,279 +140,29 @@ main {
     font-size: 0.9rem;
 }
 
-@media screen and (min-width: 420px) {
+@media screen and (min-width: 440px) {
+    label {
+        padding: 3px 5px;
+    }
+
     .row {
         gap: 10px;
     }
 
     .left {
         max-width: 65px;
-        text-align: right;
+        justify-content: flex-end;
     } 
     
     .right {
         width: calc(100% - 75px);
-        text-align: left;
     }
 }
 
-
-// $shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-// $shadow2: rgba(50, 50, 93, 0.25) 0px 6px 12px, rgba(0, 0, 0, 0.3) 0px 3px 7px;
-// $stack: Helvetica, Arial, sans-serif;
-
-// .flex-center {
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-// }
-
-// * {
-//     padding: 0;
-//     margin: 0;
-//     box-sizing: border-box;
-// }
-
-// body {
-//     background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.6)), url(../assets/alum.png);
-//     background-repeat: repeat;
-//     width: 100vw;
-//     height: 100vh;
-//     min-height: 600px;
-//     display: flex;
-//     flex-direction: column;
-// }
-
-// small {
-//     font-size: 0.75rem;
-//     opacity: 0.75;
-//     font-style: italic;
-// }
-
-// .clock, .preferences, .footer {
-//     width: calc(100% - 20px);
-//     max-width: 400px;
-//     min-width: 315px;
-//     display: flex;
-// }
-
-// .clock {
-//     flex-direction: row;
-//     margin-bottom: 15px;
-//     height: 80px;
-// }
-
-// .clock_play, .clock_minutes, .clock_seconds {
-//     height: min-content;
-// }
-
-// .clock_play {
-//     width: 80px;
-//     height: 80px;
-//     margin-right: 10px;
-//     appearance: none;
-//     border: none;
-//     font-weight: bold;
-//     font-size: 1rem;
-//     border-radius: 5px;
-//     box-shadow: $shadow;
-//     transition: 0.3s box-shadow ease, 0.3s transform ease, 0.75s background-color ease;
-//     &:hover {
-//         cursor: pointer;
-//         box-shadow: rgba(0, 0, 0, 0.4) 0px 5px 10px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-//         transform: translateY(-3px);
-//     } &:active {
-//         box-shadow: $shadow;
-//         transform: translateY(0px);
-//     }
-// }
-
-// .icon_play {
-//     filter: invert(100%);
-//     width: 50px;
-//     height: 50px;
-// }
-
-// .spin {
-//     animation: spin 2s infinite ease;
-// }
-
-// @keyframes spin {
-//     from {transform: rotate(0deg)}
-//     to {transform: rotate(360deg)}
-// }
-
-// .playing {
-//     background-color: crimson;
-// }
-
-// .pausing, .shuffling {
-//     background-color: deepskyblue;
-// }
-
-// .clock_minutes, .clock_seconds {
-//     font-family: $stack;
-//     font-weight: bold;
-//     font-size: 5rem;
-//     line-height: 4rem;
-//     color: white;
-//     text-shadow: $shadow2;
-//     &::before {
-//         content: ':';
-//     }
-// }
-
-// .preferences {
-//     background-color: white;
-//     box-shadow: $shadow;
-//     border-radius: 5px;
-//     padding: 20px;
-//     flex-direction: column;
-//     gap: 25px;
-// }
-
-// .preferences, button, input, select, .footer {
-//     font-family: 'Roboto', $stack;
-// }
-
-// .row {
-//     display: flex;
-//     flex-direction: row;
-//     gap: 15px;
-// }
-
-// .left {
-//     width: 65px;
-//     min-width: 65px;
-//     text-align: right;
-//     line-height: 1.25rem;
-// }
-
-// .right {
-//     width: calc(100% - 65px);
-// }
-
-// .pref_delay_input {
-//     width: 50px;
-// }
-
-// .pref_sound {
-//     display: flex;
-//     flex-direction: column;
-// }
-
-// .pref_sound_input {
-//     margin-bottom: 5px;
-// }
-
-// .pref_volume {
-//     display: flex;
-//     flex-direction: row;
-//     gap: 15px;
-// }
-
-// .pref_volume_input {
-//     width: 60%;
-// }
-
-// .pref_volume_test {
-//     width: 40%;
-//     &:hover {
-//         border-color: black;
-//     }
-// }
-
-// .pref_notify {
-//     display: flex;
-//     flex-direction: column;
-// }
-
-// .pref_notify_status {
-//     width: 100%;
-//     margin-bottom: 15px;
-// }
-
-// .notify-off, .notify-on {
-//     transition: 0.3s background-color ease, 0.3s border-color ease, color 0.3s ease;
-//     background-color: white;
-//     font-family: 'Roboto Bold', $stack;
-//     &:hover {
-//         cursor: pointer;
-//         color: white;
-//     }
-// }
-
-// .notify-off {
-//     border-color: crimson;
-//     color: crimson;
-//     &:hover {
-//         background-color: rgba(220, 20, 60, 0.75);
-//     }
-// }
-
-// .notify-on {
-//     border-color: deepskyblue;
-//     color: deepskyblue;
-//     &:hover {
-//         background-color: rgba(0, 191, 255, 0.75);
-//     }
-// }
-
-// .options_row_check {
-//     margin-right: 3px;
-// }
-
-// .options_subrow {
-//     font-size: 0.9rem;
-//     margin-bottom: 10px;
-// }
-
-// input, select, button {
-//     border: 1px solid rgba(0, 0, 0, 0.25);
-//     border-radius: 5px;
-//     padding: 3px 5px;
-//     &:hover {
-//         cursor: pointer;
-//     }
-// }
-
-// input:hover, select:hover {
-//     border-color: black;
-// }
-
-// [disabled]:hover {
-//     pointer-events: none;
-//     cursor: auto;
-//     border-color: rgba(0,0,0,0.25);
-// }
-
-// .footer {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 5px;
-//     margin-top: 15px;
-//     color: white;
-//     text-shadow: $shadow2;
-// }
-
-// .footer_icons {
-//     display: flex;
-//     flex-direction: row;
-//     gap: 10px;
-//     margin-top: 5px;
-// }
-
-// .footer_icon {
-//     width: 30px;
-//     height: 30px;
-//     filter: invert(100%);
-// }
-
-// a {
-//     color: white;
-// }
-
-// b {
-//     font-weight: normal;
-//     font-family: 'Roboto Bold', $stack;
-// }
+@media screen and (max-width: 300px) {
+    * {
+        font-size: 0.95rem;
+    } input, select, button, .biome_adjust {
+        font-size: 0.85rem;
+    }
+}

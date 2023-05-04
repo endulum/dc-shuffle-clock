@@ -18,7 +18,7 @@
                 <label for="delay-input" class="bold">Delay</label>
             </div>
             <div class="right">
-                <p>Warn me <input type="number" id="delay-input" class="input" min="1" max="59"> seconds before each shuffle.</p>
+                <p>Warn me <input type="number" aria-label="delay in seconds" id="delay-input" class="input" min="1" max="59"> seconds before each shuffle.</p>
             </div>
         </div>
 
@@ -27,7 +27,7 @@
                 <label for="sound-select" class="bold">Sound</label>
             </div>
             <div class="right">
-                <select id="sound-select" class="input sound_input"></select>
+                <select aria-label="sound selection" id="sound-select" class="input sound_input"></select>
             </div>
         </div>
 
@@ -46,15 +46,15 @@
                 <label for="notif-toggle" class="bold">Notify</label>
             </div>
             <div class="right notif_options">
-                <button type="button" id="notif-toggle"></button>
+                <button type="button" aria-label="toggle notification" id="notif-toggle"></button>
                 <div>
                     <input type="checkbox" id="jump-toggle" class="input">
                     <label for="jump-toggle">Jump to biome when clicked</label>
-                    <p class="biome_adjust">
+                    <p id="biome" class="biome_adjust">
                         Take me to the
-                        <select title="Biome Selection" id="biome-select" class="input"></select>
+                        <select aria-label="biome selection" id="biome-select" class="input"></select>
                         in a
-                        <select title="Tab Behavior Selection" id="popup-select" class="input">
+                        <select aria-label="tab behavior selection" id="popup-select" class="input">
                             <option value="tab">new tab</option>
                             <option value="window">new window</option>
                         </select>

@@ -31,7 +31,7 @@ main {
     max-width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     padding: 20px;
 }
 
@@ -52,6 +52,11 @@ main {
     > div {
         //border: $test;
     }
+}
+
+.row + .row {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+    padding-top: 15px;
 }
 
 .left, .right {
@@ -93,12 +98,12 @@ main {
     }
 
     .left {
-        max-width: 75px;
+        max-width: 65px;
         text-align: right;
     } 
     
     .right {
-        width: calc(100% - 85px);
+        width: calc(100% - 75px);
         text-align: left;
     }
 }

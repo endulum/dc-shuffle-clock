@@ -9,6 +9,7 @@
 }
 
 $stack: Arial, Helvetica, sans-serif;
+$test: 1px solid red;
 
 * { // reset
     margin: 0;
@@ -17,10 +18,90 @@ $stack: Arial, Helvetica, sans-serif;
     font-family: 'Roboto', $stack;
 }
 
-label {
+body {
+    background-color: lightgray;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+main {
+    background-color: white;
+    width: calc(100% - 20px);
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.bold {
     font-family: 'Roboto Bold', $stack;
 }
 
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    > div {
+        //border: $test;
+    }
+}
+
+.left, .right {
+    width: 100%;
+    text-align: center;
+}
+
+.sound_input {
+    width: 100%;
+}
+
+.volume_row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.volume_input {
+    width: 100%;
+}
+
+.volume_test {
+    min-width: fit-content;
+}
+
+.notif_options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.biome_adjust {
+    font-size: 0.9rem;
+}
+
+@media screen and (min-width: 420px) {
+    .row {
+        gap: 10px;
+    }
+
+    .left {
+        max-width: 75px;
+        text-align: right;
+    } 
+    
+    .right {
+        width: calc(100% - 85px);
+        text-align: left;
+    }
+}
 
 
 // $shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;

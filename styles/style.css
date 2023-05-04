@@ -13,6 +13,82 @@
   font-family: "Roboto", Arial, Helvetica, sans-serif;
 }
 
-label {
+body {
+  background-color: lightgray;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+main {
+  background-color: white;
+  width: calc(100% - 20px);
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.bold {
   font-family: "Roboto Bold", Arial, Helvetica, sans-serif;
+}
+
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.left, .right {
+  width: 100%;
+  text-align: center;
+}
+
+.sound_input {
+  width: 100%;
+}
+
+.volume_row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.volume_input {
+  width: 100%;
+}
+
+.volume_test {
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+
+.notif_options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.biome_adjust {
+  font-size: 0.9rem;
+}
+
+@media screen and (min-width: 420px) {
+  .row {
+    gap: 10px;
+  }
+  .left {
+    max-width: 75px;
+    text-align: right;
+  }
+  .right {
+    width: calc(100% - 85px);
+    text-align: left;
+  }
 }/*# sourceMappingURL=style.css.map */

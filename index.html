@@ -11,8 +11,64 @@
     <script src="script.js" defer></script>
 </head>
 <body class="flex-center">
+    <main>
 
-    <label for="delay-input">Delay</label>
+        <div class="row">
+            <div class="left">
+                <label for="delay-input" class="bold">Delay</label>
+            </div>
+            <div class="right">
+                <p>Warn me <input type="number" id="delay-input" class="input" min="1" max="59"> seconds before each shuffle.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="left">
+                <label for="sound-select" class="bold">Sound</label>
+            </div>
+            <div class="right">
+                <select id="sound-select" class="input sound_input"></select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="left">
+                <label for="volume-input" class="bold">Volume</label>
+            </div>
+            <div class="right volume_row">
+                <input type="range" id="volume-input" class="input volume_input" min="1" max="100">
+                <button type="button" id="test-sound" class="volume_test">Test Sound</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="left">
+                <label for="notif-toggle" class="bold">Notify</label>
+            </div>
+            <div class="right notif_options">
+                <button type="button" id="notif-toggle"></button>
+                <div>
+                    <input type="checkbox" id="jump-toggle" class="input">
+                    <label for="jump-toggle">Jump to biome when clicked</label>
+                    <p class="biome_adjust">
+                        Take me to the
+                        <select title="Biome Selection" id="biome-select" class="input"></select>
+                        in a
+                        <select title="Tab Behavior Selection" id="popup-select" class="input">
+                            <option value="tab">new tab</option>
+                            <option value="window">new window</option>
+                        </select>
+                    </p> <!-- on mobile, tapping on this paragraph selects the jump-toggle checkbox? why? -->
+                </div>
+                <div>
+                    <input type="checkbox" id="dismiss-toggle" class="input">
+                    <label for="dismiss-toggle">Dismiss notification when shuffle occurs</label>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <!-- <label for="delay-input">Delay</label>
     <p>Warn me <input type="number" id="delay-input" class="input" min="1" max="59"> seconds before each shuffle.</p>
 
     <label for="sound-select">Sound</label>
@@ -42,94 +98,6 @@
     <div>
         <input type="checkbox" id="dismiss-toggle" class="input">
         <label for="dismiss-toggle">Dismiss notification when shuffle occurs</label>
-    </div>
-    <!-- <div class="clock flex-center">
-        <button id="pause-play" class="clock_play"></button>
-        <span id="minutes" class="clock_minutes">00</span>
-        <span id="seconds" class="clock_seconds">00</span>
-    </div>
-    <div class="preferences">
-        <div class="row">
-            <div class="left">
-                <label for="delay-input"><b>Delay</b></label>
-            </div>
-            <div class="right pref_delay">
-                <p>Warn me <input type="number" id="delay-input" class="pref_delay_input" min="1" max="59"> seconds before each shuffle.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="left">
-                <label for="sound-select"><b>Sound</b></label>
-            </div>
-            <div class="right pref_sound">
-                <select id="sound-select" class="pref_sound_input">
-                    <option value="1">SMS Alert 1</option>
-                    <option value="2">SMS Alert 2</option>
-                    <option value="3">SMS Alert 3</option>
-                    <option value="4">SMS Alert 4</option>
-                    <option value="5">SMS Alert 5</option>
-                    <option value="0">No sound, please</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="left">
-                <label for="volume-input"><b>Volume</b></label>
-            </div>
-            <div class="right pref_volume">
-                <input type="range" id="volume-input" class="pref_volume_input" min="1" max="100">
-                <button id="test-volume" class="pref_volume_test">Test Sound</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="left">
-                <b>Notify</b>
-                <small>Experimental!</small>
-            </div>
-            <div class="right pref_notify">
-                <button id="notification-status" class="pref_notify_status"></button>
-                <div class="pref_notify_options">
-                    <div class="options_row">
-                        <input type="checkbox" id="biome-toggle" class="options_row_check" aria-labelledby="biome-tab-choice">
-                        <label for="biome-toggle" class="options_label">Jump to biome when clicked</label>
-                        <div class="options_subrow">
-                            <p id="biome-tab-choice" class="options_subrow_text">
-                                Take me to 
-                                <select title="Biome Selection" id="biome-select" class="pref_notify_select">
-                                    <option value="1">Alpine</option>
-                                    <option value="2">Coast</option>
-                                    <option value="3">Desert</option>
-                                    <option value="4">Forest</option>
-                                    <option value="5">Jungle</option>
-                                    <option value="6">Volcano</option>
-                                </select>
-                                in a 
-                                <select title="Tab Behavior" id="popup-select" class="pref_notify_select">
-                                    <option value="tab">new tab</option>
-                                    <option value="window">new window</option>
-                                </select>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="options_row">
-                        <input type="checkbox" id="close-toggle" class="options_row_check">
-                        <label for="close-toggle" class="options_label">Dismiss notification when shuffle occurs</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer flex-center">
-        <span><b>Cave Shuffle Clock</b> &copy; endulum/μ</span>
-        <small>Simple alarm tool for use with Dragon Cave.</small>
-        <div class="footer_icons">
-            <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10/">
-                <img src="./assets/speech.svg" class="footer_icon" alt="Thread">
-            </a>
-            <a href="https://github.com/endulum/dc-shuffle-clock">
-                <img src="./assets/github.svg" class="footer_icon" alt="Repository">
-            </a>
-        </div>
     </div> -->
 </body>
 </html>

@@ -189,6 +189,7 @@ async function askPermission() {
 
 function handlePermission(permission) {
     if (permission == 'denied') {
+        prefs.notif = setPref('notif', false);
         notifButton.textContent = 'Notifications blocked';
         notifButton.disabled = true;
         toggleNotifControls(false);

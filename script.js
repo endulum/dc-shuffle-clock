@@ -16,18 +16,6 @@ biomes[5].id = 6;
 
 // preferences object
 
-/*
- * There was one partiularly annoying problem in this area. The "popup" variable of the prefs object is 
- * meant to be one of two strings, "tab" and "window". Storing a string in localStorage and retireving it
- * with JSON.parse() gives an error, "unexpected token... invalid JSON". But, I need JSON.parse() in the 
- * getPref() function to ensure that the other variables keep their types. I came up with two options:
- * - Use a try/catch in the getPref() function to default to just grabbing the value straight from
- *   localStorage without parsing if parsing was somehow not possible
- * - Let getPref() return the raw localStorage strings, and do type conversions directly on each of the 
- *   individual variables of the prefs object
- * Opted for the first option because it was easier, but I'm unsure of the "elegance" of either solution.
- */
-
 const getPref = (prefName, defaultValue) => {
     try {return JSON.parse(localStorage.getItem(prefName)) ?? defaultValue;}
     catch {return localStorage.getItem(prefName) ?? defaultValue;}
@@ -81,19 +69,16 @@ const biomeSelect = document.getElementById('biome-select'); // dropdown for bio
 const popupSelect = document.getElementById('popup-select'); // dropdown for popup type
 const dismissToggle = document.getElementById('dismiss-toggle'); // checkbox for toggling
 
-sounds.forEach((sound, index) => { // populate sound dropdown
-    const option = soundSelect.appendChild(document.createElement('option'));
-    option.innerHTML = sound;
-    option.value = index;
-});
+function makeOption(text, value, parent) {
+    const option = document.createElement('option');
+    option.innerHTML = text;
+    option.value = value;
+    parent.appendChild(option);
+}
 
+sounds.forEach((sound, index) => {makeOption(sound, index, soundSelect)}); // populate sound dropdown
 soundSelect.addEventListener('change', checkIfMuted);
-
-biomes.forEach((name, index) => { // populate biome dropdown
-    const option = biomeSelect.appendChild(document.createElement('option'));
-    option.innerHTML = biomes[index].name;
-    option.value = index;
-});
+biomes.forEach((name, index) => {makeOption(biomes[index].name, index, biomeSelect)}) // populate biome dropdown
 
 const testSound = document.getElementById('test-sound'); // button for testing volume
 testSound.addEventListener('click', playSound);
@@ -293,9 +278,7 @@ clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon" 
 
 clockButton.addEventListener('click', pauseOrPlay);
 
-document.addEventListener('keydown', function(e) {
-    if (e.keyCode == 32) pauseOrPlay();
-})
+document.addEventListener('keydown', function(e) {if (e.key == 'Spacebar' || e.key == ' ') pauseOrPlay();});
 
 function pauseOrPlay() {
     if (intervalID) {

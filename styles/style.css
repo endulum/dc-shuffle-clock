@@ -66,7 +66,7 @@ input:hover, select:hover, .volume_test:hover {
   border-color: black;
 }
 
-.bold, b {
+.bold {
   font-weight: normal;
   font-family: "Roboto Bold", Arial, Helvetica, sans-serif;
 }

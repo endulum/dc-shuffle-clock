@@ -15,11 +15,11 @@
 
     <div class="clock flex-center">
         <button type="button" aria-label="pause or play the clock" id="pause-play" class="clock_button"></button>
-        <span id="minutes" class="clock_minutes">00</span>
-        <span id="seconds" class="clock_seconds">00</span>
+        <span aria-label="current minute" id="minutes" class="clock_minutes">00</span>
+        <span aria-label="current second" id="seconds" class="clock_seconds">00</span>
     </div>
     
-    <main>
+    <main title="clock preferences">
 
         <div class="row">
             <div class="left">
@@ -35,7 +35,7 @@
                 <label for="sound-select" class="bold">Sound</label>
             </div>
             <div class="right">
-                <select aria-label="sound selection" id="sound-select" class="input sound_input"></select>
+                <select id="sound-select" class="input sound_input"></select>
             </div>
         </div>
 
@@ -54,8 +54,8 @@
                 <label for="notif-toggle" class="bold">Notify</label>
             </div>
             <div class="right notif_options">
-                <button type="button" aria-label="toggle notification" id="notif-toggle"></button>
-                <div>
+                <button type="button" aria-label="toggle notification" id="notif-toggle" class="bold"></button>
+                <div title="notification jump to biome">
                     <input type="checkbox" id="jump-toggle" class="input">
                     <label for="jump-toggle">Jump to biome when clicked</label>
                     <p id="biome" class="biome_adjust">
@@ -66,9 +66,9 @@
                             <option value="tab">new tab</option>
                             <option value="window">new window</option>
                         </select>
-                    </p> <!-- on mobile, tapping on this paragraph selects the jump-toggle checkbox? why? -->
+                    </p>
                 </div>
-                <div>
+                <div title="notification auto dismiss">
                     <input type="checkbox" id="dismiss-toggle" class="input">
                     <label for="dismiss-toggle">Dismiss notification when shuffle occurs</label>
                 </div>
@@ -78,7 +78,7 @@
     </main>
 
     <footer class="flex-center">
-        <span><b>Cave Shuffle Clock</b> &copy; endulum</span>
+        <span><span class="bold">Cave Shuffle Clock</span> &copy; endulum</span>
         <small>Simple alarm tool for use with Dragon Cave.</small>
         <div class="footer_icons">
             <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10/">

@@ -41,8 +41,21 @@ main {
     border-radius: 5px;
 }
 
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 15px;
+    color: white;
+    text-shadow: $shadow;
+}
+
 label {
     padding: 3px 0px;
+}
+
+small {
+    font-style: italic;
 }
 
 input, select, button {
@@ -63,7 +76,8 @@ input, select, .volume_test {
     }
 }
 
-.bold {
+.bold, b {
+    font-weight: normal;
     font-family: 'Roboto Bold', $stack;
 }
 
@@ -123,8 +137,8 @@ img.white {
 }
 
 .button_icon {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 
 .playing {
@@ -154,6 +168,10 @@ img.white {
 .left, .right {
     width: 100%;
     display: flex;
+}
+
+.delay_input {
+    width: 50px;
 }
 
 .sound_input {
@@ -209,6 +227,18 @@ img.white {
     font-size: 0.9rem;
 }
 
+.footer_icons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.footer_icon {
+    width: 30px;
+    height: 30px;
+}
+
 @media screen and (min-width: 440px) {
     label {
         padding: 3px 5px;
@@ -223,6 +253,11 @@ img.white {
         height: 80px;
     }
 
+    .button_icon {
+        width: 50px;
+        height: 50px;
+    }
+
     .row {
         gap: 10px;
     }
@@ -230,6 +265,7 @@ img.white {
     .left {
         max-width: 65px;
         justify-content: flex-end;
+        height: min-content;
     } 
     
     .right {

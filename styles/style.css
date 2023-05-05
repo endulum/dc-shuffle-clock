@@ -33,8 +33,21 @@ main {
   border-radius: 5px;
 }
 
+footer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 15px;
+  color: white;
+  text-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
 label {
   padding: 3px 0px;
+}
+
+small {
+  font-style: italic;
 }
 
 input, select, button {
@@ -53,7 +66,8 @@ input:hover, select:hover, .volume_test:hover {
   border-color: black;
 }
 
-.bold {
+.bold, b {
+  font-weight: normal;
   font-family: "Roboto Bold", Arial, Helvetica, sans-serif;
 }
 
@@ -116,8 +130,8 @@ img.white {
 }
 
 .button_icon {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .playing {
@@ -154,6 +168,10 @@ img.white {
 .left, .right {
   width: 100%;
   display: flex;
+}
+
+.delay_input {
+  width: 50px;
 }
 
 .sound_input {
@@ -210,6 +228,18 @@ img.white {
   font-size: 0.9rem;
 }
 
+.footer_icons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.footer_icon {
+  width: 30px;
+  height: 30px;
+}
+
 @media screen and (min-width: 440px) {
   label {
     padding: 3px 5px;
@@ -221,12 +251,18 @@ img.white {
     width: 80px;
     height: 80px;
   }
+  .button_icon {
+    width: 50px;
+    height: 50px;
+  }
   .row {
     gap: 10px;
   }
   .left {
     max-width: 65px;
     justify-content: flex-end;
+    height: -moz-min-content;
+    height: min-content;
   }
   .right {
     width: calc(100% - 75px);

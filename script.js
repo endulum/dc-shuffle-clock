@@ -23,9 +23,9 @@ biomes[5].id = 6;
  * getPref() function to ensure that the other variables keep their types. I came up with two options:
  * - Use a try/catch in the getPref() function to default to just grabbing the value straight from
  *   localStorage without parsing if parsing was somehow not possible
- * - Let getPref() return the raw localStorage strings, and do type conversions directly on the individual
- *   variables of the prefs object
- * Opted for the first option because it was easier, but I'm unsure of the elegance of either solution.
+ * - Let getPref() return the raw localStorage strings, and do type conversions directly on each of the 
+ *   individual variables of the prefs object
+ * Opted for the first option because it was easier, but I'm unsure of the "elegance" of either solution.
  */
 
 const getPref = (prefName, defaultValue) => {
@@ -225,7 +225,7 @@ function notify(minute) {
     if (minute == 59) notifText = `The hourly cave refresh will occur in about ${prefs.delay} seconds.`;
     else notifText = `The next cave shuffle will occur in ${prefs.delay} seconds.`;
     const notif = new Notification('Cave Shuffle Clock', {body: notifText});
-    
+
     if (prefs.jump) notif.addEventListener('click', function(e) {
         e.preventDefault();
         const url = `https://dragcave.net/locations/${biomes[prefs.biome].id}`;
@@ -249,15 +249,18 @@ function countTime() {
 function checkTime(minute, second) {
     let conditionForAlert = (minute + 1) % 5 === 0 && 60 - prefs.delay === second;
     let conditionForDebugging = second % 10 == 0;
-    if (conditionForDebugging) {
+    if (conditionForAlert) {
+        if (prefs.sound != muted) playSound();
         if (prefs.notif) notify(minute);
+        animate();
+        console.log(`Notification should be sent at ${minute}:${second}`);
     }
 }
 
 function displayTime(minute, second) {
     if (minute < 10) minute = '0' + minute;
     if (second < 10) second = '0' + second;
-    console.log(`Time is ${minute}:${second}`);
+    // console.log(`Time is ${minute}:${second}`);
     document.getElementById('minutes').textContent = minute;
     document.getElementById('seconds').textContent = second;
 }
@@ -286,17 +289,25 @@ function stop() {
 
 const clockButton = document.getElementById('pause-play');
 clockButton.classList.add('pausing');
-clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon">';
+clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon" alt="Play">';
 
 clockButton.addEventListener('click', function() {
     if (intervalID) {
         stop();
         clockButton.classList.replace('playing', 'pausing');
-        clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon">';
+        clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon" alt="Play">';
     } else if (!intervalID) {
         start();
         clockButton.classList.replace('pausing', 'playing');
-        clockButton.innerHTML = '<img src="./assets/pause.svg" class="white button_icon">';
+        clockButton.innerHTML = '<img src="./assets/pause.svg" class="white button_icon" alt="Pause">';
     }
 });
 
+function animate() {
+    clockButton.classList.add('shuffling');
+    clockButton.innerHTML = '<img src="./assets/shuffle.svg" class="white button_icon spin" alt="Shuffling">';
+    setTimeout(() => {
+        clockButton.classList.remove('shuffling');
+        clockButton.innerHTML = '<img src="./assets/pause.svg" class="white button_icon" alt="Pause">';
+    }, 2000);
+}

@@ -12,6 +12,7 @@
     <script src="script.js" defer></script>
 </head>
 <body class="flex-center">
+
     <div class="clock flex-center">
         <button type="button" aria-label="pause or play the clock" id="pause-play" class="clock_button"></button>
         <span id="minutes" class="clock_minutes">00</span>
@@ -25,7 +26,7 @@
                 <label for="delay-input" class="bold">Delay</label>
             </div>
             <div class="right">
-                <p>Warn me <input type="number" aria-label="delay in seconds" id="delay-input" class="input" min="1" max="59"> seconds before each shuffle.</p>
+                <p>Warn me <input type="number" aria-label="delay in seconds" id="delay-input" class="input delay_input" min="1" max="59"> seconds before each shuffle.</p>
             </div>
         </div>
 
@@ -75,6 +76,19 @@
         </div>
 
     </main>
+
+    <footer class="flex-center">
+        <span><b>Cave Shuffle Clock</b> &copy; endulum</span>
+        <small>Simple alarm tool for use with Dragon Cave.</small>
+        <div class="footer_icons">
+            <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10/">
+                <img src="./assets/speech.svg" class="white footer_icon" alt="thread" role="img" aria-hidden="true">
+            </a>
+            <a href="https://github.com/endulum/dc-shuffle-clock">
+                <img src="./assets/github.svg" class="white footer_icon" alt="repository" role="img" aria-hidden="true">
+            </a>
+        </div>
+    </footer>
 
 </body>
 </html>

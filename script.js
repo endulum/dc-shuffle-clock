@@ -291,7 +291,13 @@ const clockButton = document.getElementById('pause-play');
 clockButton.classList.add('pausing');
 clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon" alt="Play">';
 
-clockButton.addEventListener('click', function() {
+clockButton.addEventListener('click', pauseOrPlay);
+
+document.addEventListener('keydown', function(e) {
+    if (e.keyCode == 32) pauseOrPlay();
+})
+
+function pauseOrPlay() {
     if (intervalID) {
         stop();
         clockButton.classList.replace('playing', 'pausing');
@@ -301,7 +307,7 @@ clockButton.addEventListener('click', function() {
         clockButton.classList.replace('pausing', 'playing');
         clockButton.innerHTML = '<img src="./assets/pause.svg" class="white button_icon" alt="Pause">';
     }
-});
+}
 
 function animate() {
     clockButton.classList.add('shuffling');

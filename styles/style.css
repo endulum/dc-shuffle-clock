@@ -111,7 +111,7 @@ main, .clock {
   transform: translateY(0px);
 }
 
-.icon {
+img.white {
   filter: invert(100%);
 }
 

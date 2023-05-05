@@ -220,10 +220,83 @@ if (!typeof Notification || !checkNotifSupport()) {
     toggleNotifControls(false);
 } else handlePermission(Notification.permission);
 
+function notify(minute) {
+    let notifText;
+    if (minute == 59) notifText = `The hourly cave refresh will occur in about ${prefs.delay} seconds.`;
+    else notifText = `The next cave shuffle will occur in ${prefs.delay} seconds.`;
+    const notif = new Notification('Cave Shuffle Clock', {body: notifText});
+    
+    if (prefs.jump) notif.addEventListener('click', function(e) {
+        e.preventDefault();
+        const url = `https://dragcave.net/locations/${biomes[prefs.biome].id}`;
+        if (prefs.popup == 'tab') window.open(url, '_blank');
+        else if (prefs.popup == 'window') window.open(url, '', 'width=900,height=500');
+    })
+
+    if (prefs.dismiss) setTimeout(() => {notif.close()}, prefs.delay*1000);
+}
+
 // finally, the clock
+
+function countTime() {
+    const now = new Date();
+    const minute = parseInt(now.getMinutes());
+    const second = parseInt(now.getSeconds());
+    checkTime(minute, second);
+    displayTime(minute, second);
+}
+
+function checkTime(minute, second) {
+    let conditionForAlert = (minute + 1) % 5 === 0 && 60 - prefs.delay === second;
+    let conditionForDebugging = second % 10 == 0;
+    if (conditionForDebugging) {
+        if (prefs.notif) notify(minute);
+    }
+}
+
+function displayTime(minute, second) {
+    if (minute < 10) minute = '0' + minute;
+    if (second < 10) second = '0' + second;
+    console.log(`Time is ${minute}:${second}`);
+    document.getElementById('minutes').textContent = minute;
+    document.getElementById('seconds').textContent = second;
+}
 
 function playSound() {
     const sound = new Audio(`./assets/sms${prefs.sound + 1}.mp3`);
     sound.volume = prefs.volume;
     sound.play();
 }
+
+function start() {
+    if (!intervalID) {
+        countTime();
+        intervalID = setInterval(countTime, 999);
+    }
+}
+
+function stop() {
+    if (intervalID) {
+        clearInterval(intervalID);
+        intervalID = null;
+    }
+}
+
+// dom for clock
+
+const clockButton = document.getElementById('pause-play');
+clockButton.classList.add('pausing');
+clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon">';
+
+clockButton.addEventListener('click', function() {
+    if (intervalID) {
+        stop();
+        clockButton.classList.replace('playing', 'pausing');
+        clockButton.innerHTML = '<img src="./assets/play.svg" class="white button_icon">';
+    } else if (!intervalID) {
+        start();
+        clockButton.classList.replace('pausing', 'playing');
+        clockButton.innerHTML = '<img src="./assets/pause.svg" class="white button_icon">';
+    }
+});
+

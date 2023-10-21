@@ -6,13 +6,14 @@ const sounds = new Array(5)
 
 const muted = (sounds.push('No sound, please')) - 1;
 
-const biomes = ['Alpine', 'Coast', 'Desert', 'Forest', 'Jungle', 'Volcano']
+const biomes = ['Alpine', 'Coast', 'Desert', 'Forest', 'Jungle', 'Volcano', 'Holiday']
                .map((name, index) => ({
                 id: index,
                 name: name
                }));
 biomes[0].id = 5;
 biomes[5].id = 6;
+biomes[6].id = 7;
 
 // preferences object
 

@@ -7,7 +7,7 @@ export default function Settings({ settings, onInputChange } : {
   onInputChange: (e: ChangeEvent<HTMLInputElement>) => void
 }) {
   return (
-    <p>
+    <main title="Shuffle Clock Settings">
       <input
         type="number"
         value={settings.delay}
@@ -16,6 +16,6 @@ export default function Settings({ settings, onInputChange } : {
         id="delay"
         onChange={onInputChange}
       />
-    </p>
+    </main>
   );
 }

@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+
+import PauseSvg from '../assets/pause.svg';
+import PlaySvg from '../assets/play.svg';
+import ShuffleSvg from '../assets/shuffle.svg';
 
 type Time = {
   minutes: number,
@@ -9,12 +13,12 @@ export default function Clock({ onAlert, delay } : {
   onAlert: () => void,
   delay: number
 }) {
-  const [time, setTime] = useState<Time>({
-    minutes: 0,
-    seconds: 0,
-  });
+  const [time, setTime] = useState<Time>({ minutes: 0, seconds: 0 });
+  const [paused, setPaused] = useState<boolean>(true);
+  const playButton = useRef<HTMLButtonElement | null>(null);
+  const playButtonImg = useRef<HTMLImageElement | null>(null);
 
-  function getTime() {
+  function getTime(): void {
     const date = new Date();
     setTime({
       minutes: date.getMinutes(),
@@ -22,7 +26,10 @@ export default function Clock({ onAlert, delay } : {
     });
   }
 
-  const [paused, setPaused] = useState(true);
+  function handlePauseToggle(): void {
+    setPaused(!paused);
+    getTime();
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,32 +39,52 @@ export default function Clock({ onAlert, delay } : {
   });
 
   useEffect(() => {
+    // if (!paused && time.seconds % 5 === 0) {
     if (!paused && time.seconds === 60 - delay) {
       console.log(`sending alert on ${time.minutes}:${time.seconds}`);
+
+      // the shuffle animation did have its own state but
+      // giving it state made the clock skip seconds whenever
+      // the shuffle occurred. it's cleaner - and less re-renders -
+      // to keep the shuffle animation to some dom reffing
+      playButton.current?.classList.add('alerting');
+      playButtonImg.current?.setAttribute('src', ShuffleSvg);
+      setTimeout(() => {
+        playButton.current?.classList.remove('alerting');
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        playButtonImg.current?.setAttribute('src', paused ? PlaySvg : PauseSvg);
+        // issue: ofc this whole condition runs when !paused. but how can i
+        // get this setTimeout to check the value of paused AFTER the timeout?
+        // currently, paused is always falsy because of the condition it runs in.
+      }, 2000);
+
       onAlert();
     }
   }, [time]);
 
-  const handlePauseToggle = () => {
-    setPaused(!paused);
-    getTime();
-  };
-
   return (
-    <div>
-      <p>
-        Minutes:
-        {' '}
-        {time.minutes.toString().padStart(2, '0')}
-      </p>
-      <p>
-        Seconds:
-        {' '}
-        {time.seconds.toString().padStart(2, '0')}
-      </p>
-      <button type="button" onClick={handlePauseToggle}>
-        {paused ? 'Resume' : 'Pause'}
+    <div className="clock">
+      <button
+        type="button"
+        ref={playButton}
+        className={`clock-button ${paused ? 'pausing' : 'playing'}`}
+        aria-label={paused ? 'start the clock' : 'pause the clock'}
+        onClick={handlePauseToggle}
+      >
+        <img
+          ref={playButtonImg}
+          className="clock-button-svg white"
+          src={paused ? PlaySvg : PauseSvg}
+          alt={paused ? 'the clock is paused' : 'the clock is running'}
+        />
       </button>
+
+      <span className="clock-minutes">
+        {time.minutes.toString().padStart(2, '0')}
+      </span>
+      <span className="clock-seconds">
+        {time.seconds.toString().padStart(2, '0')}
+      </span>
     </div>
   );
 }

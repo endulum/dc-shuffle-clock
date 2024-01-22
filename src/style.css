@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url(./assets/RobotoCondensed-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Roboto Bold';
+  src: url(./assets/RobotoCondensed-Bold.ttf);
+}
+
 :root {
   --extrusion: 
     rgba(0, 0, 0, 0.4) 0px 2px 4px,
@@ -114,11 +124,199 @@ body {
 }
 
 main {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
   background-color: white;
   box-shadow: var(--extrusion);
   border-radius: 5px;
   padding: 1rem;
 }
+
+.delay-label {
+  display: block;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  margin-bottom: 0.5rem;
+}
+
+.input-delay {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  width: 50px;
+}
+
+.settings-accordion {
+  /* padding-top: 0.5rem; */
+  /* margin-top: 0.5rem; */
+  /* border-top: 1px solid rgba(0, 0, 0, 0.15) */
+}
+
+.settings-accordion-button {
+  width: 30px;
+  height: 30px;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0.25rem;
+  opacity: 0.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+.settings-accordion-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  /* padding-bottom: 0.5rem; */
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.15) */
+}
+
+.settings-accordion-body {
+  margin: 0.5rem 0;
+  padding: 0.75rem;
+  background-color: #eee;
+  box-shadow: 
+    rgba(0, 0, 0, 0.25) 0 0 1px inset,
+    rgba(0, 0, 0, 0.4) 0px 2px 4px inset;
+  border-radius: 5px;
+  /* border-top: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15); */
+}
+
+.switch-label {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 5px;
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+  }
+  &:hover, &.focused {
+    background-color: #eee;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 0 1px inset
+  }
+}
+
+.switch {
+  background-color: #eee;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  border-radius: 40px;
+  transition: background-color 0.5s ease;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px inset;
+  overflow: hidden;
+  &::after {
+    position: relative;
+    content: '';
+    top: 3px;
+    left: 4px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px;
+    transition: transform 0.5s ease;
+  }
+  &.on {
+    background-color: deepskyblue;
+    &::after {
+      transform: translateX(22px);
+    }
+  }
+}
+
+.switch-state {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.switch-text {
+  margin-right: 0.5rem;
+}
+
+b {
+  font-weight: normal;
+  font-family: 'Roboto Bold', Arial, Helvetica, sans-serif;
+}
+
+/*.switch-label input[type="checkbox"]:checked ~ .switch {
+  background-color: deepskyblue;
+  &::after {
+    transform: translateX(22px);
+  }
+}
+
+ */
+
+/* .settings-top-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: #eee;
+  }
+  input {
+    visibility: hidden;
+  }
+}
+
+.switch {
+  background-color: #ccc;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+  border-radius: 40px;
+  transition: background-color 0.5s ease;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px inset;
+}
+
+.switch-knob {
+  position: relative;
+  top: 3px;
+  left: 4px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: white;
+  transition: transform 0.5s ease;
+}
+
+.settings-top-label input[type="checkbox"]:checked ~ .settings-top-label-state .switch {
+  background-color: deepskyblue;
+}
+
+.settings-top-label input[type="checkbox"]:checked ~ .settings-top-label-state .switch-knob {
+  transform: translateX(22px);
+}
+
+.settings-top-label input[type="checkbox"]:not(:checked) ~ .settings-top-label-state .switch-knob {
+  transform: translateX(0px);
+}
+ */
+
 
 img.white {
   filter: invert(100%)

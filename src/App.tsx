@@ -13,6 +13,8 @@ export default function App() {
     if (settingsData) return JSON.parse(settingsData);
     return {
       delay: 15,
+      soundEnabled: false,
+      notifsEnabled: false,
     };
   }
 
@@ -24,7 +26,12 @@ export default function App() {
   }, [settings]);
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-    setSettings({ ...settings, [e.target.id]: parseInt(e.target.value, 10) });
+    switch (e.target.type) {
+      case 'checkbox':
+        setSettings({ ...settings, [e.target.id]: e.target.checked }); break;
+      default:
+        setSettings({ ...settings, [e.target.id]: parseInt(e.target.value, 10) });
+    }
   }
 
   function handleAlert(): void {

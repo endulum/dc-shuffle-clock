@@ -1,53 +1,22 @@
-import { useEffect, useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 
 import Clock from './components/Clock';
-import Main from './components/Main';
+import DelaySetting from './components/DelaySetting';
+import SoundSettings from './components/SoundSettings';
+import NotifSettings from './components/NotifSettings';
 
-import { Settings as SettingsType, NotifSupport } from './types';
-
-function checkNotifSupport(): boolean {
-  if (!window.Notification || !Notification.requestPermission) return false;
-  if (Notification.permission === 'granted') return true;
-  try {
-    const notification = new Notification('');
-  } catch (e: unknown) {
-    if (e instanceof Error && e.name === 'TypeError') return false;
-  }
-  return true;
-}
+import {
+  Settings, settingsInitializer, NotifSupport, notifSupportInitializer,
+} from './types';
 
 export default function App() {
-  function settingsOrDefault(): SettingsType {
-    const settingsData = localStorage.getItem('settings');
-    // bandaid! remove and fix before making public!
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    if (settingsData) return JSON.parse(settingsData);
-    return {
-      delay: 15,
-      soundEnabled: false,
-      notifsEnabled: false,
-    };
-  }
-
-  const [settings, setSettings] = useState<SettingsType>(settingsOrDefault());
-  const [notifSupport, setNotifSupport] = useState<NotifSupport>('pending');
+  const [settings, setSettings] = useState<Settings>(settingsInitializer);
+  const [notifSupport, setNotifSupport] = useState<NotifSupport>(notifSupportInitializer);
 
   useEffect(() => {
-    console.log(settings);
+    console.log(settings); // for debugging
     localStorage.setItem('settings', JSON.stringify(settings));
   }, [settings]);
-
-  useEffect(() => {
-    if (!typeof Notification || !checkNotifSupport()) {
-      setNotifSupport('unsupported');
-    } else if (Notification.permission === 'denied') {
-      setNotifSupport('blocked');
-    } else if (Notification.permission === 'granted') {
-      setNotifSupport('allowed');
-    } else {
-      setNotifSupport('pending');
-    }
-  });
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     switch (e.target.type) {
@@ -65,13 +34,27 @@ export default function App() {
   return (
     <div className="app">
       <Clock onAlert={handleAlert} delay={settings.delay} />
-      <Main
-        settings={settings}
-        onInputChange={handleInputChange}
-        notifSupport={notifSupport}
-        setNotifSupport={setNotifSupport}
-      />
-      {/* <Settings settings={settings} onInputChange={handleInputChange} /> */}
+      <main aria-label="clock settings">
+        <div className="row">
+          <DelaySetting delay={settings.delay} onInputChange={handleInputChange} />
+        </div>
+
+        <SoundSettings
+          soundSettings={{
+            soundEnabled: settings.soundEnabled,
+          }}
+          onInputChange={handleInputChange}
+        />
+
+        <NotifSettings
+          notifSettings={{
+            notifsEnabled: settings.notifsEnabled,
+          }}
+          onInputChange={handleInputChange}
+          notifSupport={notifSupport}
+          setNotifSupport={setNotifSupport}
+        />
+      </main>
     </div>
   );
 }

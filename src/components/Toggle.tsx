@@ -10,7 +10,7 @@ export default function Toggle({ setting, onInputChange }: {
 }) {
   const switchLabel = useRef<HTMLLabelElement>(null);
   return (
-    <label ref={switchLabel} className="switch-label" htmlFor={setting.id}>
+    <label ref={switchLabel} className="switch-label" htmlFor={setting.id} title={`${setting.name} is ${setting.bool ? 'on' : 'off'}, click to turn ${setting.bool ? 'off' : 'on'}`}>
       <span>
         <b>
           {setting.name}
@@ -34,7 +34,7 @@ export default function Toggle({ setting, onInputChange }: {
 
       <span className="switch-label-right">
         <span className="switch-text" aria-hidden>
-          {setting.bool ? 'Enabled' : 'Disabled'}
+          {setting.bool ? 'On' : 'Off'}
         </span>
         <span className={`switch ${setting.bool && 'on'}`} />
       </span>

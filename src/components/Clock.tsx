@@ -68,7 +68,8 @@ export default function Clock({ onAlert, delay } : {
         type="button"
         ref={playButton}
         className={`clock-button ${paused ? 'pausing' : 'playing'}`}
-        aria-label={paused ? 'start the clock' : 'pause the clock'}
+        aria-label="pause or play the clock"
+        aria-pressed={!paused}
         onClick={handlePauseToggle}
       >
         <img
@@ -79,10 +80,10 @@ export default function Clock({ onAlert, delay } : {
         />
       </button>
 
-      <span className="clock-minutes">
+      <span className="clock-minutes" aria-label="minutes of current time">
         {time.minutes.toString().padStart(2, '0')}
       </span>
-      <span className="clock-seconds">
+      <span className="clock-seconds" aria-label="seconds of current time">
         {time.seconds.toString().padStart(2, '0')}
       </span>
     </div>

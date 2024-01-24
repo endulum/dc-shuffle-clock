@@ -3,3 +3,5 @@ export interface Settings {
   soundEnabled: boolean,
   notifsEnabled: boolean
 }
+
+export type NotifSupport = 'allowed' | 'pending' | 'blocked' | 'unsupported'

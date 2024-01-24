@@ -189,11 +189,6 @@ main {
     opacity: 1;
     cursor: pointer;
   }
-  &.disabled {
-    pointer-events: none;
-    cursor: not-allowed;
-    opacity: 0.25;
-  }
 }
 
 .switch-label {
@@ -201,15 +196,17 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-grow: 1;
   position: relative;
-  cursor: pointer;
+  
   padding: 0.25rem;
   border-radius: 5px;
   input[type="checkbox"] {
     position: absolute;
     opacity: 0;
   }
-  &:hover, &.focused {
+  &.focused {
+    cursor: pointer;
     background-color: #eee;
     box-shadow: rgba(0, 0, 0, 0.25) 0 0 1px inset
   }
@@ -267,7 +264,12 @@ b {
   font-family: 'Roboto Bold', Arial, Helvetica, sans-serif;
 }
 
-
 img.white {
   filter: invert(100%)
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.25;
 }

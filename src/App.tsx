@@ -1,9 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 
 import Clock from './components/Clock';
-import DelaySetting from './components/DelaySetting';
-import SoundSettings from './components/SoundSettings';
-import NotifSettings from './components/NotifSettings';
+import Expandable from './components/Expandable';
 
 import {
   Settings, settingsInitializer, NotifSupport, notifSupportInitializer,
@@ -36,24 +34,46 @@ export default function App() {
       <Clock onAlert={handleAlert} delay={settings.delay} />
       <main aria-label="clock settings">
         <div className="row">
-          <DelaySetting delay={settings.delay} onInputChange={handleInputChange} />
+          <label className="delay-label" htmlFor="delay">
+            Warn me
+            {' '}
+            <input
+              type="number"
+              value={settings.delay}
+              min="1"
+              max="60"
+              id="delay"
+              className="input-delay"
+              onChange={handleInputChange}
+            />
+            {' '}
+            seconds before each shuffle.
+          </label>
         </div>
 
-        <SoundSettings
-          soundSettings={{
-            soundEnabled: settings.soundEnabled,
+        <Expandable
+          setting={{
+            name: 'Sound',
+            id: 'soundEnabled',
+            bool: settings.soundEnabled,
           }}
           onInputChange={handleInputChange}
-        />
+        >
+          <p>settings for sound go here</p>
+        </Expandable>
 
-        <NotifSettings
-          notifSettings={{
-            notifsEnabled: settings.notifsEnabled,
+        <Expandable
+          setting={{
+            name: 'Notifications',
+            id: 'notifsEnabled',
+            bool: settings.notifsEnabled,
+            notifSupport,
           }}
           onInputChange={handleInputChange}
-          notifSupport={notifSupport}
           setNotifSupport={setNotifSupport}
-        />
+        >
+          <p>settings for notifs go here</p>
+        </Expandable>
       </main>
     </div>
   );

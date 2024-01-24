@@ -2,7 +2,7 @@ import {
   useRef, ChangeEvent, Dispatch, SetStateAction,
 } from 'react';
 
-import { NotifSupport } from '../types';
+import { NotifSupport } from '../types.ts';
 
 export default function Toggle({
   setting, onInputChange, setNotifSupport,
@@ -81,7 +81,8 @@ export default function Toggle({
             type="button"
             title="Request notification permission in order to enable notifications"
             onClick={() => {
-            // todo: improve this error catch?
+              // todo: improve this error catch?
+              // how do i simulate an error here anyway
               askNotifPermission().catch((e) => { console.error(e); });
             }}
           >

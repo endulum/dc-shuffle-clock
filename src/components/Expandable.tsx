@@ -2,9 +2,9 @@ import {
   useState, ChangeEvent, SetStateAction, Dispatch,
 } from 'react';
 
-import Toggle from './Toggle';
+import Toggle from './Toggle.tsx';
 
-import { NotifSupport } from '../types';
+import { NotifSupport } from '../types.ts';
 
 import GearSvg from '../assets/gear.svg';
 import CloseSvg from '../assets/close.svg';
@@ -49,9 +49,9 @@ export default function Expandable({
 
       </div>
       {expanded && (
-      <div className="setting-body">
+      <section className="setting-body">
         {children}
-      </div>
+      </section>
       )}
     </>
   );

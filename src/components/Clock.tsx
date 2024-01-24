@@ -41,7 +41,7 @@ export default function Clock({ onAlert, delay } : {
   useEffect(() => {
     // if (!paused && time.seconds % 5 === 0) {
     if (!paused && time.seconds === 60 - delay) {
-      console.log(`sending alert on ${time.minutes}:${time.seconds}`);
+      console.log(`sending alert on ${time.minutes}:${time.seconds}`); // for debugging
 
       // the shuffle animation did have its own state but
       // giving it state made the clock skip seconds whenever
@@ -68,7 +68,7 @@ export default function Clock({ onAlert, delay } : {
         type="button"
         ref={playButton}
         className={`clock-button ${paused ? 'pausing' : 'playing'}`}
-        aria-label="pause or play the clock"
+        title="pause or play the clock"
         aria-pressed={!paused}
         onClick={handlePauseToggle}
       >
@@ -80,10 +80,10 @@ export default function Clock({ onAlert, delay } : {
         />
       </button>
 
-      <span className="clock-minutes" aria-label="minutes of current time">
+      <span className="clock-minutes" title="minutes of current time">
         {time.minutes.toString().padStart(2, '0')}
       </span>
-      <span className="clock-seconds" aria-label="seconds of current time">
+      <span className="clock-seconds" title="seconds of current time">
         {time.seconds.toString().padStart(2, '0')}
       </span>
     </div>

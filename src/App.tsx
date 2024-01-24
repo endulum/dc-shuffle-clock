@@ -1,11 +1,11 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 
-import Clock from './components/Clock';
-import Expandable from './components/Expandable';
+import Clock from './components/Clock.tsx';
+import Expandable from './components/Expandable.tsx';
 
 import {
   Settings, settingsInitializer, NotifSupport, notifSupportInitializer,
-} from './types';
+} from './types.ts';
 
 export default function App() {
   const [settings, setSettings] = useState<Settings>(settingsInitializer);
@@ -26,7 +26,7 @@ export default function App() {
   }
 
   function handleAlert(): void {
-    console.log('alert!');
+    console.log('alert!'); // for debugging
   }
 
   return (
@@ -45,6 +45,7 @@ export default function App() {
               id="delay"
               className="input-delay"
               onChange={handleInputChange}
+              title="delay in seconds"
             />
             {' '}
             seconds before each shuffle.

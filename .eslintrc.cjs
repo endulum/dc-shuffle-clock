@@ -20,8 +20,8 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     "import/no-unresolved": "off",
-    "import/extensions": "off",
     "react/jsx-filename-extension": "off",
+    "react/require-default-props": "off",
     "react/jsx-no-bind": [
       'warn',
       { 

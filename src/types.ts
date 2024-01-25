@@ -1,7 +1,13 @@
 export interface Settings {
   delay: number,
   soundEnabled: boolean,
-  notifsEnabled: boolean
+  soundSelect: string,
+  soundVolume: number,
+  notifsEnabled: boolean,
+  biomeEnabled: boolean,
+  biomeSelect: '1' | '2' | '3' | '4' | '5' | '6' | '7',
+  biomeOpenType: 'tab' | 'window',
+  notifAutoDismiss: boolean
 }
 
 export function settingsInitializer(): Settings {
@@ -18,7 +24,13 @@ export function settingsInitializer(): Settings {
   return {
     delay: 15,
     soundEnabled: false,
+    soundSelect: 'SMS Alert 1',
+    soundVolume: 50,
     notifsEnabled: false,
+    biomeEnabled: false,
+    biomeSelect: '5',
+    biomeOpenType: 'window',
+    notifAutoDismiss: false,
   };
 }
 

@@ -23,7 +23,7 @@ export default function Expandable({
   // todo: research this issue
   setNotifSupport?: Dispatch<SetStateAction<NotifSupport>>
 }) {
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [expanded, setExpanded] = useState<boolean>(true);
   return (
     <>
       <div className="setting-header">

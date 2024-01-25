@@ -257,11 +257,30 @@ main {
     rgba(0, 0, 0, 0.25) 0 0 1px inset,
     rgba(0, 0, 0, 0.4) 0px 2px 4px inset;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+}
+
+.setting-body-label {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.setting-body-input {
+  flex-grow: 1;
 }
 
 b {
   font-weight: normal;
   font-family: 'Roboto Bold', Arial, Helvetica, sans-serif;
+}
+
+small {
+  font-size: 0.825rem;
 }
 
 img.white {

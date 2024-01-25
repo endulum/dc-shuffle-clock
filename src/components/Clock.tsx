@@ -10,7 +10,7 @@ type Time = {
 }
 
 export default function Clock({ onAlert, delay } : {
-  onAlert: () => void,
+  onAlert: (isHourly: boolean) => void,
   delay: number
 }) {
   const [time, setTime] = useState<Time>({ minutes: 0, seconds: 0 });
@@ -39,8 +39,8 @@ export default function Clock({ onAlert, delay } : {
   });
 
   useEffect(() => {
-    // if (!paused && time.seconds % 5 === 0) {
-    if (!paused && time.seconds === 60 - delay) {
+    if (!paused && time.seconds % 5 === 0) {
+    // if (!paused && time.seconds === 60 - delay) {
       console.log(`sending alert on ${time.minutes}:${time.seconds}`); // for debugging
 
       // the shuffle animation did have its own state but
@@ -58,7 +58,9 @@ export default function Clock({ onAlert, delay } : {
         // currently, paused is always falsy because of the condition it runs in.
       }, 2000);
 
-      onAlert();
+      const isHourly = time.minutes === 59;
+
+      onAlert(isHourly);
     }
   }, [time]);
 

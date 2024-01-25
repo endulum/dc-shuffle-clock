@@ -36,8 +36,26 @@ export default function App() {
     setSettings({ ...settings, [e.target.id]: e.target.value });
   } // why two entire functions? easiest way to not have the linter complain
 
-  function handleAlert(): void {
-    console.log('alert!'); // for debugging
+  function handleAlert(isHourly: boolean): void {
+    if (settings.soundEnabled) {
+      const sound = new Audio(`./audio/${settings.soundSelect}.mp3`);
+      sound.volume = settings.soundVolume / 100;
+      sound.play().catch((e) => { console.warn(e); });
+    }
+    if (settings.notifsEnabled && notifSupport === 'allowed') {
+      let notifText = '';
+      if (isHourly) { notifText = `The hourly shuffle will occur in about ${settings.delay} seconds.`; } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`;
+      const notif = new Notification('Cave Shuffle Clock', { body: notifText });
+
+      if (settings.biomeEnabled) {
+        notif.addEventListener('click', (e) => {
+          e.preventDefault();
+          const url = `https://dragcave.net/locations/${settings.biomeSelect}`;
+          if (settings.biomeOpenType === 'tab') window.open(url, '_blank');
+          if (settings.biomeOpenType === 'window') window.open(url, '', 'width=900,height=500');
+        });
+      }
+    }
   }
 
   return (

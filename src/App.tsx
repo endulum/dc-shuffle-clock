@@ -1,59 +1,59 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react'
 
-import Clock from './components/Clock.tsx';
-import Expandable from './components/Expandable.tsx';
+import Clock from './components/Clock.tsx'
+import Expandable from './components/Expandable.tsx'
 
 import {
-  Settings, settingsInitializer, NotifSupport, notifSupportInitializer,
-} from './types.ts';
+  type Settings, settingsInitializer, type NotifSupport, notifSupportInitializer
+} from './types.ts'
 
-const sounds = new Array(5).fill(0).map((_dummy, index) => `SMS Alert ${index + 1}`);
+const sounds = new Array(5).fill(0).map((_dummy, index) => `SMS Alert ${index + 1}`)
 
 const biomes = ['Coast', 'Desert', 'Forest', 'Jungle', 'Alpine', 'Volcano', 'Holiday'].map((name, index) => ({
   id: index + 1,
-  name,
-}));
+  name
+}))
 
-export default function App() {
-  const [settings, setSettings] = useState<Settings>(settingsInitializer);
-  const [notifSupport, setNotifSupport] = useState<NotifSupport>(notifSupportInitializer);
+export default function App (): JSX.Element {
+  const [settings, setSettings] = useState<Settings>(settingsInitializer)
+  const [notifSupport, setNotifSupport] = useState<NotifSupport>(notifSupportInitializer)
 
   useEffect(() => {
-    console.log(settings); // for debugging
-    localStorage.setItem('settings', JSON.stringify(settings));
-  }, [settings]);
+    console.log(settings) // for debugging
+    localStorage.setItem('settings', JSON.stringify(settings))
+  }, [settings])
 
-  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+  function handleInputChange (e: ChangeEvent<HTMLInputElement>): void {
     switch (e.target.type) {
       case 'checkbox':
-        setSettings({ ...settings, [e.target.id]: e.target.checked }); break;
+        setSettings({ ...settings, [e.target.id]: e.target.checked }); break
       default:
-        setSettings({ ...settings, [e.target.id]: parseInt(e.target.value, 10) });
+        setSettings({ ...settings, [e.target.id]: parseInt(e.target.value, 10) })
     }
   }
 
-  function handleSelectChange(e: ChangeEvent<HTMLSelectElement>) {
-    setSettings({ ...settings, [e.target.id]: e.target.value });
-  } // why two entire functions? easiest way to not have the linter complain
+  function handleSelectChange (e: ChangeEvent<HTMLSelectElement>): void {
+    setSettings({ ...settings, [e.target.id]: e.target.value })
+  }
 
-  function handleAlert(isHourly: boolean): void {
+  function handleAlert (isHourly: boolean): void {
     if (settings.soundEnabled) {
-      const sound = new Audio(`./audio/${settings.soundSelect}.mp3`);
-      sound.volume = settings.soundVolume / 100;
-      sound.play().catch((e) => { console.warn(e); });
+      const sound = new Audio(`./audio/${settings.soundSelect}.mp3`)
+      sound.volume = settings.soundVolume / 100
+      sound.play().catch((e) => { console.warn(e) })
     }
     if (settings.notifsEnabled && notifSupport === 'allowed') {
-      let notifText = '';
-      if (isHourly) { notifText = `The hourly shuffle will occur in about ${settings.delay} seconds.`; } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`;
-      const notif = new Notification('Cave Shuffle Clock', { body: notifText });
+      let notifText = ''
+      if (isHourly) { notifText = `The hourly shuffle will occur in about ${settings.delay} seconds.` } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
+      const notif = new Notification('Cave Shuffle Clock', { body: notifText })
 
       if (settings.biomeEnabled) {
         notif.addEventListener('click', (e) => {
-          e.preventDefault();
-          const url = `https://dragcave.net/locations/${settings.biomeSelect}`;
-          if (settings.biomeOpenType === 'tab') window.open(url, '_blank');
-          if (settings.biomeOpenType === 'window') window.open(url, '', 'width=900,height=500');
-        });
+          e.preventDefault()
+          const url = `https://dragcave.net/locations/${settings.biomeSelect}`
+          if (settings.biomeOpenType === 'tab') window.open(url, '_blank')
+          if (settings.biomeOpenType === 'window') window.open(url, '', 'width=900,height=500')
+        })
       }
     }
   }
@@ -85,7 +85,7 @@ export default function App() {
           setting={{
             name: 'Sound',
             id: 'soundEnabled',
-            bool: settings.soundEnabled,
+            bool: settings.soundEnabled
           }}
           onInputChange={handleInputChange}
         >
@@ -113,7 +113,7 @@ export default function App() {
             name: 'Notifications',
             id: 'notifsEnabled',
             bool: settings.notifsEnabled,
-            notifSupport,
+            notifSupport
           }}
           onInputChange={handleInputChange}
           setNotifSupport={setNotifSupport}
@@ -150,5 +150,5 @@ export default function App() {
         </Expandable>
       </main>
     </div>
-  );
+  )
 }

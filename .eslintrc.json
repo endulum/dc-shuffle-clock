@@ -15,6 +15,7 @@
         "react"
     ],
     "rules": {
+        "no-console": "warn",
         "react/react-in-jsx-scope": "off"
     }
 }

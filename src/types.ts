@@ -10,12 +10,20 @@ export interface Settings {
   notifAutoDismiss: boolean
 }
 
+function instanceOfSettings (object: any): object is Settings {
+  return (
+    'delay' in object &&
+    'soundEnabled' in object &&
+    'notifsEnabled' in object
+  ) // is there really no shorter way to check if an object fits an interface?
+}
+
 export function settingsInitializer (): Settings {
   const settingsData = localStorage.getItem('settings')
   if (settingsData !== null) {
     try {
       const settingsJSON: Settings = JSON.parse(settingsData) as Settings
-      return settingsJSON
+      if (instanceOfSettings(settingsJSON)) return settingsJSON
     } catch (e: unknown) {
       console.warn('Error occurred when accessing local storage. Using default settings instead.')
     }

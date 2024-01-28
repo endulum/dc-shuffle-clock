@@ -9,6 +9,8 @@ import {
 
 import PlaySvg from './assets/play.svg'
 
+import 'hacktimer/HackTimer.min.js'
+
 const sounds = new Array(5).fill(0).map((_dummy, index) => `SMS Alert ${index + 1}`)
 
 const biomes = ['Coast', 'Desert', 'Forest', 'Jungle', 'Alpine', 'Volcano', 'Holiday'].map((name, index) => ({

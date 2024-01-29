@@ -8,6 +8,8 @@ import {
 } from './types.ts'
 
 import PlaySvg from './assets/play.svg'
+import GithubSvg from './assets/github.svg'
+import SpeechSvg from './assets/speech.svg'
 
 import 'hacktimer/HackTimer.min.js'
 
@@ -23,7 +25,7 @@ export default function App (): JSX.Element {
   const [notifSupport, setNotifSupport] = useState<NotifSupport>(notifSupportInitializer)
 
   useEffect(() => {
-    console.log(settings) // for debugging
+    // console.log(settings)
     localStorage.setItem('settings', JSON.stringify(settings))
   }, [settings])
 
@@ -92,7 +94,7 @@ export default function App (): JSX.Element {
       <main aria-label="clock settings">
         <div className="setting">
           <button type="button" onClick={playSound} className='setting-test-button' title='Test Sound'>
-            <img src={PlaySvg} />
+            <img src={PlaySvg} alt="play sound" />
           </button>
           <Toggle
             setting={{
@@ -122,8 +124,8 @@ export default function App (): JSX.Element {
         </div>
 
         <div className="setting">
-          <button type="button" onClick={() => { doNotify(false) }} className='setting-test-button'>
-            <img src={PlaySvg} />
+          <button type="button" onClick={() => { doNotify(false) }} className='setting-test-button' disabled={notifSupport !== 'allowed'} title={notifSupport !== 'allowed' ? 'Enable notifications to test' : ''}>
+            <img src={PlaySvg} alt="play notification" />
           </button>
           <Toggle
             setting={{
@@ -135,8 +137,11 @@ export default function App (): JSX.Element {
             onInputChange={handleInputChange}
             setNotifSupport={setNotifSupport}
           />
-          <div className="setting-body">
-            <input type="checkbox" id="biomeEnabled" onChange={handleInputChange} checked={settings.biomeEnabled} />
+          <div
+            className={`setting-body ${notifSupport !== 'allowed' && 'disabled'}`}
+            title={notifSupport !== 'allowed' ? 'Enable notifications to adjust settings' : ''}
+          >
+            <input type="checkbox" id="biomeEnabled" onChange={handleInputChange} checked={settings.biomeEnabled} disabled={notifSupport !== 'allowed'} />
 
             <label htmlFor="biomeEnabled">
               Jump to biome when clicked
@@ -145,7 +150,7 @@ export default function App (): JSX.Element {
                 <small>
                   Take me to
                   {' '}
-                  <select aria-label="biome select" id="biomeSelect" onChange={handleSelectChange} defaultValue={settings.biomeSelect}>
+                  <select aria-label="biome select" id="biomeSelect" onChange={handleSelectChange} defaultValue={settings.biomeSelect} disabled={notifSupport !== 'allowed'}>
                     {biomes.map((biome) => (
                       <option key={biome.id} value={biome.id}>
                         {biome.name}
@@ -155,7 +160,7 @@ export default function App (): JSX.Element {
                   {' '}
                   in a
                   {' '}
-                  <select id="biomeOpenType" onChange={handleSelectChange} defaultValue={settings.biomeOpenType}>
+                  <select aria-label='biome open type' id="biomeOpenType" onChange={handleSelectChange} defaultValue={settings.biomeOpenType} disabled={notifSupport !== 'allowed'}>
                     <option value="tab">new tab</option>
                     <option value="window">new window</option>
                   </select>
@@ -163,13 +168,29 @@ export default function App (): JSX.Element {
               </>}
             </label>
 
-            <input type="checkbox" id="notifAutoDismiss" onChange={handleInputChange} checked={settings.notifAutoDismiss} />
+            <input type="checkbox" id="notifAutoDismiss" onChange={handleInputChange} checked={settings.notifAutoDismiss} disabled={notifSupport !== 'allowed'} />
             <label htmlFor="notifAutoDismiss">
               Automatically dismiss notification when shuffle occurs
             </label>
           </div>
         </div>
       </main>
+
+      <footer>
+        <p>
+          <b>Cave Shuffle Clock</b> &copy; endulum
+          <br />
+          <small><i>Simple alarm tool for use with Dragon Cave.</i></small>
+        </p>
+        <div className="footer-icons">
+          <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10" title="Forum Thread">
+            <img src={SpeechSvg} alt="thread" className='footer-icon' role='img' aria-hidden />
+          </a>
+          <a href="https://github.com/endulum/dc-shuffle-clock" title="Repository">
+            <img src={GithubSvg} alt="repository" className='footer-icon' role='img' aria-hidden />
+          </a>
+        </div>
+      </footer>
     </div>
   )
 }

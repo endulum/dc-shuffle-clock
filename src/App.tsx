@@ -69,7 +69,8 @@ export default function App (): JSX.Element {
   return (
     <div className="app">
       <Clock onAlert={handleAlert} delay={settings.delay} />
-      <main aria-label="clock settings">
+
+      <div className="delay">
         <label className="delay-label" htmlFor="delay">
           Warn me
           {' '}
@@ -86,6 +87,9 @@ export default function App (): JSX.Element {
           {' '}
           seconds before each shuffle.
         </label>
+      </div>
+
+      <main aria-label="clock settings">
         <div className="setting">
           <button type="button" onClick={playSound} className='setting-test-button' title='Test Sound'>
             <img src={PlaySvg} />
@@ -98,7 +102,7 @@ export default function App (): JSX.Element {
             }}
             onInputChange={handleInputChange}
           />
-          <div className="setting-body">
+          <div className="setting-body align-center">
             <label className="setting-body-label" htmlFor="soundSelect">
               Select Sound
             </label>
@@ -111,7 +115,7 @@ export default function App (): JSX.Element {
             </select>
 
             <label className="setting-body-label" htmlFor="soundVolume">
-              Sound Volume
+              Volume
             </label>
             <input className="setting-body-input" type="range" id="soundVolume" onChange={handleInputChange} defaultValue={settings.soundVolume} />
           </div>
@@ -136,25 +140,27 @@ export default function App (): JSX.Element {
 
             <label htmlFor="biomeEnabled">
               Jump to biome when clicked
-              <br />
-              <small>
-                Take me to
-                {' '}
-                <select aria-label="biome select" id="biomeSelect" onChange={handleSelectChange} defaultValue={settings.biomeSelect}>
-                  {biomes.map((biome) => (
-                    <option key={biome.id} value={biome.id}>
-                      {biome.name}
-                    </option>
-                  ))}
-                </select>
-                {' '}
-                in a
-                {' '}
-                <select id="biomeOpenType" onChange={handleSelectChange} defaultValue={settings.biomeOpenType}>
-                  <option value="tab">new tab</option>
-                  <option value="window">new window</option>
-                </select>
-              </small>
+              {settings.biomeEnabled && <>
+                <br />
+                <small>
+                  Take me to
+                  {' '}
+                  <select aria-label="biome select" id="biomeSelect" onChange={handleSelectChange} defaultValue={settings.biomeSelect}>
+                    {biomes.map((biome) => (
+                      <option key={biome.id} value={biome.id}>
+                        {biome.name}
+                      </option>
+                    ))}
+                  </select>
+                  {' '}
+                  in a
+                  {' '}
+                  <select id="biomeOpenType" onChange={handleSelectChange} defaultValue={settings.biomeOpenType}>
+                    <option value="tab">new tab</option>
+                    <option value="window">new window</option>
+                  </select>
+                </small>
+              </>}
             </label>
 
             <input type="checkbox" id="notifAutoDismiss" onChange={handleInputChange} checked={settings.notifAutoDismiss} />

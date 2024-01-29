@@ -39,8 +39,7 @@ export default function Clock ({ onAlert, delay }: {
   })
 
   useEffect(() => {
-    if (!paused && time.seconds % 5 === 0) {
-    // if (!paused && time.seconds === 60 - delay) {
+    if (!paused && (time.minutes + 1) % 5 === 0 && time.seconds === 60 - delay) {
       console.log(`sending alert on ${time.minutes}:${time.seconds}`) // for debugging
 
       // the shuffle animation did have its own state but

@@ -93,7 +93,7 @@ export default function App (): JSX.Element {
 
       <main aria-label="clock settings">
         <div className="setting">
-          <button type="button" onClick={playSound} className='setting-test-button' title='Test Sound'>
+          <button type="button" onClick={playSound} className="setting-test-button" title="Test Sound">
             <img src={PlaySvg} alt="play sound" />
           </button>
           <Toggle
@@ -124,7 +124,7 @@ export default function App (): JSX.Element {
         </div>
 
         <div className="setting">
-          <button type="button" onClick={() => { doNotify(false) }} className='setting-test-button' disabled={notifSupport !== 'allowed'} title={notifSupport !== 'allowed' ? 'Enable notifications to test' : ''}>
+          <button type="button" onClick={() => { doNotify(false) }} className="setting-test-button" disabled={notifSupport !== 'allowed'} title={notifSupport !== 'allowed' ? 'Enable notifications to test' : ''}>
             <img src={PlaySvg} alt="play notification" />
           </button>
           <Toggle
@@ -145,7 +145,8 @@ export default function App (): JSX.Element {
 
             <label htmlFor="biomeEnabled">
               Jump to biome when clicked
-              {settings.biomeEnabled && <>
+              {settings.biomeEnabled && (
+              <>
                 <br />
                 <small>
                   Take me to
@@ -160,12 +161,13 @@ export default function App (): JSX.Element {
                   {' '}
                   in a
                   {' '}
-                  <select aria-label='biome open type' id="biomeOpenType" onChange={handleSelectChange} defaultValue={settings.biomeOpenType} disabled={notifSupport !== 'allowed'}>
+                  <select aria-label="biome open type" id="biomeOpenType" onChange={handleSelectChange} defaultValue={settings.biomeOpenType} disabled={notifSupport !== 'allowed'}>
                     <option value="tab">new tab</option>
                     <option value="window">new window</option>
                   </select>
                 </small>
-              </>}
+              </>
+              )}
             </label>
 
             <input type="checkbox" id="notifAutoDismiss" onChange={handleInputChange} checked={settings.notifAutoDismiss} disabled={notifSupport !== 'allowed'} />
@@ -178,16 +180,18 @@ export default function App (): JSX.Element {
 
       <footer>
         <p>
-          <b>Cave Shuffle Clock</b> &copy; endulum
+          <b>Cave Shuffle Clock</b>
+          {' '}
+          &copy; endulum
           <br />
           <small><i>Simple alarm tool for use with Dragon Cave.</i></small>
         </p>
         <div className="footer-icons">
           <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10" title="Forum Thread">
-            <img src={SpeechSvg} alt="thread" className='footer-icon' role='img' aria-hidden />
+            <img src={SpeechSvg} alt="thread" className="footer-icon" role="img" aria-hidden />
           </a>
           <a href="https://github.com/endulum/dc-shuffle-clock" title="Repository">
-            <img src={GithubSvg} alt="repository" className='footer-icon' role='img' aria-hidden />
+            <img src={GithubSvg} alt="repository" className="footer-icon" role="img" aria-hidden />
           </a>
         </div>
       </footer>

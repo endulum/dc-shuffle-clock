@@ -25,9 +25,9 @@ export default function useClockSettings (): {
     deserializer
   })
 
-  useEffect(() => {
-    console.log(clockSettings)
-  }, [clockSettings])
+  // useEffect(() => {
+  //   console.log(clockSettings)
+  // }, [clockSettings])
 
   return { clockSettings, setClockSettings }
 }

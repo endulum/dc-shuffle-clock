@@ -1,6 +1,10 @@
 import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
 import { type IClockSettings } from '../types.ts'
 
+import ToggleLabel from './ToggleLabel.tsx'
+
+import PlaySvg from '../assets/play.svg?react'
+
 export default function SettingsFields ({ clockSettings, setClockSettings }: {
   clockSettings: IClockSettings
   setClockSettings: Dispatch<SetStateAction<IClockSettings>>
@@ -25,22 +29,55 @@ export default function SettingsFields ({ clockSettings, setClockSettings }: {
   }
 
   return (
-    <main>
-      <input
+    <main aria-label="clock settings">
+      {/* <input
         type="number"
         id="delay"
         onChange={handleInputChange}
         defaultValue={clockSettings.delay}
-      />
+      /> */}
 
-      <input
-        type="checkbox"
-        id="soundEnabled"
-        onChange={handleInputChange}
-        defaultChecked={clockSettings.soundEnabled}
-      />
+      <div className="setting">
+        <button
+          type="button"
+          className="setting-test-button"
+          title="Test Sound"
+          aria-label="test sound"
+        >
+          <PlaySvg />
+        </button>
 
-      <select
+        <ToggleLabel
+          setting={{
+            id: 'soundEnabled',
+            name: 'Sound',
+            checked: clockSettings.soundEnabled
+          }}
+          onInputChange={handleInputChange}
+        />
+      </div>
+
+      <div className="setting">
+        <button
+          type="button"
+          className="setting-test-button"
+          title="Test Notification"
+          aria-label="test notification"
+        >
+          <PlaySvg />
+        </button>
+
+        <ToggleLabel
+          setting={{
+            id: 'notifsEnabled',
+            name: 'Notifications',
+            checked: clockSettings.notifsEnabled
+          }}
+          onInputChange={handleInputChange}
+        />
+      </div>
+
+      {/* <select
         id="soundSelect"
         onChange={handleSelectChange}
         defaultValue={clockSettings.soundSelect}
@@ -60,13 +97,6 @@ export default function SettingsFields ({ clockSettings, setClockSettings }: {
         id="soundVolume"
         onChange={handleInputChange}
         defaultValue={clockSettings.soundVolume}
-      />
-
-      <input
-        type="checkbox"
-        id="notifsEnabled"
-        onChange={handleInputChange}
-        defaultChecked={clockSettings.notifsEnabled}
       />
 
       <input
@@ -97,7 +127,7 @@ export default function SettingsFields ({ clockSettings, setClockSettings }: {
       >
         <option value="tab">new tab</option>
         <option value="window">new window</option>
-      </select>
+      </select> */}
     </main>
   )
 }

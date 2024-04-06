@@ -1,49 +1,33 @@
-import { type Dispatch, type SetStateAction, useState, useEffect } from 'react'
-
+import { type Dispatch, type SetStateAction, useEffect } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
+import transformSettings from '../helpers/transformSettings.ts'
+import defaultSettings from '../helpers/defaultSettings.ts'
 import { type IClockSettings } from '../types.ts'
 
-const defaultSettings: IClockSettings = {
-  delay: 15,
-  soundEnabled: false,
-  soundSelect: 'SMS Alert 1',
-  soundVolume: 50,
-  notifsEnabled: false,
-  biomeEnabled: false,
-  biomeSelect: '5',
-  biomeOpenType: 'window',
-  notifAutoDismiss: false
+function deserializer (string: string): IClockSettings {
+  try {
+    const settingsJSON = JSON.parse(string)
+    return transformSettings(settingsJSON)
+  } catch (e: unknown) {
+    // eslint-disable-next-line no-console
+    console.warn('Error occurred when accessing stored settings. Using default settings...')
+    return defaultSettings
+  }
 }
 
 export default function useClockSettings (): {
-  clockSettings: IClockSettings | null
-  setClockSettings: Dispatch<SetStateAction<IClockSettings | null>>
+  clockSettings: IClockSettings
+  setClockSettings: Dispatch<SetStateAction<IClockSettings>>
 } {
-  const [clockSettings, setClockSettings] = useState<IClockSettings | null>(null)
-
-  function getStoredSettings (): void {
-    const settingsData = localStorage.getItem('settings')
-    if (settingsData !== null) {
-      try {
-        const settingsJSON = JSON.parse(settingsData)
-        setClockSettings(settingsJSON as IClockSettings)
-      } catch (e: unknown) {
-        // eslint-disable-next-line no-console
-        console.warn('Error occurred when accessing stored settings. Using default settings...')
-      }
-    } else {
-      // eslint-disable-next-line no-console
-      console.warn('No stored settings found. Using default settings...')
-      setClockSettings(defaultSettings)
-    }
-  }
+  const [clockSettings, setClockSettings] =
+  useLocalStorage<IClockSettings>('settings', defaultSettings, {
+    initializeWithValue: true,
+    deserializer
+  })
 
   useEffect(() => {
-    localStorage.setItem('settings', JSON.stringify(clockSettings))
+    console.log(clockSettings)
   }, [clockSettings])
-
-  useEffect(() => {
-    getStoredSettings()
-  }, [])
 
   return { clockSettings, setClockSettings }
 }

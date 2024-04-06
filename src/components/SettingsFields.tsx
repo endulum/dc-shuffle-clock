@@ -4,11 +4,16 @@ import { type IClockSettings } from '../types.ts'
 import ToggleLabel from './ToggleLabel.tsx'
 
 import PlaySvg from '../assets/play.svg?react'
+import NotifToggleLabel from './NotifToggleLabel.tsx'
 
-export default function SettingsFields ({ clockSettings, setClockSettings }: {
-  clockSettings: IClockSettings
-  setClockSettings: Dispatch<SetStateAction<IClockSettings>>
-}): JSX.Element {
+export default function SettingsFields (
+  { clockSettings, setClockSettings, notifSupport, setNotifSupport }: {
+    clockSettings: IClockSettings
+    setClockSettings: Dispatch<SetStateAction<IClockSettings>>
+    notifSupport: string
+    setNotifSupport: Dispatch<SetStateAction<string>>
+  }
+): JSX.Element {
   function handleInputChange (e: ChangeEvent<HTMLInputElement>): void {
     switch (e.target.type) {
       case 'checkbox':
@@ -37,6 +42,7 @@ export default function SettingsFields ({ clockSettings, setClockSettings }: {
         defaultValue={clockSettings.delay}
       /> */}
 
+      {/* settings group for Sound */}
       <div className="setting">
         <button
           type="button"
@@ -57,6 +63,7 @@ export default function SettingsFields ({ clockSettings, setClockSettings }: {
         />
       </div>
 
+      {/* settings group for Notifications */}
       <div className="setting">
         <button
           type="button"
@@ -67,7 +74,9 @@ export default function SettingsFields ({ clockSettings, setClockSettings }: {
           <PlaySvg />
         </button>
 
-        <ToggleLabel
+        <NotifToggleLabel
+          notifSupport={notifSupport}
+          setNotifSupport={setNotifSupport}
           setting={{
             id: 'notifsEnabled',
             name: 'Notifications',

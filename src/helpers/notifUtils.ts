@@ -1,10 +1,12 @@
 function checkNotifSupport (): boolean {
+  // 1. does this device support service workers?
+  if ('serviceWorker' in navigator) return true
+  // 2. if not, does this device support the Notification object?
   if (!('Notification' in window)) return false
-  if (Notification.permission === 'granted') return true
+  // 3. and if so, can this device actually invoke a Notification object?
   try {
-    // eslint-disable-next-line no-new
-    new Notification('')
-    // this is intended to be "thrown out" anyway
+    const notif = new Notification('')
+    notif.close()
   } catch (e: unknown) {
     if (e instanceof Error && e.name === 'TypeError') return false
   }
@@ -12,7 +14,7 @@ function checkNotifSupport (): boolean {
 }
 
 export default function notifSupportInitializer (): string {
-  if (!('Notification' in window) || !checkNotifSupport()) return 'unsupported'
+  if (!checkNotifSupport()) return 'unsupported'
   if (Notification.permission === 'denied') return 'blocked'
   if (Notification.permission === 'granted') return 'allowed'
   return 'pending'

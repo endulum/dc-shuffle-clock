@@ -1,5 +1,7 @@
 import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
 import { type IClockSettings } from '../types.ts'
+import doNotify from '../helpers/doNotify.ts'
+import playSound from '../helpers/playSound.ts'
 
 import ToggleLabel from './ToggleLabel.tsx'
 
@@ -49,6 +51,9 @@ export default function SettingsFields (
           className="setting-test-button"
           title="Test Sound"
           aria-label="test sound"
+          onClick={() => {
+            playSound(clockSettings.soundSelect, clockSettings.soundVolume)
+          }}
         >
           <PlaySvg />
         </button>
@@ -70,6 +75,7 @@ export default function SettingsFields (
           className="setting-test-button"
           title="Test Notification"
           aria-label="test notification"
+          onClick={() => { doNotify(null) }}
         >
           <PlaySvg />
         </button>

@@ -8,6 +8,22 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js', { scope: '/' })
+          .then((registration) => { console.log('sw registered') })
+          .catch((e) => {
+            console.warn(e)
+            // alert(e)
+          })
+        navigator.serviceWorker.ready
+          .then((registration) => { console.log('sw ready') })
+          .catch((e) => {
+            console.warn(e)
+            // alert(e)
+          })
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

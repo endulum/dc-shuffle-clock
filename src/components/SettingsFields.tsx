@@ -6,6 +6,7 @@ import playSound from '../helpers/playSound.ts'
 import ToggleLabel from './ToggleLabel.tsx'
 import NotifToggleLabel from './NotifToggleLabel.tsx'
 import SoundSettings from './SoundSettings.tsx'
+import NotifSettings from './NotifSettings.tsx'
 
 import PlaySvg from '../assets/play.svg?react'
 
@@ -107,39 +108,13 @@ export default function SettingsFields (
           }}
           onInputChange={handleInputChange}
         />
+
+        <NotifSettings
+          clockSettings={clockSettings}
+          handleInputChange={handleInputChange}
+          handleSelectChange={handleSelectChange}
+        />
       </div>
-
-      {/*
-
-      <input
-        type="checkbox"
-        id="biomeEnabled"
-        onChange={handleInputChange}
-        defaultChecked={clockSettings.biomeEnabled}
-      />
-
-      <select
-        id="biomeSelect"
-        onChange={handleSelectChange}
-        defaultValue={clockSettings.biomeSelect}
-      >
-        {['Coast', 'Desert', 'Forest', 'Jungle', 'Alpine', 'Volcano', 'Holiday']
-          .map((name, index) => ({ id: index + 1, name }))
-          .map((biome) => (
-            <option key={biome.name} value={biome.id.toString()}>
-              {biome.name}
-            </option>
-          ))}
-      </select>
-
-      <select
-        id="biomeOpenType"
-        onChange={handleSelectChange}
-        defaultValue={clockSettings.biomeOpenType}
-      >
-        <option value="tab">new tab</option>
-        <option value="window">new window</option>
-      </select> */}
     </main>
   )
 }

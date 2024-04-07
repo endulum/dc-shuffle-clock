@@ -1,5 +1,6 @@
 import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
 import { type IClockSettings } from '../types.ts'
+import SoundUrlField from './SoundUrlField.tsx'
 
 export default function SoundSettings (
   { clockSettings, setClockSettings, handleInputChange, handleSelectChange }: {
@@ -74,34 +75,10 @@ export default function SoundSettings (
         </label>
 
         <div className={clockSettings.soundCustomChoice ? '' : 'disabled'}>
-          <label htmlFor="soundCustomPath" className="row">
-            <small>File Path</small>
-            {/* <button
-              type="button"
-              onClick={() => { void getFile() }}
-            >
-              Choose...
-            </button> */}
-            {/* <input
-              type="file"
-              id="soundCustomPath"
-              accept=".mp3,.ogg,.wav"
-              onInput={(event) => {
-                setClockSettings(
-                  { ...clockSettings, soundCustomPath: event.target.value }
-                )
-              }}
-            /> */}
-            <input
-              type="text"
-              id="soundCustomPath"
-              onChange={handleInputChange}
-              defaultValue={clockSettings.soundCustomPath}
-            />
-            <audio id="customSound" src={clockSettings.soundCustomPath}>
-              <track kind="captions" />
-            </audio>
-          </label>
+          <SoundUrlField
+            handleInputChange={handleInputChange}
+            clockSettings={clockSettings}
+          />
         </div>
       </div>
 

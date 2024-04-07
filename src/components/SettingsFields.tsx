@@ -23,13 +23,13 @@ export default function SettingsFields (
         setClockSettings(
           { ...clockSettings, [event.target.id]: event.target.checked }
         ); break
-      case 'text': setClockSettings(
-        { ...clockSettings, [event.target.id]: event.target.value }
-      ); break
-      default:
+      case 'range':
         setClockSettings(
           { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
-        )
+        ); break
+      default: setClockSettings(
+        { ...clockSettings, [event.target.id]: event.target.value }
+      )
     }
   }
 

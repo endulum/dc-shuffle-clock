@@ -6,15 +6,11 @@ export default function playSound (
 ): void {
   let sound: HTMLAudioElement | null
   if (isCustom && customPath !== null) {
-    sound = document.getElementById('customSound') as HTMLAudioElement
-    if (sound === null) return
-    // sound = new Audio()
-    // sound.src = customPath
-    // sound.load()
+    const audio = (document.getElementById('customSound') as HTMLAudioElement)
+    sound = new Audio(audio.src)
   } else {
     sound = new Audio(`./audio/${defaultSelection}.mp3`)
   }
-  sound.crossOrigin = 'anonymous'
   sound.volume = soundVolume / 100
   // eslint-disable-next-line no-console
   sound.play().catch((e) => { console.warn(e) })

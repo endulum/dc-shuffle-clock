@@ -29,11 +29,11 @@ export default function SettingsFields (
     }
   }
 
-  function handleSelectChange (e: ChangeEvent<HTMLSelectElement>): void {
-    setClockSettings(
-      { ...clockSettings, [e.target.id]: e.target.value }
-    )
-  }
+  // function handleSelectChange (e: ChangeEvent<HTMLSelectElement>): void {
+  //   setClockSettings(
+  //     { ...clockSettings, [e.target.id]: e.target.value }
+  //   )
+  // }
 
   return (
     <main aria-label="clock settings">

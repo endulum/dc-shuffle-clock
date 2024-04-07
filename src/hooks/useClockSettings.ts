@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useEffect } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import transformSettings from '../helpers/transformSettings.ts'
 import defaultSettings from '../helpers/defaultSettings.ts'

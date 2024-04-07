@@ -1,6 +1,8 @@
 import { useState, type ChangeEvent } from 'react'
 import { type IClockSettings } from '../types.ts'
 
+import WarningSvg from '../assets/warning.svg?react'
+
 export default function SoundUrlField (
   { handleInputChange, clockSettings }: {
     handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -27,7 +29,12 @@ export default function SoundUrlField (
           <track kind="captions" />
         </audio>
       </label>
-      {!isUrlValid && <small><i>Please input a valid, playable HTTPS URL.</i></small>}
+      {(!isUrlValid && clockSettings.soundCustomChoice) && (
+      <small>
+        <WarningSvg className="small-svg" />
+        <i>Please input a valid, playable HTTPS URL.</i>
+      </small>
+      )}
     </>
   )
 }

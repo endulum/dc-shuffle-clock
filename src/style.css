@@ -181,6 +181,14 @@ main {
   }
 }
 
+.small-svg {
+  width: 1rem;
+  display: inline;
+  vertical-align: text-top;
+  margin-right: 0.25rem;
+  fill: #444;
+}
+
 input[type="radio"], input[type="checkbox"] {
   flex-grow: 0;
 }

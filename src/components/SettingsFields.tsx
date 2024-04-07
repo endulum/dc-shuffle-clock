@@ -76,6 +76,7 @@ export default function SettingsFields (
           title="Test Notification"
           aria-label="test notification"
           onClick={() => { doNotify(null) }}
+          disabled={notifSupport !== 'allowed'}
         >
           <PlaySvg />
         </button>

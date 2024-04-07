@@ -173,6 +173,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 0.825rem;
+  color: #444;
 }
 
 .input-delay {
@@ -209,6 +210,12 @@ button {
 .setting-test-button {
   max-height: 35px;
   grid-column: 1 / 2;
+  svg {
+    fill: #444;
+  }
+  &:hover svg {
+    fill: #222;
+  }
 }
 
 .switch-label {

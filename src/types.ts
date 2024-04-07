@@ -1,7 +1,12 @@
 export interface IClockSettings {
   delay: number
   soundEnabled: boolean
-  soundSelect: string
+  soundCustomChoice: boolean
+  soundDefaultSelect: string
+  soundCustomPath: string
+  // soundSelectType: string
+  // soundDefaultChoice: string
+  // soundCustomPath: string
   soundVolume: number
   notifsEnabled: boolean
   biomeEnabled: boolean

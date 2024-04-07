@@ -4,9 +4,10 @@ import doNotify from '../helpers/doNotify.ts'
 import playSound from '../helpers/playSound.ts'
 
 import ToggleLabel from './ToggleLabel.tsx'
+import NotifToggleLabel from './NotifToggleLabel.tsx'
+import SoundSettings from './SoundSettings.tsx'
 
 import PlaySvg from '../assets/play.svg?react'
-import NotifToggleLabel from './NotifToggleLabel.tsx'
 
 export default function SettingsFields (
   { clockSettings, setClockSettings, notifSupport, setNotifSupport }: {
@@ -16,24 +17,27 @@ export default function SettingsFields (
     setNotifSupport: Dispatch<SetStateAction<string>>
   }
 ): JSX.Element {
-  function handleInputChange (e: ChangeEvent<HTMLInputElement>): void {
-    switch (e.target.type) {
+  function handleInputChange (event: ChangeEvent<HTMLInputElement>): void {
+    switch (event.target.type) {
       case 'checkbox':
         setClockSettings(
-          { ...clockSettings, [e.target.id]: e.target.checked }
+          { ...clockSettings, [event.target.id]: event.target.checked }
         ); break
+      case 'text': setClockSettings(
+        { ...clockSettings, [event.target.id]: event.target.value }
+      ); break
       default:
         setClockSettings(
-          { ...clockSettings, [e.target.id]: parseInt(e.target.value, 10) }
+          { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
         )
     }
   }
 
-  // function handleSelectChange (e: ChangeEvent<HTMLSelectElement>): void {
-  //   setClockSettings(
-  //     { ...clockSettings, [e.target.id]: e.target.value }
-  //   )
-  // }
+  function handleSelectChange (event: ChangeEvent<HTMLSelectElement>): void {
+    setClockSettings(
+      { ...clockSettings, [event.target.id]: event.target.value }
+    )
+  }
 
   return (
     <main aria-label="clock settings">
@@ -52,7 +56,12 @@ export default function SettingsFields (
           title="Test Sound"
           aria-label="test sound"
           onClick={() => {
-            playSound(clockSettings.soundSelect, clockSettings.soundVolume)
+            playSound(
+              clockSettings.soundCustomChoice,
+              clockSettings.soundCustomPath,
+              clockSettings.soundDefaultSelect,
+              clockSettings.soundVolume
+            )
           }}
         >
           <PlaySvg />
@@ -65,6 +74,13 @@ export default function SettingsFields (
             checked: clockSettings.soundEnabled
           }}
           onInputChange={handleInputChange}
+        />
+
+        <SoundSettings
+          clockSettings={clockSettings}
+          setClockSettings={setClockSettings}
+          handleInputChange={handleInputChange}
+          handleSelectChange={handleSelectChange}
         />
       </div>
 
@@ -93,27 +109,7 @@ export default function SettingsFields (
         />
       </div>
 
-      {/* <select
-        id="soundSelect"
-        onChange={handleSelectChange}
-        defaultValue={clockSettings.soundSelect}
-      >
-        {new Array(5)
-          .fill(0)
-          .map((_dummy, index) => `SMS Alert ${index + 1}`)
-          .map((sound) => (
-            <option key={sound} value={sound}>
-              {sound}
-            </option>
-          ))}
-      </select>
-
-      <input
-        type="range"
-        id="soundVolume"
-        onChange={handleInputChange}
-        defaultValue={clockSettings.soundVolume}
-      />
+      {/*
 
       <input
         type="checkbox"

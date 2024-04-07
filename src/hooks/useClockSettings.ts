@@ -1,4 +1,5 @@
 import { type Dispatch, type SetStateAction } from 'react'
+import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import transformSettings from '../helpers/transformSettings.ts'
 import defaultSettings from '../helpers/defaultSettings.ts'
@@ -25,9 +26,9 @@ export default function useClockSettings (): {
     deserializer
   })
 
-  // useEffect(() => {
-  //   console.log(clockSettings)
-  // }, [clockSettings])
+  useEffect(() => {
+    console.log(clockSettings)
+  }, [clockSettings])
 
   return { clockSettings, setClockSettings }
 }

@@ -176,6 +176,15 @@ main {
   color: #444;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+
 .input-delay {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -282,9 +291,8 @@ button {
   margin-left: 0.5rem;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  align-items: start;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
   input[type="checkbox"] {
     margin-right: 0.5rem;
@@ -300,6 +308,12 @@ button {
 .setting-body-label {
   display: flex;
   gap: 0.5rem;
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 footer {
@@ -340,6 +354,7 @@ img.white {
 
 .disabled {
   opacity: 0.25;
+  pointer-events: none;
 }
 
 @media screen and (min-width: 420px) {

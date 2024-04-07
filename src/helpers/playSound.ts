@@ -4,11 +4,13 @@ export default function playSound (
   defaultSelection: string | null,
   soundVolume: number
 ): void {
-  let sound
+  let sound: HTMLAudioElement | null
   if (isCustom && customPath !== null) {
-    sound = new Audio()
-    sound.src = customPath
-    sound.load()
+    sound = document.getElementById('customSound') as HTMLAudioElement
+    if (sound === null) return
+    // sound = new Audio()
+    // sound.src = customPath
+    // sound.load()
   } else {
     sound = new Audio(`./audio/${defaultSelection}.mp3`)
   }

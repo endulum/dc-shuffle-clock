@@ -98,6 +98,9 @@ export default function SoundSettings (
               onChange={handleInputChange}
               defaultValue={clockSettings.soundCustomPath}
             />
+            <audio id="customSound" src={clockSettings.soundCustomPath}>
+              <track kind="captions" />
+            </audio>
           </label>
         </div>
       </div>

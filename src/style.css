@@ -370,6 +370,7 @@ img.white {
   .clock-button {
     width: 80px;
     height: 80px;
+    padding: 0.75rem;
   }
 }
 

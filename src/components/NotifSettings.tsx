@@ -1,8 +1,5 @@
 import { type ChangeEvent } from 'react'
 import { type IClockSettings } from '../types.ts'
-import {
-  checkNotificationSupport, checkServiceWorkerSupport
-} from '../helpers/notifUtils.ts'
 
 export default function NotifSettings (
   { clockSettings, handleInputChange, handleSelectChange }: {
@@ -47,10 +44,6 @@ export default function NotifSettings (
               id="biomeOpenType"
               onChange={handleSelectChange}
               defaultValue={clockSettings.biomeOpenType}
-              disabled={
-                !checkNotificationSupport() &&
-                checkServiceWorkerSupport()
-              }
             >
               <option value="tab">new tab</option>
               <option value="window">new window</option>

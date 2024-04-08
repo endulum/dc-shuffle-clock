@@ -1,7 +1,7 @@
 import { type IClockSettings } from '../types.ts'
 
 const defaultSettings: IClockSettings = {
-  delay: 15,
+  delay: 5,
   soundEnabled: false,
   soundCustomChoice: false,
   soundDefaultSelect: 'SMS Alert 1',

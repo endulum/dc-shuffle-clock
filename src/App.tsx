@@ -2,15 +2,35 @@ import { useState } from 'react'
 import useClockSettings from './hooks/useClockSettings.ts'
 import { notifSupportInitializer } from './helpers/notifUtils.ts'
 import SettingsFields from './components/SettingsFields.tsx'
+import Clock from './components/Clock.tsx'
+import playSound from './helpers/playSound.ts'
+import doNotify from './helpers/doNotify.ts'
 
 export default function App (): JSX.Element {
   const { clockSettings, setClockSettings } = useClockSettings()
   const [notifSupport, setNotifSupport] = useState<string>(notifSupportInitializer)
 
+  function handleAlert (isHourly: boolean): void {
+    if (clockSettings.soundEnabled) {
+      playSound(
+        clockSettings.soundCustomChoice,
+        clockSettings.soundCustomPath,
+        clockSettings.soundDefaultSelect,
+        clockSettings.soundVolume
+      )
+    }
+    if (clockSettings.notifsEnabled) {
+      doNotify(clockSettings, isHourly)
+    }
+  }
+
   return (
     <div className="app">
 
-      {/* <Clock /> */}
+      <Clock
+        // delay={clockSettings.delay}
+        onAlert={handleAlert}
+      />
       {/* <DelayField /> */}
       <SettingsFields
         clockSettings={clockSettings}

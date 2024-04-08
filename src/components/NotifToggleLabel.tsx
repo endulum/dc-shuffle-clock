@@ -17,7 +17,7 @@ export default function NotifToggleLabel (
       const permission = await Notification.requestPermission()
       if (permission === 'granted') {
         if (checkNotificationSupport()) setNotifSupport('allowed (notif)')
-        if (checkServiceWorkerSupport()) setNotifSupport('allowed (sw)')
+        else if (checkServiceWorkerSupport()) setNotifSupport('allowed (sw)')
       }
       if (permission === 'denied') setNotifSupport('blocked')
     }

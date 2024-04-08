@@ -1,14 +1,9 @@
 export function checkNotificationSupport (): boolean {
   if (!('Notification' in window)) return false
-  // if (Notification.permission === 'granted') return true
-  // if i let this line exist
-  // then users with notif perms already granted for this domain
-  // but with incompatible devices
-  // will have this as a false positive
+  if (Notification.permission === 'granted') return true
   try {
     const notif = new Notification('')
-    setTimeout(() => { notif.close() }, 0)
-    // if i dont do this it wont close...?
+    notif.close()
   } catch (e: unknown) {
     if (e instanceof Error && e.name === 'TypeError') return false
   }

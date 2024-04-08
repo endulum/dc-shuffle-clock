@@ -1,5 +1,8 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 import ToggleLabel from './ToggleLabel.tsx'
+import {
+  checkNotificationSupport, checkServiceWorkerSupport
+} from '../helpers/notifUtils.ts'
 
 export default function NotifToggleLabel (
   { notifSupport, setNotifSupport, setting, onInputChange }: {
@@ -12,12 +15,15 @@ export default function NotifToggleLabel (
   async function askNotifPermission (): Promise<void> {
     if (setNotifSupport !== undefined) {
       const permission = await Notification.requestPermission()
-      if (permission === 'granted') setNotifSupport('allowed')
+      if (permission === 'granted') {
+        if (checkNotificationSupport()) setNotifSupport('allowed (notif)')
+        if (checkServiceWorkerSupport()) setNotifSupport('allowed (sw)')
+      }
       if (permission === 'denied') setNotifSupport('blocked')
     }
   }
 
-  return notifSupport === 'allowed'
+  return notifSupport.startsWith('allowed')
     ? (
       <ToggleLabel
         setting={{

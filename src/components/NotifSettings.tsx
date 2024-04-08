@@ -2,10 +2,11 @@ import { type ChangeEvent } from 'react'
 import { type IClockSettings } from '../types.ts'
 
 export default function NotifSettings (
-  { clockSettings, handleInputChange, handleSelectChange }: {
+  { clockSettings, handleInputChange, handleSelectChange, notifSupport }: {
     clockSettings: IClockSettings
     handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
     handleSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void
+    notifSupport: string
   }
 ): JSX.Element {
   return (
@@ -44,6 +45,7 @@ export default function NotifSettings (
               id="biomeOpenType"
               onChange={handleSelectChange}
               defaultValue={clockSettings.biomeOpenType}
+              disabled={notifSupport === 'allowed (sw)'}
             >
               <option value="tab">new tab</option>
               <option value="window">new window</option>

@@ -1,9 +1,6 @@
-function checkNotifSupport (): boolean {
-  // 1. does this device support service workers?
-  if ('serviceWorker' in navigator) return true
-  // 2. if not, does this device support the Notification object?
+export function checkNotificationSupport (): boolean {
   if (!('Notification' in window)) return false
-  // 3. and if so, can this device actually invoke a Notification object?
+  if (Notification.permission === 'granted') return true
   try {
     const notif = new Notification('')
     notif.close()
@@ -13,9 +10,18 @@ function checkNotifSupport (): boolean {
   return true
 }
 
-export default function notifSupportInitializer (): string {
-  if (!checkNotifSupport()) return 'unsupported'
+export function checkServiceWorkerSupport (): boolean {
+  return 'serviceWorker' in navigator
+}
+
+export function notifSupportInitializer (): string {
+  const notifSupport = checkNotificationSupport()
+  const swSupport = checkServiceWorkerSupport()
+  if (!notifSupport && !swSupport) return 'unsupported'
   if (Notification.permission === 'denied') return 'blocked'
-  if (Notification.permission === 'granted') return 'allowed'
+  if (Notification.permission === 'granted') {
+    if (notifSupport) return 'allowed (notif)'
+    if (swSupport) return 'allowed (sw)'
+  }
   return 'pending'
 }

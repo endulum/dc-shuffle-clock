@@ -92,7 +92,7 @@ export default function SettingsFields (
           className="setting-test-button"
           title="Test Notification"
           aria-label="test notification"
-          onClick={() => { doNotify(notifSupport, clockSettings, false) }}
+          onClick={() => { doNotify(clockSettings, false) }}
           disabled={!notifSupport.startsWith('allowed')}
         >
           <PlaySvg />
@@ -113,7 +113,6 @@ export default function SettingsFields (
           clockSettings={clockSettings}
           handleInputChange={handleInputChange}
           handleSelectChange={handleSelectChange}
-          notifSupport={notifSupport}
         />
       </div>
     </main>

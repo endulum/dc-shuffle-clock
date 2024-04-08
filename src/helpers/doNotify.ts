@@ -1,19 +1,12 @@
 import { type IClockSettings } from '../types.ts'
 
 export default function doNotify (
-  notifSupport: string,
   settings: IClockSettings,
   isHourly: boolean
 ): void {
-  if (notifSupport.endsWith('(notif)')) {
-    try {
-      notifyWithNotif(settings, isHourly)
-    } catch {
-      notifyWithSw(settings, isHourly)
-    }
-  }
-
-  if (notifSupport.endsWith('(sw)')) {
+  try {
+    notifyWithNotif(settings, isHourly)
+  } catch {
     notifyWithSw(settings, isHourly)
   }
 }
@@ -23,8 +16,14 @@ function notifyWithNotif (
   isHourly: boolean
 ): void {
   let notifText = ''
-  if (isHourly) { notifText = `The hourly shuffle will occur in about ${settings.delay} seconds.` } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
-  const notif = new Notification('Cave Shuffle Clock', { body: notifText })
+  if (isHourly) {
+    notifText = `The hourly cave restock will occur in about ${settings.delay} seconds.`
+  } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
+
+  const notif = new Notification(
+    isHourly ? 'Incoming Cave Restock' : 'Incoming Cave Shuffle',
+    { body: notifText }
+  )
 
   if (settings.biomeEnabled) {
     notif.addEventListener('click', (e) => {
@@ -34,6 +33,8 @@ function notifyWithNotif (
       if (settings.biomeOpenType === 'window') window.open(url, '', 'width=900,height=500')
     })
   }
+
+  setTimeout(() => { notif.close() }, settings.delay * 1000)
 }
 
 function notifyWithSw (

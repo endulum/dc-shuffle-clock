@@ -19,9 +19,6 @@ export function notifSupportInitializer (): string {
   const swSupport = checkServiceWorkerSupport()
   if (!notifSupport && !swSupport) return 'unsupported'
   if (Notification.permission === 'denied') return 'blocked'
-  if (Notification.permission === 'granted') {
-    if (notifSupport) return 'allowed (notif)'
-    if (swSupport) return 'allowed (sw)'
-  }
+  if (Notification.permission === 'granted') return 'allowed'
   return 'pending'
 }

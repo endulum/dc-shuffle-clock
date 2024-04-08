@@ -7,19 +7,18 @@ export default function doNotify (
 ): void {
   if (notifSupport.endsWith('(notif)')) {
     try {
-      notifyWithNotif(notifSupport, settings, isHourly)
+      notifyWithNotif(settings, isHourly)
     } catch {
-      notifyWithSw(notifSupport, settings, isHourly)
+      notifyWithSw(settings, isHourly)
     }
   }
 
   if (notifSupport.endsWith('(sw)')) {
-    notifyWithSw(notifSupport, settings, isHourly)
+    notifyWithSw(settings, isHourly)
   }
 }
 
 function notifyWithNotif (
-  notifSupport: string,
   settings: IClockSettings,
   isHourly: boolean
 ): void {
@@ -38,7 +37,6 @@ function notifyWithNotif (
 }
 
 function notifyWithSw (
-  notifSupport: string,
   settings: IClockSettings,
   isHourly: boolean
 ): void {

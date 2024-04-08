@@ -1,5 +1,6 @@
 export function checkNotificationSupport (): boolean {
   if (!('Notification' in window)) return false
+  // if (Notification.permission === 'granted') return true
   try {
     const notif = new Notification('')
     notif.close()

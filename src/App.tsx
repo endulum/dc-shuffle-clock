@@ -5,6 +5,7 @@ import SettingsFields from './components/SettingsFields.tsx'
 import Clock from './components/Clock.tsx'
 import playSound from './helpers/playSound.ts'
 import doNotify from './helpers/doNotify.ts'
+import 'hacktimer/HackTimer.min'
 
 export default function App (): JSX.Element {
   const { clockSettings, setClockSettings } = useClockSettings()
@@ -12,12 +13,7 @@ export default function App (): JSX.Element {
 
   function handleAlert (isHourly: boolean): void {
     if (clockSettings.soundEnabled) {
-      playSound(
-        clockSettings.soundCustomChoice,
-        clockSettings.soundCustomPath,
-        clockSettings.soundDefaultSelect,
-        clockSettings.soundVolume
-      )
+      playSound(clockSettings)
     }
     if (clockSettings.notifsEnabled) {
       doNotify(clockSettings, isHourly)
@@ -28,7 +24,7 @@ export default function App (): JSX.Element {
     <div className="app">
 
       <Clock
-        // delay={clockSettings.delay}
+        delay={clockSettings.delay}
         onAlert={handleAlert}
       />
       {/* <DelayField /> */}

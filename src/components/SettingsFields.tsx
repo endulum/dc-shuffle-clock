@@ -57,12 +57,7 @@ export default function SettingsFields (
           title="Test Sound"
           aria-label="test sound"
           onClick={() => {
-            playSound(
-              clockSettings.soundCustomChoice,
-              clockSettings.soundCustomPath,
-              clockSettings.soundDefaultSelect,
-              clockSettings.soundVolume
-            )
+            playSound(clockSettings)
           }}
         >
           <PlaySvg />

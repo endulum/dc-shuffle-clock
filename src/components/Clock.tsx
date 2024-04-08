@@ -9,9 +9,9 @@ interface Time {
   seconds: number
 }
 
-export default function Clock ({ onAlert }: {
+export default function Clock ({ onAlert, delay }: {
   onAlert: (isHourly: boolean) => void
-  // delay: number
+  delay: number
 }): JSX.Element {
   const [time, setTime] = useState<Time>({ minutes: 0, seconds: 0 })
   const [paused, setPaused] = useState<boolean>(true)
@@ -41,9 +41,8 @@ export default function Clock ({ onAlert }: {
   useEffect(() => {
     if (
       !paused &&
-      // (time.minutes + 1) % 5 === 0 &&
-      // time.seconds === 60 - delay
-      time.seconds % 5 === 0
+      (time.minutes + 1) % 5 === 0 &&
+      time.seconds === 60 - delay
     ) {
       // the shuffle animation did have its own state but
       // giving it state made the clock skip seconds whenever
@@ -53,11 +52,7 @@ export default function Clock ({ onAlert }: {
       playButtonImg.current?.setAttribute('src', ShuffleSvg)
       setTimeout(() => {
         playButton.current?.classList.remove('alerting')
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         playButtonImg.current?.setAttribute('src', paused ? PlaySvg : PauseSvg)
-        // issue: ofc this whole condition runs when !paused. but how can i
-        // get this setTimeout to check the value of paused AFTER the timeout?
-        // currently, paused is always falsy because of the condition it runs in.
       }, 2000)
 
       const isHourly = time.minutes === 59

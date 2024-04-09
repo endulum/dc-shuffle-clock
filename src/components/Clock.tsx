@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useDocumentTitle } from 'usehooks-ts'
 import useClockTime from '../hooks/useClockTime.ts'
 
 import PauseSvg from '../assets/pause.svg'
@@ -12,6 +13,12 @@ export default function Clock ({ onAlert, delay }: {
   const { time, isPaused, togglePause } = useClockTime()
   const playButton = useRef<HTMLButtonElement | null>(null)
   const playButtonImg = useRef<HTMLImageElement | null>(null)
+
+  useDocumentTitle(
+    isPaused
+      ? 'Cave Shuffle Clock'
+      : `${4 - (time.minutes % 5)}:${(60 - (time.seconds)).toString().padStart(2, '0')} until next shuffle`
+  )
 
   function animateShuffle (): void {
     playButton.current?.classList.add('alerting')

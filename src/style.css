@@ -219,7 +219,6 @@ main {
 .delay {
   color: white;
   text-shadow: var(--text-shadow-1);
-  margin-bottom: 1rem;
 }
 
 .input-delay {

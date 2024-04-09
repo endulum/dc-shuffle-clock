@@ -22,8 +22,7 @@ export default function App (): JSX.Element {
   }
 
   return (
-    <div className="app">
-
+    <>
       <Clock
         delay={clockSettings.delay}
         onAlert={handleAlert}
@@ -39,6 +38,6 @@ export default function App (): JSX.Element {
         setNotifSupport={setNotifSupport}
       />
       {/* <Footer /> */}
-    </div>
+    </>
   )
 }

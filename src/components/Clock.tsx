@@ -45,7 +45,7 @@ export default function Clock ({ onAlert, delay }: {
       >
         <img
           ref={playButtonImg}
-          className="clock-button-svg white"
+          className="button-svg white-svg"
           src={isPaused ? PlaySvg : PauseSvg}
           alt={isPaused ? 'the clock is paused' : 'the clock is running'}
         />

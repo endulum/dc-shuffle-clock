@@ -4,6 +4,7 @@ import { notifSupportInitializer } from './helpers/notifUtils.ts'
 import SettingsFields from './components/SettingsFields.tsx'
 import Clock from './components/Clock.tsx'
 import DelayField from './components/DelayField.tsx'
+import Footer from './components/Footer.tsx'
 import playSound from './helpers/playSound.ts'
 import doNotify from './helpers/doNotify.ts'
 import 'hacktimer/HackTimer.min'
@@ -37,7 +38,7 @@ export default function App (): JSX.Element {
         notifSupport={notifSupport}
         setNotifSupport={setNotifSupport}
       />
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }

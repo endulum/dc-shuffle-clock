@@ -9,6 +9,5 @@ export default function playSound (settings: IClockSettings): void {
     sound = new Audio(`./audio/${settings.soundDefaultSelect}.mp3`)
   }
   sound.volume = settings.soundVolume / 100
-  // eslint-disable-next-line no-console
   sound.play().catch((e) => { console.warn(e) })
 }

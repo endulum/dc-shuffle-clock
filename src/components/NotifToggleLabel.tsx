@@ -58,7 +58,6 @@ export default function NotifToggleLabel (
               title="Request notification permission in order to enable notifications"
               onClick={() => {
                 askNotifPermission().catch((e) => {
-                  // eslint-disable-next-line no-console
                   console.error(e)
                   setNotifSupport('unsupported')
                 })

@@ -86,11 +86,6 @@ input, select {
   }
 }
 
-[disabled] {
-  pointer-events: none;
-  opacity: 0.5;
-}
-
 b {
   font-weight: normal;
   font-family: 'Roboto Bold', Arial, Helvetica, sans-serif;
@@ -143,6 +138,11 @@ main {
 
 .white-svg {
   filter: invert(100%)
+}
+
+.disabled, [disabled]{
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 /* clock component */

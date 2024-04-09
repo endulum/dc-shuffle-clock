@@ -4,22 +4,22 @@ export default function doNotify (
   settings: IClockSettings,
   isHourly: boolean
 ): void {
+  let notifText = ''
+  if (isHourly) {
+    notifText = `The hourly cave restock will occur in about ${settings.delay} seconds.`
+  } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
   try {
-    notifyWithNotif(settings, isHourly)
+    notifyWithNotif(settings, isHourly, notifText)
   } catch {
-    notifyWithSw(settings, isHourly)
+    notifyWithSw(settings, isHourly, notifText)
   }
 }
 
 function notifyWithNotif (
   settings: IClockSettings,
-  isHourly: boolean
+  isHourly: boolean,
+  notifText: string
 ): void {
-  let notifText = ''
-  if (isHourly) {
-    notifText = `The hourly cave restock will occur in about ${settings.delay} seconds.`
-  } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
-
   const notif = new Notification(
     isHourly ? 'Incoming Cave Restock' : 'Incoming Cave Shuffle',
     { body: notifText }
@@ -39,15 +39,14 @@ function notifyWithNotif (
 
 function notifyWithSw (
   settings: IClockSettings,
-  isHourly: boolean
+  isHourly: boolean,
+  notifText: string
 ): void {
   navigator.serviceWorker.ready.then(async (serviceWorker) => {
     await serviceWorker.showNotification(
       isHourly ? 'Incoming Cave Restock' : 'Incoming Cave Shuffle',
       {
-        body: isHourly
-          ? `The hourly cave restock will occur in about ${settings.delay} seconds.`
-          : `The next cave shuffle will occur in ${settings.delay} seconds.`,
+        body: notifText,
         data: {
           canJump: settings.biomeEnabled,
           url: `https://dragcave.net/locations/${settings.biomeSelect}`
@@ -59,7 +58,6 @@ function notifyWithSw (
       setTimeout(() => { notif.close() }, settings.delay * 1000)
     }
   }).catch((e) => {
-  // eslint-disable-next-line no-console
     console.warn(e)
   // alert(e)
   })

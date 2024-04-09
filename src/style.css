@@ -151,14 +151,6 @@ input, select {
   }
 }
 
-.delay {
-  color: white;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  text-shadow: var(--text-shadow-1);
-  text-align: center;
-}
-
 main {
   position: relative;
   background-color: white;
@@ -191,6 +183,12 @@ main {
 
 input[type="radio"], input[type="checkbox"] {
   flex-grow: 0;
+}
+
+.delay {
+  color: white;
+  text-shadow: var(--text-shadow-1);
+  margin-bottom: 1rem;
 }
 
 .input-delay {

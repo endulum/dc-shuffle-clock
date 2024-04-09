@@ -3,6 +3,7 @@ import useClockSettings from './hooks/useClockSettings.ts'
 import { notifSupportInitializer } from './helpers/notifUtils.ts'
 import SettingsFields from './components/SettingsFields.tsx'
 import Clock from './components/Clock.tsx'
+import DelayField from './components/DelayField.tsx'
 import playSound from './helpers/playSound.ts'
 import doNotify from './helpers/doNotify.ts'
 import 'hacktimer/HackTimer.min'
@@ -27,7 +28,10 @@ export default function App (): JSX.Element {
         delay={clockSettings.delay}
         onAlert={handleAlert}
       />
-      {/* <DelayField /> */}
+      <DelayField
+        clockSettings={clockSettings}
+        setClockSettings={setClockSettings}
+      />
       <SettingsFields
         clockSettings={clockSettings}
         setClockSettings={setClockSettings}

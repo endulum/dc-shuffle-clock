@@ -20,9 +20,9 @@ describe('transforming unknown data into usable clock settings', () => {
     )
 
     expect(transformSettings(
-      { soundSelect: 'SMS Alert 0' }
+      { soundDefaultSelect: 'SMS Alert 0' }
     )).toEqual(
-      { ...defaultSettings, soundSelect: 'SMS Alert 0' }
+      { ...defaultSettings, soundDefaultSelect: 'SMS Alert 0' }
     )
 
     expect(transformSettings(
@@ -34,7 +34,9 @@ describe('transforming unknown data into usable clock settings', () => {
     const allChangedSettings = {
       delay: 20,
       soundEnabled: true,
-      soundSelect: 'Nonexistent Track',
+      soundCustomChoice: true,
+      soundDefaultSelect: 'SMS Alert 0',
+      soundCustomPath: 'https://something.com/something.mp3',
       soundVolume: 100,
       notifsEnabled: true,
       biomeEnabled: true,

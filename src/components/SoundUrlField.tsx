@@ -25,6 +25,7 @@ export default function SoundUrlField (
           src={clockSettings.soundCustomPath}
           onError={() => { setIsUrlValid(false) }}
           onCanPlay={() => { setIsUrlValid(true) }}
+          aria-hidden
         >
           <track kind="captions" />
         </audio>

@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import useClockSettings from './hooks/useClockSettings.ts'
 import { notifSupportInitializer } from './helpers/notifUtils.ts'
+
+import 'hacktimer/HackTimer.min'
+
 import SettingsFields from './components/SettingsFields.tsx'
 import Clock from './components/Clock.tsx'
 import DelayField from './components/DelayField.tsx'
 import Footer from './components/Footer.tsx'
+
 import playSound from './helpers/playSound.ts'
 import doNotify from './helpers/doNotify.ts'
-import 'hacktimer/HackTimer.min'
 
 export default function App (): JSX.Element {
   const { clockSettings, setClockSettings } = useClockSettings()

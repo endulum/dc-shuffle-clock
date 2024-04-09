@@ -42,14 +42,6 @@ export default function SettingsFields (
 
   return (
     <main aria-label="clock settings">
-      {/* <input
-        type="number"
-        id="delay"
-        onChange={handleInputChange}
-        defaultValue={clockSettings.delay}
-      /> */}
-
-      {/* settings group for Sound */}
       <div className="setting">
         <button
           type="button"
@@ -80,7 +72,6 @@ export default function SettingsFields (
         />
       </div>
 
-      {/* settings group for Notifications */}
       <div className="setting">
         <button
           type="button"

@@ -1,62 +1,35 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import useClockTime from '../hooks/useClockTime.ts'
 
 import PauseSvg from '../assets/pause.svg'
 import PlaySvg from '../assets/play.svg'
 import ShuffleSvg from '../assets/shuffle.svg'
 
-interface Time {
-  minutes: number
-  seconds: number
-}
-
 export default function Clock ({ onAlert, delay }: {
   onAlert: (isHourly: boolean) => void
   delay: number
 }): JSX.Element {
-  const [time, setTime] = useState<Time>({ minutes: 0, seconds: 0 })
-  const [paused, setPaused] = useState<boolean>(true)
+  const { time, isPaused, togglePause } = useClockTime()
   const playButton = useRef<HTMLButtonElement | null>(null)
   const playButtonImg = useRef<HTMLImageElement | null>(null)
 
-  function getTime (): void {
-    const date = new Date()
-    setTime({
-      minutes: date.getMinutes(),
-      seconds: date.getSeconds()
-    })
+  function animateShuffle (): void {
+    playButton.current?.classList.add('alerting')
+    playButtonImg.current?.setAttribute('src', ShuffleSvg)
+    setTimeout(() => {
+      playButton.current?.classList.remove('alerting')
+      playButtonImg.current?.setAttribute('src', isPaused ? PlaySvg : PauseSvg)
+    }, 2000)
   }
-
-  function handlePauseToggle (): void {
-    setPaused(!paused)
-    getTime()
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!paused) getTime()
-    }, 1000)
-    return () => { clearInterval(interval) }
-  })
 
   useEffect(() => {
     if (
-      !paused &&
+      !isPaused &&
       (time.minutes + 1) % 5 === 0 &&
       time.seconds === 60 - delay
     ) {
-      // the shuffle animation did have its own state but
-      // giving it state made the clock skip seconds whenever
-      // the shuffle occurred. it's cleaner - and less re-renders -
-      // to keep the shuffle animation to some dom reffing
-      playButton.current?.classList.add('alerting')
-      playButtonImg.current?.setAttribute('src', ShuffleSvg)
-      setTimeout(() => {
-        playButton.current?.classList.remove('alerting')
-        playButtonImg.current?.setAttribute('src', paused ? PlaySvg : PauseSvg)
-      }, 2000)
-
-      const isHourly = time.minutes === 59
-      onAlert(isHourly)
+      animateShuffle()
+      onAlert(time.minutes === 59)
     }
   }, [time])
 
@@ -65,16 +38,16 @@ export default function Clock ({ onAlert, delay }: {
       <button
         type="button"
         ref={playButton}
-        className={`clock-button ${paused ? 'pausing' : 'playing'}`}
+        className={`clock-button ${isPaused ? 'pausing' : 'playing'}`}
         title="pause or play the clock"
-        aria-pressed={!paused}
-        onClick={handlePauseToggle}
+        aria-pressed={!isPaused}
+        onClick={togglePause}
       >
         <img
           ref={playButtonImg}
           className="clock-button-svg white"
-          src={paused ? PlaySvg : PauseSvg}
-          alt={paused ? 'the clock is paused' : 'the clock is running'}
+          src={isPaused ? PlaySvg : PauseSvg}
+          alt={isPaused ? 'the clock is paused' : 'the clock is running'}
         />
       </button>
 

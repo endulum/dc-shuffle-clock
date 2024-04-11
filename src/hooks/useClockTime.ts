@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react'
-
-interface Time {
-  minutes: number
-  seconds: number
-}
+import { type Time } from '../types.ts'
 
 export default function useClockTime (): {
   time: Time

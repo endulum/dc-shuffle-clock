@@ -1,13 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { useDocumentTitle } from 'usehooks-ts'
 import useClockTime from '../hooks/useClockTime.ts'
+import { type Time } from '../types.ts'
 
 import PauseSvg from '../assets/pause.svg'
 import PlaySvg from '../assets/play.svg'
 import ShuffleSvg from '../assets/shuffle.svg'
 
 export default function Clock ({ onAlert, delay }: {
-  onAlert: (isHourly: boolean) => void
+  onAlert: (time: Time) => void
   delay: number
 }): JSX.Element {
   const { time, isPaused, togglePause } = useClockTime()
@@ -34,9 +35,10 @@ export default function Clock ({ onAlert, delay }: {
       !isPaused &&
       (time.minutes + 1) % 5 === 0 &&
       time.seconds === 60 - delay
+      // time.seconds % 10 === 0
     ) {
       animateShuffle()
-      onAlert(time.minutes === 59)
+      onAlert({ minutes: time.minutes, seconds: time.seconds })
     }
   }, [time])
 

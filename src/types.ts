@@ -11,3 +11,8 @@ export interface IClockSettings {
   biomeOpenType: 'tab' | 'window'
   notifAutoDismiss: boolean
 }
+
+export interface Time {
+  minutes: number
+  seconds: number
+}

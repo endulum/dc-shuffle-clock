@@ -4,7 +4,7 @@ export default function addToSessionLog (logString: string): void {
   sessionStorage.setItem('logs', JSON.stringify(log))
 }
 
-function getSessionLog (): string[] {
+export function getSessionLog (): string[] {
   const sessionString = sessionStorage.getItem('logs')
   if (sessionString === null) initSessionLog()
   else {
@@ -19,6 +19,6 @@ function getSessionLog (): string[] {
   return []
 }
 
-function initSessionLog (): void {
+export function initSessionLog (): void {
   sessionStorage.setItem('logs', JSON.stringify([]))
 }

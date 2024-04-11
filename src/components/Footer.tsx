@@ -1,3 +1,5 @@
+import AlertLogModal from './AlertLogModal.tsx'
+
 import SpeechSvg from '../assets/speech.svg'
 import GithubSvg from '../assets/github.svg'
 
@@ -28,6 +30,7 @@ export default function Footer (): JSX.Element {
             aria-hidden
           />
         </a>
+        <AlertLogModal />
       </div>
     </footer>
   )

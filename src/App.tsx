@@ -26,7 +26,7 @@ export default function App (): JSX.Element {
       doNotify(clockSettings, time.minutes === 59)
     }
 
-    addToSessionLog(`Alarm went off at ${
+    addToSessionLog(`Alarm went off at :${
       time.minutes.toString().padStart(2, '0')
     }:${
       time.seconds.toString().padStart(2, '0')

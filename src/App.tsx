@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import useClockSettings from './hooks/useClockSettings.ts'
 import { notifSupportInitializer } from './helpers/notifUtils.ts'
-import addToSessionLog from './helpers/addToSessionLog.ts'
-import { type Time } from './types.ts'
 
 import 'hacktimer/HackTimer.min'
 
@@ -18,19 +16,13 @@ export default function App (): JSX.Element {
   const { clockSettings, setClockSettings } = useClockSettings()
   const [notifSupport, setNotifSupport] = useState<string>(notifSupportInitializer)
 
-  function handleAlert (time: Time): void {
+  function handleAlert (isHourly: boolean): void {
     if (clockSettings.soundEnabled) {
       playSound(clockSettings)
     }
     if (clockSettings.notifsEnabled) {
-      doNotify(clockSettings, time.minutes === 59)
+      doNotify(clockSettings, isHourly)
     }
-
-    addToSessionLog(`Alarm went off at :${
-      time.minutes.toString().padStart(2, '0')
-    }:${
-      time.seconds.toString().padStart(2, '0')
-    }`)
   }
 
   return (

@@ -12,7 +12,12 @@ export interface IClockSettings {
   notifAutoDismiss: boolean
 }
 
-export interface Time {
+export interface ITime {
   minutes: number
   seconds: number
+}
+
+export interface ILogEvent {
+  timestamp: ITime
+  message: string
 }

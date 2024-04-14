@@ -1,3 +1,4 @@
+import { addToSessionLog } from './addToSessionLog.ts'
 import { type IClockSettings } from '../types.ts'
 
 export default function playSound (settings: IClockSettings): void {
@@ -9,5 +10,11 @@ export default function playSound (settings: IClockSettings): void {
     sound = new Audio(`./audio/${settings.soundDefaultSelect}.mp3`)
   }
   sound.volume = settings.soundVolume / 100
-  sound.play().catch((e) => { console.warn(e) })
+  sound.play().catch((err) => {
+    const time = {
+      minutes: (new Date()).getMinutes(),
+      seconds: (new Date()).getSeconds()
+    }
+    addToSessionLog(time, err)
+  })
 }

@@ -406,12 +406,17 @@ footer {
 
 .alertlog-msg {
   padding: 0.5rem;
-  font-family: monospace;
   &:nth-child(2n) {
     background-color: #dedede;
   }
   &:nth-child(2n + 1) {
     background-color: #ededed;
+  }
+  span, b {
+    font-family: monospace;
+  }
+  b {
+    font-weight: bold;
   }
 }
 

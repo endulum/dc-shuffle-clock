@@ -1,3 +1,5 @@
+import { checkNotificationSupport, checkServiceWorkerSupport } from './notifUtils.ts'
+import { addToSessionLog } from './addToSessionLog.ts'
 import { type IClockSettings } from '../types.ts'
 
 export default function doNotify (
@@ -8,11 +10,21 @@ export default function doNotify (
   if (isHourly) {
     notifText = `The hourly cave restock will occur in about ${settings.delay} seconds.`
   } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
-  try {
-    notifyWithNotif(settings, isHourly, notifText)
-  } catch {
-    notifyWithSw(settings, isHourly, notifText)
-  }
+
+  if (checkNotificationSupport()) {
+    try { notifyWithNotif(settings, isHourly, notifText) } catch (err) {
+      const time = {
+        minutes: (new Date()).getMinutes(),
+        seconds: (new Date()).getSeconds()
+      }
+      addToSessionLog(time, err)
+    }
+  } else if (checkServiceWorkerSupport()) notifyWithSw(settings, isHourly, notifText)
+  // try {
+  //   notifyWithNotif(settings, isHourly, notifText)
+  // } catch {
+  //   notifyWithSw(settings, isHourly, notifText)
+  // }
 }
 
 function notifyWithNotif (
@@ -57,8 +69,12 @@ function notifyWithSw (
     if (settings.notifAutoDismiss) {
       setTimeout(() => { notif.close() }, settings.delay * 1000)
     }
-  }).catch((e) => {
-    console.warn(e)
+  }).catch((err) => {
+    const time = {
+      minutes: (new Date()).getMinutes(),
+      seconds: (new Date()).getSeconds()
+    }
+    addToSessionLog(time, err)
   // alert(e)
   })
 }

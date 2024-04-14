@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useDocumentTitle } from 'usehooks-ts'
 import useClockTime from '../hooks/useClockTime.ts'
-import addToSessionLog from '../helpers/addToSessionLog.ts'
+import { addToSessionLog } from '../helpers/addToSessionLog.ts'
 import keepWorkerAwake from '../helpers/keepWorkerAwake.ts'
 
 import PauseSvg from '../assets/pause.svg'
@@ -34,21 +34,13 @@ export default function Clock ({ onAlert, delay }: {
   useEffect(() => {
     if (!isPaused) {
       if ((time.minutes + 1) % 5 === 0 && time.seconds === 60 - delay) {
+        addToSessionLog(time, 'Alarm should go off')
         animateShuffle()
         onAlert(time.minutes === 59)
-        addToSessionLog(`Alarm went off at :${
-          time.minutes.toString().padStart(2, '0')
-        }:${
-          time.seconds.toString().padStart(2, '0')
-        }`)
       }
-      if (time.seconds % 15 === 0) {
+      if (time.seconds % 30 === 0) {
+        addToSessionLog(time, 'Keeping SW awake')
         keepWorkerAwake()
-        addToSessionLog(`Sent event to SW at :${
-          time.minutes.toString().padStart(2, '0')
-        }:${
-          time.seconds.toString().padStart(2, '0')
-        }`)
       }
     }
   }, [time])

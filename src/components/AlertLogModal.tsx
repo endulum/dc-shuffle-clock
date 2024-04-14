@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import CustomModal from './CustomModal.tsx'
 import { getSessionLog, initSessionLog } from '../helpers/addToSessionLog.ts'
+import { type ILogEvent } from '../types.ts'
 import LogSvg from '../assets/file-pen-solid.svg'
 
 export default function AlertLogModal (): JSX.Element {
@@ -32,7 +33,7 @@ export default function AlertLogModal (): JSX.Element {
 }
 
 function AlertLog (): JSX.Element {
-  const [logs, setLogs] = useState<string[] | null>(null)
+  const [logs, setLogs] = useState<ILogEvent[] | null>(null)
 
   function getLogs (): void {
     setLogs(getSessionLog())
@@ -46,7 +47,17 @@ function AlertLog (): JSX.Element {
     : (
       <>
         <div className="alertlog">
-          {logs.map((log) => <p className="alertlog-msg" key={log}>{log}</p>)}
+          {logs.map((log, index) => (
+            <p className="alertlog-msg" key={log.message.concat(index.toString())}>
+              <b>
+                {log.timestamp.minutes.toString().padStart(2, '0')}
+                :
+                {log.timestamp.seconds.toString().padStart(2, '0')}
+              </b>
+              {' '}
+              <span>{log.message}</span>
+            </p>
+          ))}
         </div>
         <button
           type="button"

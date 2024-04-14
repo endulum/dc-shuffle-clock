@@ -1,9 +1,9 @@
 export function checkNotificationSupport (): boolean {
   if (!('Notification' in window)) return false
-  if (Notification.permission === 'granted') return true
+  // if (Notification.permission === 'granted') return true
   try {
     const notif = new Notification('')
-    notif.close()
+    setTimeout(() => { notif.close() }, 0)
   } catch (e: unknown) {
     if (e instanceof Error && e.name === 'TypeError') return false
   }

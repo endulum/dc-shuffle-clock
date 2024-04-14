@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { type Time } from '../types.ts'
+import { type ITime } from '../types.ts'
 
 export default function useClockTime (): {
-  time: Time
+  time: ITime
   isPaused: boolean
   togglePause: () => void
 } {
-  const [time, setTime] = useState<Time>({ minutes: 0, seconds: 0 })
+  const [time, setTime] = useState<ITime>({ minutes: 0, seconds: 0 })
   const [isPaused, setIsPaused] = useState<boolean>(true)
 
   function getTimeNow (): void {

@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
-import { type IClockSettings } from '../types.ts'
+import { type IClockSettings } from '../../types.ts'
 import SoundUrlField from './SoundUrlField.tsx'
 
 export default function SoundSettings (

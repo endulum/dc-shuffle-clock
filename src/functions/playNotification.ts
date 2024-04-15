@@ -1,9 +1,9 @@
-import { checkNotificationSupport, checkServiceWorkerSupport } from './notifUtils.ts'
 import { addToSessionLog } from './addToSessionLog.ts'
 import { type IClockSettings } from '../types.ts'
 
-export default function doNotify (
+export default function playNotification (
   settings: IClockSettings,
+  type: null | 'sworker' | 'browser',
   isHourly: boolean
 ): void {
   let notifText = ''
@@ -11,23 +11,13 @@ export default function doNotify (
     notifText = `The hourly cave restock will occur in about ${settings.delay} seconds.`
   } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
 
-  if (checkNotificationSupport()) {
-    try { notifyWithNotif(settings, isHourly, notifText) } catch (err) {
-      const time = {
-        minutes: (new Date()).getMinutes(),
-        seconds: (new Date()).getSeconds()
-      }
-      addToSessionLog(time, err)
-    }
-  } else if (checkServiceWorkerSupport()) notifyWithSw(settings, isHourly, notifText)
-  // try {
-  //   notifyWithNotif(settings, isHourly, notifText)
-  // } catch {
-  //   notifyWithSw(settings, isHourly, notifText)
-  // }
+  try {
+    if (type === 'sworker') notifyWithSWorker(settings, isHourly, notifText)
+    if (type === 'browser') notifyWithBrowser(settings, isHourly, notifText)
+  } catch (err) { addToSessionLog(err) }
 }
 
-function notifyWithNotif (
+function notifyWithBrowser (
   settings: IClockSettings,
   isHourly: boolean,
   notifText: string
@@ -36,7 +26,6 @@ function notifyWithNotif (
     isHourly ? 'Incoming Cave Restock' : 'Incoming Cave Shuffle',
     { body: notifText }
   )
-
   if (settings.biomeEnabled) {
     notif.addEventListener('click', (e) => {
       e.preventDefault()
@@ -45,11 +34,10 @@ function notifyWithNotif (
       if (settings.biomeOpenType === 'window') window.open(url, '', 'width=900,height=500')
     })
   }
-
   setTimeout(() => { notif.close() }, settings.delay * 1000)
 }
 
-function notifyWithSw (
+function notifyWithSWorker (
   settings: IClockSettings,
   isHourly: boolean,
   notifText: string
@@ -69,12 +57,5 @@ function notifyWithSw (
     if (settings.notifAutoDismiss) {
       setTimeout(() => { notif.close() }, settings.delay * 1000)
     }
-  }).catch((err) => {
-    const time = {
-      minutes: (new Date()).getMinutes(),
-      seconds: (new Date()).getSeconds()
-    }
-    addToSessionLog(time, err)
-  // alert(e)
-  })
+  }).catch((err) => { addToSessionLog(err) })
 }

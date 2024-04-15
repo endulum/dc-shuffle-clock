@@ -1,29 +1,24 @@
 import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
 import ToggleLabel from './ToggleLabel.tsx'
-import {
-  checkNotificationSupport, checkServiceWorkerSupport
-} from '../helpers/notifUtils.ts'
+import { type TNotifPerms } from '../../types.ts'
 
 export default function NotifToggleLabel (
-  { notifSupport, setNotifSupport, setting, onInputChange }: {
-    notifSupport: string
-    setNotifSupport: Dispatch<SetStateAction<string>>
+  { notifPermission, setNotifPermission, setting, onInputChange }: {
+    notifPermission: TNotifPerms
+    setNotifPermission: Dispatch<SetStateAction<TNotifPerms>>
     setting: { id: string, name: string, checked: boolean }
     onInputChange: (e: ChangeEvent<HTMLInputElement>) => void
   }
 ): JSX.Element {
   async function askNotifPermission (): Promise<void> {
-    if (setNotifSupport !== undefined) {
+    if (setNotifPermission !== undefined) {
       const permission = await Notification.requestPermission()
-      if (permission === 'granted') {
-        if (checkNotificationSupport()) setNotifSupport('allowed (notif)')
-        else if (checkServiceWorkerSupport()) setNotifSupport('allowed (sw)')
-      }
-      if (permission === 'denied') setNotifSupport('blocked')
+      if (permission === 'granted') setNotifPermission('allowed')
+      if (permission === 'denied') setNotifPermission('blocked')
     }
   }
 
-  return notifSupport.startsWith('allowed')
+  return notifPermission === 'allowed'
     ? (
       <ToggleLabel
         setting={{
@@ -44,22 +39,22 @@ export default function NotifToggleLabel (
         </span>
 
         <span>
-          {notifSupport === 'unsupported' && (
+          {notifPermission === 'unsupported' && (
           <i>Not Supported</i>
           )}
 
-          {notifSupport === 'blocked' && (
+          {notifPermission === 'blocked' && (
           <i>Blocked</i>
           )}
 
-          {notifSupport === 'pending' && (
+          {notifPermission === 'pending' && (
             <button
               type="button"
               title="Request notification permission in order to enable notifications"
               onClick={() => {
-                askNotifPermission().catch((e) => {
-                  console.error(e)
-                  setNotifSupport('unsupported')
+                askNotifPermission().catch((err) => {
+                  console.error(err)
+                  setNotifPermission('unsupported')
                 })
               }}
             >

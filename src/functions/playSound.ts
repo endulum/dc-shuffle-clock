@@ -15,6 +15,6 @@ export default function playSound (settings: IClockSettings): void {
       minutes: (new Date()).getMinutes(),
       seconds: (new Date()).getSeconds()
     }
-    addToSessionLog(time, err)
+    addToSessionLog(err, time)
   })
 }

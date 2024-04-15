@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import CustomModal from './CustomModal.tsx'
-import { getSessionLog, initSessionLog } from '../helpers/addToSessionLog.ts'
-import { type ILogEvent } from '../types.ts'
-import LogSvg from '../assets/file-pen-solid.svg'
+import { getSessionLog, initSessionLog } from '../../functions/addToSessionLog.ts'
+import { type ILogEvent } from '../../types.ts'
+import LogSvg from '../../assets/file-pen-solid.svg'
 
 export default function AlertLogModal (): JSX.Element {
   const [modalOpen, setModalOpen] = useState<boolean>(false)

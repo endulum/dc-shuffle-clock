@@ -1,21 +1,23 @@
 import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
-import { type IClockSettings } from '../types.ts'
-import doNotify from '../helpers/doNotify.ts'
-import playSound from '../helpers/playSound.ts'
+import { type IClockSettings, type TNotifPerms, type TNotifTypes } from '../types.ts'
 
-import ToggleLabel from './ToggleLabel.tsx'
-import NotifToggleLabel from './NotifToggleLabel.tsx'
-import SoundSettings from './SoundSettings.tsx'
-import NotifSettings from './NotifSettings.tsx'
+import playNotification from '../functions/playNotification.ts'
+import playSound from '../functions/playSound.ts'
+
+import ToggleLabel from './settings-subcomponents/ToggleLabel.tsx'
+import NotifToggleLabel from './settings-subcomponents/NotifToggleLabel.tsx'
+import SoundSettings from './settings-subcomponents/SoundSettings.tsx'
+import NotifSettings from './settings-subcomponents/NotifSettings.tsx'
 
 import PlaySvg from '../assets/play.svg?react'
 
-export default function SettingsFields (
-  { clockSettings, setClockSettings, notifSupport, setNotifSupport }: {
+export default function Settings (
+  { clockSettings, setClockSettings, notifPermission, setNotifPermission, notifSupport }: {
     clockSettings: IClockSettings
     setClockSettings: Dispatch<SetStateAction<IClockSettings>>
-    notifSupport: string
-    setNotifSupport: Dispatch<SetStateAction<string>>
+    notifPermission: TNotifPerms
+    setNotifPermission: Dispatch<SetStateAction<TNotifPerms>>
+    notifSupport: TNotifTypes
   }
 ): JSX.Element {
   function handleInputChange (event: ChangeEvent<HTMLInputElement>): void {
@@ -48,9 +50,7 @@ export default function SettingsFields (
           className="setting-test-button"
           title="Test Sound"
           aria-label="test sound"
-          onClick={() => {
-            playSound(clockSettings)
-          }}
+          onClick={() => { playSound(clockSettings) }}
         >
           <PlaySvg />
         </button>
@@ -78,15 +78,15 @@ export default function SettingsFields (
           className="setting-test-button"
           title="Test Notification"
           aria-label="test notification"
-          onClick={() => { doNotify(clockSettings, false) }}
-          disabled={!notifSupport.startsWith('allowed')}
+          onClick={() => { playNotification(clockSettings, notifSupport, false) }}
+          disabled={!(notifPermission === 'allowed')}
         >
           <PlaySvg />
         </button>
 
         <NotifToggleLabel
-          notifSupport={notifSupport}
-          setNotifSupport={setNotifSupport}
+          notifPermission={notifPermission}
+          setNotifPermission={setNotifPermission}
           setting={{
             id: 'notifsEnabled',
             name: 'Notifications',
@@ -99,6 +99,7 @@ export default function SettingsFields (
           clockSettings={clockSettings}
           handleInputChange={handleInputChange}
           handleSelectChange={handleSelectChange}
+          notifSupport={notifSupport}
         />
       </div>
     </main>

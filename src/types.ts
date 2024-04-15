@@ -21,3 +21,6 @@ export interface ILogEvent {
   timestamp: ITime
   message: string
 }
+
+export type TNotifPerms = 'pending' | 'allowed' | 'blocked' | 'unsupported'
+export type TNotifTypes = null | 'sworker' | 'browser'

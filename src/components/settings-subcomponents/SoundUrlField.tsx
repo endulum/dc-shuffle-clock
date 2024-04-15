@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from 'react'
-import { type IClockSettings } from '../types.ts'
+import { type IClockSettings } from '../../types.ts'
 
-import WarningSvg from '../assets/warning.svg?react'
+import WarningSvg from '../../assets/warning.svg?react'
 
 export default function SoundUrlField (
   { handleInputChange, clockSettings }: {

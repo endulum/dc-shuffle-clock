@@ -2,7 +2,6 @@ import useClockSettings from './hooks/useClockSettings.ts'
 import useNotifSettings from './hooks/useNotifSettings.ts'
 
 import Clock from './components/Clock.tsx'
-import DelayField from './components/DelayField.tsx'
 import Settings from './components/Settings.tsx'
 import Footer from './components/Footer.tsx'
 
@@ -27,13 +26,9 @@ export default function App (): JSX.Element {
   return (
     <>
       <Clock
-        delay={clockSettings.delay}
+        clockSettings={clockSettings}
         onAlert={handleAlert}
         notifSupport={notifSupport}
-      />
-      <DelayField
-        clockSettings={clockSettings}
-        setClockSettings={setClockSettings}
       />
       <Settings
         clockSettings={clockSettings}

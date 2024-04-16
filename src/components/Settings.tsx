@@ -4,6 +4,7 @@ import { type IClockSettings, type TNotifPerms, type TNotifTypes } from '../type
 import playNotification from '../functions/playNotification.ts'
 import playSound from '../functions/playSound.ts'
 
+import Delay from './settings-subcomponents/Delay.tsx'
 import ToggleLabel from './settings-subcomponents/ToggleLabel.tsx'
 import NotifToggleLabel from './settings-subcomponents/NotifToggleLabel.tsx'
 import SoundSettings from './settings-subcomponents/SoundSettings.tsx'
@@ -30,6 +31,10 @@ export default function Settings (
         setClockSettings(
           { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
         ); break
+      case 'number':
+        setClockSettings(
+          { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
+        ); break
       default: setClockSettings(
         { ...clockSettings, [event.target.id]: event.target.value }
       )
@@ -44,6 +49,11 @@ export default function Settings (
 
   return (
     <main aria-label="clock settings">
+      <Delay
+        clockSettings={clockSettings}
+        handleInputChange={handleInputChange}
+      />
+
       <div className="setting">
         <button
           type="button"

@@ -230,16 +230,27 @@ main {
 
 /* delay component */
 
-
-.delay {
-  color: white;
-  text-shadow: var(--text-shadow-1);
-}
-
 .input-delay {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   width: 50px;
+}
+
+.delay-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+}
+
+.delay-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /* settings grid component */

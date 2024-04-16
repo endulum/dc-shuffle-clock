@@ -1,5 +1,7 @@
 export interface IClockSettings {
   delay: number
+  noDelayOnHourly: boolean
+  noHourly: boolean
   soundEnabled: boolean
   soundCustomChoice: boolean
   soundDefaultSelect: string

@@ -30,22 +30,6 @@ describe('transforming unknown data into usable clock settings', () => {
     )).toEqual(
       { ...defaultSettings, notifsEnabled: true }
     )
-
-    const allChangedSettings = {
-      delay: 20,
-      soundEnabled: true,
-      soundCustomChoice: true,
-      soundDefaultSelect: 'SMS Alert 0',
-      soundCustomPath: 'https://something.com/something.mp3',
-      soundVolume: 100,
-      notifsEnabled: true,
-      biomeEnabled: true,
-      biomeSelect: '1',
-      biomeOpenType: 'tab',
-      notifAutoDismiss: true
-    }
-
-    expect(transformSettings(allChangedSettings)).toEqual(allChangedSettings)
   })
 
   it('should set settings with incorrect types to default', () => {

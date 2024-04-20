@@ -1,15 +1,39 @@
 import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
-import { type IClockSettings } from '../../types.ts'
+import { type IClockSettings, type ICustomAudio } from '../../types.ts'
 import SoundUrlField from './SoundUrlField.tsx'
 
 export default function SoundSettings (
-  { clockSettings, setClockSettings, handleInputChange, handleSelectChange }: {
+  {
+    clockSettings, setClockSettings,
+    customAudio, setCustomAudio,
+    handleInputChange, handleSelectChange
+  }: {
     clockSettings: IClockSettings
     setClockSettings: Dispatch<SetStateAction<IClockSettings>>
+    customAudio: ICustomAudio | null
+    setCustomAudio: Dispatch<SetStateAction<ICustomAudio | null>>
     handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
     handleSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void
   }
 ): JSX.Element {
+  function handleAudioInput (event: ChangeEvent<HTMLInputElement>): void {
+    if (event.target.files !== null) {
+      const file = event.target.files[0]
+      const reader = new FileReader()
+      reader.onload = function () {
+        // eslint-disable-next-line react/no-this-in-sfc
+        const str = this.result
+        // bruh why not.
+        const aud = new Audio(str as string)
+        setCustomAudio({
+          audio: aud,
+          title: file.name
+        })
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
   return (
     <div className="setting-body">
       <label htmlFor="soundVolume" className="row">
@@ -75,10 +99,28 @@ export default function SoundSettings (
         </label>
 
         <div className={clockSettings.soundCustomChoice ? '' : 'disabled'}>
-          <SoundUrlField
+          {customAudio !== null && (
+            <div className="row">
+              <small>
+                Current saved sound:
+                {' '}
+                <i>{customAudio.title}</i>
+              </small>
+            </div>
+          )}
+          <label htmlFor="soundUpload" className="row">
+            <small>Upload</small>
+            <input
+              type="file"
+              id="soundUpload"
+              accept=".wav,.mp3"
+              onChange={handleAudioInput}
+            />
+          </label>
+          {/* <SoundUrlField
             handleInputChange={handleInputChange}
             clockSettings={clockSettings}
-          />
+          /> */}
         </div>
       </div>
 

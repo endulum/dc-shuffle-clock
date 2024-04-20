@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
-import { type IClockSettings, type TNotifPerms, type TNotifTypes } from '../types.ts'
+import { type IClockSettings, type TNotifPerms, type TNotifTypes, type ICustomAudio } from '../types.ts'
 
 import playNotification from '../functions/playNotification.ts'
 import playSound from '../functions/playSound.ts'
@@ -13,9 +13,14 @@ import NotifSettings from './settings-subcomponents/NotifSettings.tsx'
 import PlaySvg from '../assets/play.svg?react'
 
 export default function Settings (
-  { clockSettings, setClockSettings, notifPermission, setNotifPermission, notifSupport }: {
+  {
+    clockSettings, setClockSettings, customAudio,
+    setCustomAudio, notifPermission, setNotifPermission, notifSupport
+  }: {
     clockSettings: IClockSettings
     setClockSettings: Dispatch<SetStateAction<IClockSettings>>
+    customAudio: ICustomAudio | null
+    setCustomAudio: Dispatch<SetStateAction<ICustomAudio | null>>
     notifPermission: TNotifPerms
     setNotifPermission: Dispatch<SetStateAction<TNotifPerms>>
     notifSupport: TNotifTypes
@@ -60,7 +65,11 @@ export default function Settings (
           className="setting-test-button"
           title="Test Sound"
           aria-label="test sound"
-          onClick={() => { playSound(clockSettings) }}
+          onClick={() => {
+            if (clockSettings.soundCustomChoice && customAudio !== null) {
+              customAudio.audio.play().catch((err) => { console.log(err) })
+            } else playSound(clockSettings)
+          }}
         >
           <PlaySvg />
         </button>
@@ -77,6 +86,8 @@ export default function Settings (
         <SoundSettings
           clockSettings={clockSettings}
           setClockSettings={setClockSettings}
+          customAudio={customAudio}
+          setCustomAudio={setCustomAudio}
           handleInputChange={handleInputChange}
           handleSelectChange={handleSelectChange}
         />

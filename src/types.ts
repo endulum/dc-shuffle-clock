@@ -24,5 +24,10 @@ export interface ILogEvent {
   message: string
 }
 
+export interface ICustomAudio {
+  audio: HTMLAudioElement
+  title: string
+}
+
 export type TNotifPerms = 'pending' | 'allowed' | 'blocked' | 'unsupported'
 export type TNotifTypes = null | 'sworker' | 'browser'

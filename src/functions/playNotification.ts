@@ -1,4 +1,4 @@
-import { addToSessionLog } from './addToSessionLog.ts'
+import { addToEventLog } from './addToEventLog.ts'
 import { type IClockSettings } from '../types.ts'
 
 export default function playNotification (
@@ -15,7 +15,7 @@ export default function playNotification (
   try {
     if (type === 'sworker') notifyWithSWorker(settings, isHourly, notifText)
     if (type === 'browser') notifyWithBrowser(settings, isHourly, notifText)
-  } catch (err) { addToSessionLog(err) }
+  } catch (err) { addToEventLog(err) }
 }
 
 function notifyWithBrowser (
@@ -58,5 +58,5 @@ function notifyWithSWorker (
     if (settings.notifAutoDismiss) {
       setTimeout(() => { notif.close() }, settings.delay * 1000)
     }
-  }).catch((err) => { addToSessionLog(err) })
+  }).catch((err) => { addToEventLog(err) })
 }

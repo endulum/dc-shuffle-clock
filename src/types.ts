@@ -20,7 +20,7 @@ export interface ITime {
 }
 
 export interface ILogEvent {
-  timestamp: ITime
+  timestamp: string
   message: string
 }
 

@@ -1,12 +1,15 @@
-import { type ITime, type ILogEvent } from '../types.ts'
+import { DateTime } from 'luxon'
 
-export function addToSessionLog (anything: any, timestamp?: ITime): void {
-  const log = getSessionLog()
+import { type ILogEvent } from '../types.ts'
+
+export function addToEventLog (anything: any): void {
+  const log = getEventLog()
   log.push({
-    timestamp: timestamp ?? {
-      minutes: (new Date().getMinutes()),
-      seconds: (new Date().getSeconds())
-    },
+    timestamp: DateTime.local().toLocaleString({
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    }),
     message: anything instanceof Error && 'message' in anything
       ? `ERROR: ${anything.message}`
       : JSON.stringify(anything)
@@ -14,33 +17,31 @@ export function addToSessionLog (anything: any, timestamp?: ITime): void {
   sessionStorage.setItem('logs', JSON.stringify(log))
 }
 
-export function getSessionLog (): ILogEvent[] {
+export function getEventLog (): ILogEvent[] {
   const sessionString = sessionStorage.getItem('logs')
   if (sessionString === null) {
-    return initSessionLog()
+    return initEventLog()
   } // re-initialize the log if it's empty
 
   let sessionJSON: unknown
   try {
     sessionJSON = JSON.parse(sessionString)
   } catch {
-    return initSessionLog()
+    return initEventLog()
   } // re-initialize the log if its data cant be parsed
 
   if (
     Array.isArray(sessionJSON) &&
       sessionJSON.every((value) => (
-        typeof value.timestamp === 'object' &&
-        'minutes' in value.timestamp &&
-        'seconds' in value.timestamp &&
+        typeof value.timestamp === 'string' &&
         typeof value.message === 'string'
       ))
   ) return sessionJSON
   // re-initialize the log if it doesn't actually look like a log
-  return initSessionLog()
+  return initEventLog()
 }
 
-export function initSessionLog (): [] {
+export function initEventLog (): [] {
   sessionStorage.setItem('logs', JSON.stringify([]))
   return []
 }

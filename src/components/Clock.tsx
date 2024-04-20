@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { useDocumentTitle } from 'usehooks-ts'
 import useClockTime from '../hooks/useClockTime.ts'
-import { addToSessionLog } from '../functions/addToSessionLog.ts'
-import keepWorkerAwake from '../functions/keepWorkerAwake.ts'
+import { addToEventLog } from '../functions/addToEventLog.ts'
+import workerPing from '../functions/workerPing.ts'
 import { type IClockSettings, type TNotifTypes } from '../types.ts'
 
 import PauseSvg from '../assets/pause.svg'
@@ -36,7 +36,7 @@ export default function Clock ({ onAlert, clockSettings, notifSupport }: {
 
   function doAlert (isHourly: boolean): void {
     onAlert(isHourly)
-    addToSessionLog('Alarm should go off', time)
+    addToEventLog('Alarm should go off')
     animateShuffle()
   }
 
@@ -57,9 +57,9 @@ export default function Clock ({ onAlert, clockSettings, notifSupport }: {
         } else doAlert(false)
       }
 
-      if (notifSupport === 'sworker' && time.seconds % 30 === 0) {
-        addToSessionLog('Keeping SWorker awake', time)
-        keepWorkerAwake()
+      if (notifSupport === 'sworker' && time.seconds % 10 === 0) {
+        addToEventLog('Checking if SWorker is awake')
+        workerPing()
       }
     }
   }, [time])

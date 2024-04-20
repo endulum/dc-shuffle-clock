@@ -31,7 +31,12 @@ export default function Delay (
           htmlFor="noDelayOnHourly"
           className={`row${clockSettings.noHourly ? ' disabled' : ''}`}
         >
-          <input type="checkbox" id="noDelayOnHourly" onChange={handleInputChange} />
+          <input
+            type="checkbox"
+            id="noDelayOnHourly"
+            onChange={handleInputChange}
+            defaultChecked={clockSettings.noDelayOnHourly}
+          />
           <span>No delay on hourly</span>
         </label>
         <label htmlFor="noHourly" className="row">
@@ -39,6 +44,7 @@ export default function Delay (
             type="checkbox"
             id="noHourly"
             onChange={handleInputChange}
+            defaultChecked={clockSettings.noHourly}
           />
           <span>Do not warn me at all for hourlies</span>
         </label>

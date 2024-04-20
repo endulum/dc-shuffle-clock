@@ -1,20 +1,13 @@
 import { addToEventLog } from './addToEventLog.ts'
 import { type IClockSettings } from '../types.ts'
 
-export default function playSound (settings: IClockSettings): void {
-  let sound: HTMLAudioElement | null
-  if (settings.soundCustomChoice && settings.soundCustomPath !== null) {
-    const audio = (document.getElementById('customSound') as HTMLAudioElement)
-    sound = new Audio(audio.src)
+export default function playSound (settings: IClockSettings, customAudio?: HTMLAudioElement): void {
+  let sound: HTMLAudioElement
+  if (settings.soundCustomChoice && customAudio !== undefined) {
+    sound = customAudio
   } else {
     sound = new Audio(`./audio/${settings.soundDefaultSelect}.mp3`)
   }
   sound.volume = settings.soundVolume / 100
-  sound.play().catch((err) => {
-    const time = {
-      minutes: (new Date()).getMinutes(),
-      seconds: (new Date()).getSeconds()
-    }
-    addToEventLog(err)
-  })
+  sound.play().catch((err) => { addToEventLog(err) })
 }

@@ -7,7 +7,7 @@ const defaultSettings: IClockSettings = {
   soundEnabled: false,
   soundCustomChoice: false,
   soundDefaultSelect: 'SMS Alert 1',
-  soundCustomPath: '',
+  soundCustomData: '',
   soundVolume: 50,
   notifsEnabled: false,
   biomeEnabled: false,

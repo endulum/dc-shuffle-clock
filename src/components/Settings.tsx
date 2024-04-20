@@ -14,13 +14,12 @@ import PlaySvg from '../assets/play.svg?react'
 
 export default function Settings (
   {
-    clockSettings, setClockSettings, customAudio,
-    setCustomAudio, notifPermission, setNotifPermission, notifSupport
+    clockSettings, setClockSettings, initCustomAudio,
+    notifPermission, setNotifPermission, notifSupport
   }: {
     clockSettings: IClockSettings
     setClockSettings: Dispatch<SetStateAction<IClockSettings>>
-    customAudio: ICustomAudio | null
-    setCustomAudio: Dispatch<SetStateAction<ICustomAudio | null>>
+    initCustomAudio: (fileString?: string) => void
     notifPermission: TNotifPerms
     setNotifPermission: Dispatch<SetStateAction<TNotifPerms>>
     notifSupport: TNotifTypes
@@ -65,11 +64,7 @@ export default function Settings (
           className="setting-test-button"
           title="Test Sound"
           aria-label="test sound"
-          onClick={() => {
-            if (clockSettings.soundCustomChoice && customAudio !== null) {
-              customAudio.audio.play().catch((err) => { console.log(err) })
-            } else playSound(clockSettings)
-          }}
+          onClick={() => { playSound(clockSettings) }}
         >
           <PlaySvg />
         </button>

@@ -5,7 +5,7 @@ export interface IClockSettings {
   soundEnabled: boolean
   soundCustomChoice: boolean
   soundDefaultSelect: string
-  soundCustomPath: string
+  soundCustomTitle: string
   soundVolume: number
   notifsEnabled: boolean
   biomeEnabled: boolean

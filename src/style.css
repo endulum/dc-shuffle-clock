@@ -43,7 +43,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
-  min-height: 700px;
+  min-height: 750px;
   overflow-x: auto;
   padding: 1rem 0;
 }

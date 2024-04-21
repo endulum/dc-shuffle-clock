@@ -9,12 +9,12 @@ export default function Footer (): JSX.Element {
       <p>
         <b>Cave Shuffle Clock</b>
         {' '}
-        &copy; endulum
+        &copy; endulum (μ)
         <br />
         <small><i>Simple alarm tool for use with Dragon Cave.</i></small>
       </p>
       <div className="footer-icons">
-        <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10" title="Forum Thread">
+        <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10" title="Forum Thread" rel="noreferrer" target="_blank">
           <img
             src={SpeechSvg}
             alt="thread"
@@ -22,7 +22,7 @@ export default function Footer (): JSX.Element {
             aria-hidden
           />
         </a>
-        <a href="https://github.com/endulum/dc-shuffle-clock" title="Repository">
+        <a href="https://github.com/endulum/dc-shuffle-clock" title="Repository" rel="noreferrer" target="_blank">
           <img
             src={GithubSvg}
             alt="repository"

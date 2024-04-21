@@ -2,7 +2,7 @@ import { type ChangeEvent, useRef } from 'react'
 
 export default function ToggleLabel ({ setting, handleInput }: {
   setting: { id: string, name: string, checked: boolean }
-  handleInput: (e: ChangeEvent) => void
+  handleInput: (e: ChangeEvent<HTMLInputElement>) => void
 }): JSX.Element {
   const switchLabel = useRef<HTMLLabelElement>(null)
 

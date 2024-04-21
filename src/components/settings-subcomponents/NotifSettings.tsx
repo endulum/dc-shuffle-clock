@@ -4,7 +4,7 @@ import { type IClockSettings, type TNotifTypes } from '../../types.ts'
 export default function NotifSettings (
   { clockSettings, handleInput, notifSupport }: {
     clockSettings: IClockSettings
-    handleInput: (event: ChangeEvent) => void
+    handleInput: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     notifSupport: TNotifTypes
   }
 ): JSX.Element {

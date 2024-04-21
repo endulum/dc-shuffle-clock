@@ -4,7 +4,7 @@ import { type IClockSettings } from '../../types.ts'
 export default function Delay (
   { clockSettings, handleInput }: {
     clockSettings: IClockSettings
-    handleInput: (event: ChangeEvent) => void
+    handleInput: (event: ChangeEvent<HTMLInputElement>) => void
   }
 ): JSX.Element {
   return (

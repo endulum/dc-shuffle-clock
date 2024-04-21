@@ -8,7 +8,7 @@ export default function Settings (
     initCustomAudio, setCustomAudioTitle
   }: {
     clockSettings: IClockSettings
-    handleInput: (event: ChangeEvent) => void
+    handleInput: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     handleToggleCustomChoice: (event: ChangeEvent<HTMLInputElement>) => void
     initCustomAudio: () => void
     setCustomAudioTitle: (title: string) => void

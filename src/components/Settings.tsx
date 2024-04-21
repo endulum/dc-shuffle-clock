@@ -26,36 +26,26 @@ export default function Settings (
     initCustomAudio: () => void
   }
 ): JSX.Element {
-  function handleInput (
-    event: ChangeEvent
-    // i would rather typeguard within the func than have to paste
-    // "event: ChangeEvent<HTMLInputElement | HTMLSelectElement>"
-    // wherever i pass this function
-  ): void {
-    if (
-      'type' in event.target &&
-      'value' in event.target &&
-      typeof event.target.value === 'string'
-    ) {
-      switch (event.target.type) {
-        case 'checkbox':
-          if ('checked' in event.target) {
-            setClockSettings(
-              { ...clockSettings, [event.target.id]: event.target.checked }
-            )
-          } break
-        case 'range':
+  function handleInput
+  <T extends ChangeEvent<HTMLInputElement | HTMLSelectElement>> (event: T): void {
+    switch (event.target.type) {
+      case 'checkbox':
+        if ('checked' in event.target) {
           setClockSettings(
-            { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
-          ); break
-        case 'number':
-          setClockSettings(
-            { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
-          ); break
-        default: setClockSettings(
-          { ...clockSettings, [event.target.id]: event.target.value }
-        )
-      }
+            { ...clockSettings, [event.target.id]: event.target.checked }
+          )
+        } break
+      case 'range':
+        setClockSettings(
+          { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
+        ); break
+      case 'number':
+        setClockSettings(
+          { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
+        ); break
+      default: setClockSettings(
+        { ...clockSettings, [event.target.id]: event.target.value }
+      )
     }
   }
 

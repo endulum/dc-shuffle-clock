@@ -8,7 +8,7 @@ export default function NotifToggleLabel (
     notifPermission: TNotifPerms
     setNotifPermission: (permission: TNotifPerms) => void
     setting: { id: string, name: string, checked: boolean }
-    handleInput: (e: ChangeEvent) => void
+    handleInput: (e: ChangeEvent<HTMLInputElement>) => void
   }
 ): JSX.Element {
   async function askNotifPermission (): Promise<void> {

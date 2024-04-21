@@ -21,9 +21,8 @@ export default function Settings (
     ) {
       const file = event.target.files[0]
       const reader = new FileReader()
-      let audioString = ''
       reader.onload = function read (e) {
-        if (e.target !== null) audioString = JSON.stringify(e.target.result)
+        const audioString = JSON.stringify(e.target?.result)
         const { size } = new Blob([audioString])
         // stringifying a 450kb file takes 600kb of space - about 25%+
         // which is why this conditional limit is not exactly 2mb

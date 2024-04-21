@@ -12,12 +12,6 @@ export default function ToggleLabel ({ setting, handleInput }: {
       className="switch-label"
       htmlFor={setting.id}
       title={`${setting.name} is ${setting.checked ? 'on' : 'off'}, click to turn ${setting.checked ? 'off' : 'on'}`}
-      onMouseEnter={() => {
-        switchLabel.current?.classList.add('focused')
-      }}
-      onMouseLeave={() => {
-        switchLabel.current?.classList.remove('focused')
-      }}
     >
       <span>
         <b>
@@ -32,12 +26,6 @@ export default function ToggleLabel ({ setting, handleInput }: {
         id={setting.id}
         checked={setting.checked}
         onChange={handleInput}
-        onFocus={() => {
-          switchLabel.current?.classList.add('focused')
-        }}
-        onBlur={() => {
-          switchLabel.current?.classList.remove('focused')
-        }}
       />
 
       <span className="switch-label-right">

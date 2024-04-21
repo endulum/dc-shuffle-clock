@@ -31,7 +31,7 @@ export default function NotifToggleLabel (
       />
       )
     : (
-      <div className="switch-label">
+      <div className="switch-label-unhoverable">
         <span>
           <b>
             {setting.name}

@@ -267,7 +267,7 @@ main {
   grid-column: 1 / 2;
 }
 
-.switch-label {
+.switch-label, .switch-label-unhoverable {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -276,11 +276,16 @@ main {
   height: 35px;
   padding: 0.5rem;
   border-radius: 5px;
+}
+
+.switch-label {
   input[type="checkbox"] {
     position: absolute;
     opacity: 0;
   }
-  &.focused {
+  &:has(> input[type="checkbox"]:focus), 
+  &:has(> input[type="checkbox"]:focus-visible),
+  &:hover {
     cursor: pointer;
     background-color: #eee;
     box-shadow: rgba(0, 0, 0, 0.25) 0 0 1px inset

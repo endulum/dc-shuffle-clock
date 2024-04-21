@@ -1,4 +1,7 @@
 import { type Dispatch, type SetStateAction, useState, useEffect } from 'react'
+import NoSleep from 'nosleep.js'
+
+import { addToEventLog } from '../functions/addToEventLog.ts'
 import { type TNotifPerms, type TNotifTypes } from '../types.ts'
 
 export default function useNotifSettings (): {
@@ -18,6 +21,8 @@ export default function useNotifSettings (): {
 
   const [notifSupport, setNotifSupport] = useState<TNotifTypes>(null)
 
+  const nosleep = new NoSleep()
+
   useEffect(() => {
     if (notifPermission === 'allowed') {
       try {
@@ -28,7 +33,14 @@ export default function useNotifSettings (): {
         if (
           err instanceof Error &&
           err.name === 'TypeError'
-        ) setNotifSupport('sworker')
+        ) {
+          nosleep.enable().catch((e) => {
+            console.error(e)
+            addToEventLog(e)
+          })
+          setNotifSupport('sworker')
+          addToEventLog('User is on mobile. Using SWorker and NoSleep.')
+        }
       }
     } else setNotifSupport(null)
   }, [notifPermission])

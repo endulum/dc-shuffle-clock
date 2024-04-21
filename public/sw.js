@@ -5,6 +5,5 @@ self.addEventListener('notificationclick', (event) => {
 })
 
 self.addEventListener('message', (event) => {
-  localStorage.setItem('wake', JSON.stringify(true))
   // i have no idea. i just want the page to wake
 })

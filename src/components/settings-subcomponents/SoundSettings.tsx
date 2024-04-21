@@ -1,34 +1,41 @@
-import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
-import { type IClockSettings, type ICustomAudio } from '../../types.ts'
-import SoundUrlField from './SoundUrlField.tsx'
+import { type ChangeEvent } from 'react'
 
-export default function SoundSettings (
+import { type IClockSettings } from '../../types.ts'
+
+export default function Settings (
   {
-    clockSettings, setClockSettings,
-    customAudio, setCustomAudio,
-    handleInputChange, handleSelectChange
+    clockSettings, handleInput, handleToggleCustomChoice,
+    initCustomAudio, setCustomAudioTitle
   }: {
     clockSettings: IClockSettings
-    setClockSettings: Dispatch<SetStateAction<IClockSettings>>
-    customAudio: ICustomAudio | null
-    setCustomAudio: Dispatch<SetStateAction<ICustomAudio | null>>
-    handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
-    handleSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void
+    handleInput: (event: ChangeEvent) => void
+    handleToggleCustomChoice: (event: ChangeEvent<HTMLInputElement>) => void
+    initCustomAudio: () => void
+    setCustomAudioTitle: (title: string) => void
   }
 ): JSX.Element {
   function handleAudioInput (event: ChangeEvent<HTMLInputElement>): void {
-    if (event.target.files !== null) {
+    if (
+      event.target.files !== null &&
+      event.target.files.length > 0
+    ) {
       const file = event.target.files[0]
       const reader = new FileReader()
-      reader.onload = function () {
-        // eslint-disable-next-line react/no-this-in-sfc
-        const str = this.result
-        // bruh why not.
-        const aud = new Audio(str as string)
-        setCustomAudio({
-          audio: aud,
-          title: file.name
-        })
+      let audioString = ''
+      reader.onload = function read (e) {
+        if (e.target !== null) audioString = JSON.stringify(e.target.result)
+        const { size } = new Blob([audioString])
+        // stringifying a 450kb file takes 600kb of space - about 25%+
+        // which is why this conditional limit is not exactly 2mb
+        if (size > 2500000) {
+          // i'm ok with a native alert
+          // eslint-disable-next-line no-alert
+          alert('Uploaded sound is too large. Only sounds under 2MB can be stored.\n')
+        } else {
+          localStorage.setItem('customSoundData', audioString)
+          initCustomAudio()
+          setCustomAudioTitle(file.name)
+        }
       }
       reader.readAsDataURL(file)
     }
@@ -41,10 +48,11 @@ export default function SoundSettings (
         <input
           type="range"
           id="soundVolume"
-          onChange={handleInputChange}
+          onChange={handleInput}
           defaultValue={clockSettings.soundVolume}
         />
       </label>
+
       <div className="option">
         <label htmlFor="soundDefaultChoice" className="row">
           <input
@@ -52,11 +60,7 @@ export default function SoundSettings (
             name="sound"
             id="soundDefaultChoice"
             defaultChecked={!clockSettings.soundCustomChoice}
-            onChange={(event) => {
-              setClockSettings(
-                { ...clockSettings, soundCustomChoice: !event.target.checked }
-              )
-            }}
+            onChange={handleToggleCustomChoice}
           />
           <span>Use Default Sound</span>
         </label>
@@ -66,7 +70,7 @@ export default function SoundSettings (
             <small>Select Sound</small>
             <select
               id="soundDefaultSelect"
-              onChange={handleSelectChange}
+              onChange={handleInput}
               defaultValue={clockSettings.soundDefaultSelect}
             >
               {new Array(5)
@@ -89,22 +93,18 @@ export default function SoundSettings (
             name="sound"
             id="soundCustomChoice"
             defaultChecked={clockSettings.soundCustomChoice}
-            onChange={(event) => {
-              setClockSettings(
-                { ...clockSettings, soundCustomChoice: event.target.checked }
-              )
-            }}
+            onChange={handleToggleCustomChoice}
           />
           <span>Use Custom Sound</span>
         </label>
 
         <div className={clockSettings.soundCustomChoice ? '' : 'disabled'}>
-          {customAudio !== null && (
+          {clockSettings.soundCustomTitle !== '' && (
             <div className="row">
               <small>
-                Current saved sound:
+                Currently saved:
                 {' '}
-                <i>{customAudio.title}</i>
+                <i>{clockSettings.soundCustomTitle}</i>
               </small>
             </div>
           )}
@@ -117,13 +117,8 @@ export default function SoundSettings (
               onChange={handleAudioInput}
             />
           </label>
-          {/* <SoundUrlField
-            handleInputChange={handleInputChange}
-            clockSettings={clockSettings}
-          /> */}
         </div>
       </div>
-
     </div>
   )
 }

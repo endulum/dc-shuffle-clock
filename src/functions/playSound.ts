@@ -9,5 +9,8 @@ export default function playSound (settings: IClockSettings, customAudio?: HTMLA
     sound = new Audio(`./audio/${settings.soundDefaultSelect}.mp3`)
   }
   sound.volume = settings.soundVolume / 100
-  sound.play().catch((err) => { addToEventLog(err) })
+  sound.play().catch((err) => {
+    console.error(err)
+    addToEventLog(err)
+  })
 }

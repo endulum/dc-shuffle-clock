@@ -1,8 +1,8 @@
 import { type ChangeEvent, useRef } from 'react'
 
-export default function ToggleLabel ({ setting, onInputChange }: {
+export default function ToggleLabel ({ setting, handleInput }: {
   setting: { id: string, name: string, checked: boolean }
-  onInputChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleInput: (e: ChangeEvent) => void
 }): JSX.Element {
   const switchLabel = useRef<HTMLLabelElement>(null)
 
@@ -31,7 +31,7 @@ export default function ToggleLabel ({ setting, onInputChange }: {
         role="switch"
         id={setting.id}
         checked={setting.checked}
-        onChange={onInputChange}
+        onChange={handleInput}
         onFocus={() => {
           switchLabel.current?.classList.add('focused')
         }}

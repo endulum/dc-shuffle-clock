@@ -2,10 +2,9 @@ import { type ChangeEvent } from 'react'
 import { type IClockSettings, type TNotifTypes } from '../../types.ts'
 
 export default function NotifSettings (
-  { clockSettings, handleInputChange, handleSelectChange, notifSupport }: {
+  { clockSettings, handleInput, notifSupport }: {
     clockSettings: IClockSettings
-    handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
-    handleSelectChange: (event: ChangeEvent<HTMLSelectElement>) => void
+    handleInput: (event: ChangeEvent) => void
     notifSupport: TNotifTypes
   }
 ): JSX.Element {
@@ -16,7 +15,7 @@ export default function NotifSettings (
           <input
             type="checkbox"
             id="biomeEnabled"
-            onChange={handleInputChange}
+            onChange={handleInput}
             defaultChecked={clockSettings.biomeEnabled}
           />
           <span>Jump to biome when clicked</span>
@@ -27,7 +26,7 @@ export default function NotifSettings (
             {' '}
             <select
               id="biomeSelect"
-              onChange={handleSelectChange}
+              onChange={handleInput}
               defaultValue={clockSettings.biomeSelect}
             >
               {['Coast', 'Desert', 'Forest', 'Jungle', 'Alpine', 'Volcano', 'Holiday']
@@ -43,7 +42,7 @@ export default function NotifSettings (
             {' '}
             <select
               id="biomeOpenType"
-              onChange={handleSelectChange}
+              onChange={handleInput}
               defaultValue={clockSettings.biomeOpenType}
               disabled={notifSupport !== 'browser'}
             >
@@ -59,7 +58,7 @@ export default function NotifSettings (
           <input
             type="checkbox"
             id="notifAutoDismiss"
-            onChange={handleInputChange}
+            onChange={handleInput}
             defaultChecked={clockSettings.notifAutoDismiss}
           />
           <span>Dismiss notification when shuffle occurs</span>

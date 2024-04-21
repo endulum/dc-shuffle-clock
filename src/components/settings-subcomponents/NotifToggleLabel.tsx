@@ -1,13 +1,14 @@
-import { type ChangeEvent, type Dispatch, type SetStateAction } from 'react'
+import { type ChangeEvent } from 'react'
 import ToggleLabel from './ToggleLabel.tsx'
 import { type TNotifPerms } from '../../types.ts'
+import { addToEventLog } from '../../functions/addToEventLog.ts'
 
 export default function NotifToggleLabel (
-  { notifPermission, setNotifPermission, setting, onInputChange }: {
+  { notifPermission, setNotifPermission, setting, handleInput }: {
     notifPermission: TNotifPerms
-    setNotifPermission: Dispatch<SetStateAction<TNotifPerms>>
+    setNotifPermission: (permission: TNotifPerms) => void
     setting: { id: string, name: string, checked: boolean }
-    onInputChange: (e: ChangeEvent<HTMLInputElement>) => void
+    handleInput: (e: ChangeEvent) => void
   }
 ): JSX.Element {
   async function askNotifPermission (): Promise<void> {
@@ -26,7 +27,7 @@ export default function NotifToggleLabel (
           name: 'Notifications',
           checked: setting.checked
         }}
-        onInputChange={onInputChange}
+        handleInput={handleInput}
       />
       )
     : (
@@ -54,6 +55,7 @@ export default function NotifToggleLabel (
               onClick={() => {
                 askNotifPermission().catch((err) => {
                   console.error(err)
+                  addToEventLog(err)
                   setNotifPermission('unsupported')
                 })
               }}

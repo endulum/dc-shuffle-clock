@@ -2,9 +2,9 @@ import { type ChangeEvent } from 'react'
 import { type IClockSettings } from '../../types.ts'
 
 export default function Delay (
-  { clockSettings, handleInputChange }: {
+  { clockSettings, handleInput }: {
     clockSettings: IClockSettings
-    handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void
+    handleInput: (event: ChangeEvent) => void
   }
 ): JSX.Element {
   return (
@@ -19,13 +19,14 @@ export default function Delay (
             max="60"
             id="delay"
             className="input-delay"
-            onChange={handleInputChange}
+            onChange={handleInput}
             title="delay in seconds"
           />
           {' '}
           seconds before each shuffle
         </span>
       </label>
+
       <div className="delay-body">
         <label
           htmlFor="noDelayOnHourly"
@@ -34,16 +35,17 @@ export default function Delay (
           <input
             type="checkbox"
             id="noDelayOnHourly"
-            onChange={handleInputChange}
+            onChange={handleInput}
             defaultChecked={clockSettings.noDelayOnHourly}
           />
           <span>No delay on hourly</span>
         </label>
+
         <label htmlFor="noHourly" className="row">
           <input
             type="checkbox"
             id="noHourly"
-            onChange={handleInputChange}
+            onChange={handleInput}
             defaultChecked={clockSettings.noHourly}
           />
           <span>Do not warn me at all for hourlies</span>

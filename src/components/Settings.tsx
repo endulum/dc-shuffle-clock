@@ -1,70 +1,80 @@
-import { type Dispatch, type SetStateAction, type ChangeEvent } from 'react'
-import { type IClockSettings, type TNotifPerms, type TNotifTypes, type ICustomAudio } from '../types.ts'
-
-import playNotification from '../functions/playNotification.ts'
-import playSound from '../functions/playSound.ts'
+import { type ChangeEvent } from 'react'
 
 import Delay from './settings-subcomponents/Delay.tsx'
 import ToggleLabel from './settings-subcomponents/ToggleLabel.tsx'
 import NotifToggleLabel from './settings-subcomponents/NotifToggleLabel.tsx'
 import SoundSettings from './settings-subcomponents/SoundSettings.tsx'
 import NotifSettings from './settings-subcomponents/NotifSettings.tsx'
+import { type TNotifPerms, type IClockSettings, type TNotifTypes } from '../types.ts'
 
 import PlaySvg from '../assets/play.svg?react'
 
 export default function Settings (
   {
-    clockSettings, setClockSettings, initCustomAudio,
-    notifPermission, setNotifPermission, notifSupport
+    clockSettings, setClockSettings,
+    testSound, testNotification,
+    notifPermission, setNotifPermission, notifSupport,
+    initCustomAudio
   }: {
     clockSettings: IClockSettings
-    setClockSettings: Dispatch<SetStateAction<IClockSettings>>
-    initCustomAudio: (fileString?: string) => void
+    setClockSettings: (settings: IClockSettings) => void
+    testSound: () => void
+    testNotification: () => void
     notifPermission: TNotifPerms
-    setNotifPermission: Dispatch<SetStateAction<TNotifPerms>>
+    setNotifPermission: (permission: TNotifPerms) => void
     notifSupport: TNotifTypes
+    initCustomAudio: () => void
   }
 ): JSX.Element {
-  function handleInputChange (event: ChangeEvent<HTMLInputElement>): void {
-    switch (event.target.type) {
-      case 'checkbox':
-        setClockSettings(
-          { ...clockSettings, [event.target.id]: event.target.checked }
-        ); break
-      case 'range':
-        setClockSettings(
-          { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
-        ); break
-      case 'number':
-        setClockSettings(
-          { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
-        ); break
-      default: setClockSettings(
-        { ...clockSettings, [event.target.id]: event.target.value }
-      )
+  function handleInput (
+    event: ChangeEvent
+    // i would rather typeguard within the func than have to paste
+    // "event: ChangeEvent<HTMLInputElement | HTMLSelectElement>"
+    // wherever i pass this function
+  ): void {
+    if (
+      'type' in event.target &&
+      'value' in event.target &&
+      typeof event.target.value === 'string'
+    ) {
+      switch (event.target.type) {
+        case 'checkbox':
+          if ('checked' in event.target) {
+            setClockSettings(
+              { ...clockSettings, [event.target.id]: event.target.checked }
+            )
+          } break
+        case 'range':
+          setClockSettings(
+            { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
+          ); break
+        case 'number':
+          setClockSettings(
+            { ...clockSettings, [event.target.id]: parseInt(event.target.value, 10) }
+          ); break
+        default: setClockSettings(
+          { ...clockSettings, [event.target.id]: event.target.value }
+        )
+      }
     }
   }
 
-  function handleSelectChange (event: ChangeEvent<HTMLSelectElement>): void {
-    setClockSettings(
-      { ...clockSettings, [event.target.id]: event.target.value }
-    )
-  }
-
   return (
-    <main aria-label="clock settings">
+    <main aria-label="Clock Settings">
+      {/* delay-related settings */}
       <Delay
         clockSettings={clockSettings}
-        handleInputChange={handleInputChange}
+        handleInput={handleInput}
       />
 
+      {/* sound-related settings */}
       <div className="setting">
         <button
           type="button"
           className="setting-test-button"
           title="Test Sound"
           aria-label="test sound"
-          onClick={() => { playSound(clockSettings) }}
+          onClick={testSound}
         >
           <PlaySvg />
         </button>
@@ -75,26 +85,37 @@ export default function Settings (
             name: 'Sound',
             checked: clockSettings.soundEnabled
           }}
-          onInputChange={handleInputChange}
+          handleInput={handleInput}
         />
 
         <SoundSettings
           clockSettings={clockSettings}
-          setClockSettings={setClockSettings}
-          customAudio={customAudio}
-          setCustomAudio={setCustomAudio}
-          handleInputChange={handleInputChange}
-          handleSelectChange={handleSelectChange}
+          handleInput={handleInput}
+          handleToggleCustomChoice={(event: ChangeEvent<HTMLInputElement>) => {
+            setClockSettings(
+              {
+                ...clockSettings,
+                soundCustomChoice: event.target.id === 'soundCustomChoice'
+                  ? event.target.checked
+                  : !event.target.checked
+              }
+            )
+          }}
+          initCustomAudio={initCustomAudio}
+          setCustomAudioTitle={(title: string) => {
+            setClockSettings({ ...clockSettings, soundCustomTitle: title })
+          }}
         />
       </div>
 
+      {/* notif-related settings */}
       <div className="setting">
         <button
           type="button"
           className="setting-test-button"
           title="Test Notification"
           aria-label="test notification"
-          onClick={() => { playNotification(clockSettings, notifSupport, false) }}
+          onClick={testNotification}
           disabled={!(notifPermission === 'allowed')}
         >
           <PlaySvg />
@@ -108,13 +129,12 @@ export default function Settings (
             name: 'Notifications',
             checked: clockSettings.notifsEnabled
           }}
-          onInputChange={handleInputChange}
+          handleInput={handleInput}
         />
 
         <NotifSettings
           clockSettings={clockSettings}
-          handleInputChange={handleInputChange}
-          handleSelectChange={handleSelectChange}
+          handleInput={handleInput}
           notifSupport={notifSupport}
         />
       </div>

@@ -3,13 +3,14 @@ import useNotifSettings from './hooks/useNotifSettings.ts'
 import useCustomAudio from './hooks/useCustomAudio.ts'
 
 import Clock from './components/Clock.tsx'
-// import Settings from './components/Settings.tsx'
+import Settings from './components/Settings.tsx'
 import Footer from './components/Footer.tsx'
 
 import playSound from './functions/playSound.ts'
 import playNotification from './functions/playNotification.ts'
 
 import 'hacktimer/HackTimer.min'
+import { type IClockSettings, type TNotifPerms } from './types.ts'
 
 export default function App (): JSX.Element {
   const {
@@ -46,16 +47,20 @@ export default function App (): JSX.Element {
         onAlert={handleAlert}
         notifSupport={notifSupport}
       />
-      {/* the Settings really needs some cleanup... */}
-      {/* <Settings
+      <Settings
         clockSettings={clockSettings}
-        setClockSettings={setClockSettings}
-        customAudio={customAudio}
-        initCustomAudio={initCustomAudio}
+        setClockSettings={
+          (newSettings: IClockSettings) => { setClockSettings(newSettings) }
+        }
+        testSound={testSound}
+        testNotification={testNotification}
         notifPermission={notifPermission}
-        setNotifPermission={setNotifPermission}
+        setNotifPermission={
+          (permission: TNotifPerms) => { setNotifPermission(permission) }
+        }
         notifSupport={notifSupport}
-      /> */}
+        initCustomAudio={initCustomAudio}
+      />
       <Footer />
     </>
   )

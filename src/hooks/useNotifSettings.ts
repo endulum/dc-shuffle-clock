@@ -25,21 +25,22 @@ export default function useNotifSettings (): {
 
   useEffect(() => {
     if (notifPermission === 'allowed') {
+      nosleep.enable().catch((e) => {
+        console.error(e)
+        addToEventLog(e)
+      })
       try {
         const notif = new Notification('', { silent: true })
         setTimeout(() => { notif.close() }, 0)
         setNotifSupport('browser')
+        addToEventLog('INIT: Using native browser notifs.')
       } catch (err) {
         if (
           err instanceof Error &&
           err.name === 'TypeError'
         ) {
-          nosleep.enable().catch((e) => {
-            console.error(e)
-            addToEventLog(e)
-          })
           setNotifSupport('sworker')
-          addToEventLog('User is on mobile. Using SWorker and NoSleep.')
+          addToEventLog('INIT: Using SWorker notifs.')
         }
       }
     } else setNotifSupport(null)

@@ -30,10 +30,9 @@ export default function NotifSettings (
               defaultValue={clockSettings.biomeSelect}
             >
               {['Coast', 'Desert', 'Forest', 'Jungle', 'Alpine', 'Volcano', 'Holiday']
-                .map((name, index) => ({ id: index + 1, name }))
-                .map((biome) => (
-                  <option key={biome.name} value={biome.id.toString()}>
-                    {biome.name}
+                .map((biome, index) => (
+                  <option key={biome} value={(index + 1).toString()}>
+                    {biome}
                   </option>
                 ))}
             </select>

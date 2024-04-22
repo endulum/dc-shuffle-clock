@@ -9,7 +9,7 @@ export default function NotifSettings (
   }
 ): JSX.Element {
   return (
-    <div className="setting-body">
+    <>
       <div className="option">
         <label htmlFor="biomeEnabled" className="row">
           <input
@@ -63,6 +63,6 @@ export default function NotifSettings (
           <span>Dismiss notification when shuffle occurs</span>
         </label>
       </div>
-    </div>
+    </>
   )
 }

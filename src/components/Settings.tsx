@@ -5,6 +5,7 @@ import ToggleLabel from './settings-subcomponents/ToggleLabel.tsx'
 import NotifToggleLabel from './settings-subcomponents/NotifToggleLabel.tsx'
 import SoundSettings from './settings-subcomponents/SoundSettings.tsx'
 import NotifSettings from './settings-subcomponents/NotifSettings.tsx'
+import SettingBody from './settings-subcomponents/SettingBody.tsx'
 import { type TNotifPerms, type IClockSettings, type TNotifTypes } from '../types.ts'
 
 import PlaySvg from '../assets/play.svg?react'
@@ -65,6 +66,7 @@ export default function Settings (
           title="Test Sound"
           aria-label="test sound"
           onClick={testSound}
+          disabled={!clockSettings.soundEnabled}
         >
           <PlaySvg />
         </button>
@@ -78,24 +80,28 @@ export default function Settings (
           handleInput={handleInput}
         />
 
-        <SoundSettings
-          clockSettings={clockSettings}
-          handleInput={handleInput}
-          handleToggleCustomChoice={(event: ChangeEvent<HTMLInputElement>) => {
-            setClockSettings(
-              {
-                ...clockSettings,
-                soundCustomChoice: event.target.id === 'soundCustomChoice'
-                  ? event.target.checked
-                  : !event.target.checked
-              }
-            )
-          }}
-          initCustomAudio={initCustomAudio}
-          setCustomAudioTitle={(title: string) => {
-            setClockSettings({ ...clockSettings, soundCustomTitle: title })
-          }}
-        />
+        <SettingBody
+          isVisible={clockSettings.soundEnabled}
+        >
+          <SoundSettings
+            clockSettings={clockSettings}
+            handleInput={handleInput}
+            handleToggleCustomChoice={(event: ChangeEvent<HTMLInputElement>) => {
+              setClockSettings(
+                {
+                  ...clockSettings,
+                  soundCustomChoice: event.target.id === 'soundCustomChoice'
+                    ? event.target.checked
+                    : !event.target.checked
+                }
+              )
+            }}
+            initCustomAudio={initCustomAudio}
+            setCustomAudioTitle={(title: string) => {
+              setClockSettings({ ...clockSettings, soundCustomTitle: title })
+            }}
+          />
+        </SettingBody>
       </div>
 
       {/* notif-related settings */}
@@ -106,7 +112,7 @@ export default function Settings (
           title="Test Notification"
           aria-label="test notification"
           onClick={testNotification}
-          disabled={!(notifPermission === 'allowed')}
+          disabled={!(notifPermission === 'allowed') || !clockSettings.notifsEnabled}
         >
           <PlaySvg />
         </button>
@@ -122,11 +128,20 @@ export default function Settings (
           handleInput={handleInput}
         />
 
-        <NotifSettings
-          clockSettings={clockSettings}
-          handleInput={handleInput}
-          notifSupport={notifSupport}
-        />
+        <SettingBody
+          isVisible={
+            clockSettings.notifsEnabled &&
+            notifSupport !== null &&
+            notifPermission === 'allowed'
+          }
+        >
+          <NotifSettings
+            clockSettings={clockSettings}
+            handleInput={handleInput}
+            notifSupport={notifSupport}
+          />
+        </SettingBody>
+
       </div>
     </main>
   )

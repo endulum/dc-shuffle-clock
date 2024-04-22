@@ -41,7 +41,7 @@ export default function Settings (
   }
 
   return (
-    <div className="setting-body">
+    <>
       <label htmlFor="soundVolume" className="row">
         <span>Volume</span>
         <input
@@ -94,7 +94,7 @@ export default function Settings (
             defaultChecked={clockSettings.soundCustomChoice}
             onChange={handleToggleCustomChoice}
           />
-          <span>Use Custom Sound</span>
+          <span>Upload Custom Sound</span>
         </label>
 
         <div className={clockSettings.soundCustomChoice ? '' : 'disabled'}>
@@ -108,8 +108,8 @@ export default function Settings (
             </div>
           )}
           <label htmlFor="soundUpload" className="row">
-            <small>Upload</small>
             <input
+              aria-label="upload custom sound as a file"
               type="file"
               id="soundUpload"
               accept=".wav,.mp3"
@@ -118,6 +118,6 @@ export default function Settings (
           </label>
         </div>
       </div>
-    </div>
+    </>
   )
 }

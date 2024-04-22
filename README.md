@@ -23,7 +23,9 @@ _This tool was coded with ToC compliance in mind. The page makes no requests to 
 
 * __Accidentally denied notifications:__ Reset site permissions for this tool (look up specific instructions for your browser on how to do this), and you should be able to answer the request prompt again.
 
-* __Notifications do not work:__ See [here](https://frizbit.com/blog/troubleshooting-web-push-notifications-why-im-i-not-getting-notifications/) for several issues pertaining to browser notifications to check and fix.
+* __Notifications do not work:__ See [here](https://frizbit.com/blog/troubleshooting-web-push-notifications-why-im-i-not-getting-notifications/) for several common issues pertaining to browser notifications to check and fix.
+
+* __(mobile) When not in focus, notifications/sounds fire off once or a few times, but never again:__ Your device may be putting your browser to sleep, or your browser may be putting the particular page to sleep. You may need to search up instructions specific to your device or browser to keep the page or browser awake. "Forcing" the tool to bypass mobile sleep is out of my control; the best I can suggest is to revisit the tool's page whenever an alert goes off, to "reset" any sleep timer.
 
 See [here](https://github.com/endulum/dc-shuffle-clock/issues) for known and yet unsolved issues.
 
@@ -31,4 +33,4 @@ See [here](https://github.com/endulum/dc-shuffle-clock/issues) for known and yet
 
 * __Background__: Tim Ward, [Subtle Patterns](https://www.toptal.com/designers/subtlepatterns/brushed-alum-dark/)
 
-* __Sounds__: Daniel Simon, [SoundBible](https://soundbible.com/)
+* __Default Sounds__: Daniel Simion, [SoundBible](https://soundbible.com/)

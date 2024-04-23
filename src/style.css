@@ -93,10 +93,6 @@ input, select {
   }
 }
 
-input[type="file"] {
-  margin-bottom: 0.5rem;
-}
-
 b {
   font-weight: normal;
   font-family: 'Roboto Bold', Arial, Helvetica, sans-serif;

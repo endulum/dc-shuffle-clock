@@ -27,6 +27,7 @@ export default function SettingBody (
       }
     >
       {children}
+      <div style={{ height: '1px' }} />
     </div>
   )
 }

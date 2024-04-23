@@ -22,11 +22,8 @@ export default function SettingBody (
       aria-hidden={!isVisible}
       style={
         isVisible && bodyRef.current !== null
-          ? {
-              height: bodyRef.current.scrollHeight,
-              pointerEvents: 'none'
-            }
-          : { height: 0 }
+          ? { height: bodyRef.current.scrollHeight }
+          : { height: 0, pointerEvents: 'none' }
       }
     >
       {children}

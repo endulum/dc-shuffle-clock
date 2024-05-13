@@ -2,7 +2,8 @@ import { type IClockSettings } from '../types.ts'
 
 const defaultSettings: IClockSettings = {
   delay: 15,
-  noDelayOnHourly: false,
+  useCustomHourlyDelay: false,
+  customHourlyDelay: 5,
   noHourly: false,
   soundEnabled: false,
   soundCustomChoice: false,

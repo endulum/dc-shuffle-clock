@@ -8,8 +8,11 @@ export default function playNotification (
 ): void {
   let notifText = ''
   if (isHourly) {
-    if (settings.noDelayOnHourly) notifText = 'The hourly cave restock will occur now.'
-    else notifText = `The hourly cave restock will occur in about ${settings.delay} seconds.`
+    notifText = `The hourly cave restock will occur in about ${
+      settings.useCustomHourlyDelay
+        ? settings.customHourlyDelay
+        : settings.delay
+    } seconds.`
   } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
 
   try {

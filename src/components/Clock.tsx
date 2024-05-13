@@ -42,19 +42,18 @@ export default function Clock ({ onAlert, clockSettings, notifSupport }: {
 
   useEffect(() => {
     if (!isPaused) {
-      if (
+      if (time.minutes === 59) {
+        if (
+          !clockSettings.noHourly &&
+          time.seconds === 60 - (clockSettings.useCustomHourlyDelay
+            ? clockSettings.customHourlyDelay
+            : clockSettings.delay)
+        ) doAlert(true)
+      } else if (
         (time.minutes + 1) % 5 === 0 &&
         time.seconds === 60 - clockSettings.delay
       ) {
-        if (time.minutes === 59) {
-          if (!clockSettings.noHourly) {
-            if (clockSettings.noDelayOnHourly) {
-              setTimeout(() => {
-                doAlert(true)
-              }, clockSettings.delay * 1000)
-            } else doAlert(true)
-          }
-        } else doAlert(false)
+        doAlert(false)
       }
 
       if (notifSupport === 'sworker' && time.seconds % 10 === 0) {

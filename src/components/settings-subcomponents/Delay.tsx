@@ -28,28 +28,51 @@ export default function Delay (
       </label>
 
       <div className="delay-body">
-        <label
-          htmlFor="noDelayOnHourly"
-          className={`row${clockSettings.noHourly ? ' disabled' : ''}`}
-        >
-          <input
-            type="checkbox"
-            id="noDelayOnHourly"
-            onChange={handleInput}
-            defaultChecked={clockSettings.noDelayOnHourly}
-          />
-          <span>No delay on hourly</span>
-        </label>
+        <div className="option">
+          <label
+            htmlFor="useCustomHourlyDelay"
+            className={`row${clockSettings.noHourly ? ' disabled' : ''}`}
+          >
+            <input
+              type="checkbox"
+              id="useCustomHourlyDelay"
+              onChange={handleInput}
+              defaultChecked={clockSettings.useCustomHourlyDelay}
+            />
+            <span>Use custom delay for hourlies</span>
+          </label>
 
-        <label htmlFor="noHourly" className="row">
-          <input
-            type="checkbox"
-            id="noHourly"
-            onChange={handleInput}
-            defaultChecked={clockSettings.noHourly}
-          />
-          <span>Do not warn me at all for hourlies</span>
-        </label>
+          <div className={clockSettings.useCustomHourlyDelay ? '' : 'disabled'}>
+            <label htmlFor="customHourlyDelay">
+              <small>Warn me </small>
+              <input
+                type="number"
+                value={clockSettings.customHourlyDelay}
+                min="0"
+                max="60"
+                id="customHourlyDelay"
+                className="input-delay"
+                onChange={handleInput}
+                title="delay in seconds"
+              />
+              {' '}
+              <small>seconds before each hourly</small>
+            </label>
+          </div>
+        </div>
+
+        <div className="option">
+          <label htmlFor="noHourly" className="row">
+            <input
+              type="checkbox"
+              id="noHourly"
+              onChange={handleInput}
+              defaultChecked={clockSettings.noHourly}
+            />
+            <span>Do not warn me at all for hourlies</span>
+          </label>
+        </div>
+
       </div>
     </div>
   )

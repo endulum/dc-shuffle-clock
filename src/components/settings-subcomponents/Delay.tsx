@@ -42,7 +42,7 @@ export default function Delay (
             <span>Use custom delay for hourlies</span>
           </label>
 
-          <div className={clockSettings.useCustomHourlyDelay ? '' : 'disabled'}>
+          <div className={clockSettings.useCustomHourlyDelay && !clockSettings.noHourly ? '' : 'disabled'}>
             <label htmlFor="customHourlyDelay">
               <small>Warn me </small>
               <input

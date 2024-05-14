@@ -23,12 +23,12 @@ export default function App (): JSX.Element {
     notifPermission, setNotifPermission, notifSupport
   } = useNotifSettings()
 
-  function handleAlert (isHourly: boolean): void {
+  function handleAlert (alertString: string): void {
     if (clockSettings.soundEnabled) {
       playSound(clockSettings, customAudio ?? undefined)
     }
     if (clockSettings.notifsEnabled) {
-      playNotification(clockSettings, notifSupport, isHourly)
+      playNotification(clockSettings, notifSupport, alertString)
     }
   }
 
@@ -37,7 +37,7 @@ export default function App (): JSX.Element {
   }
 
   const testNotification = (): void => {
-    playNotification(clockSettings, notifSupport, false)
+    playNotification(clockSettings, notifSupport, 'This is a test notification.')
   }
 
   return (

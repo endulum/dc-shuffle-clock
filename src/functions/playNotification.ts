@@ -4,31 +4,21 @@ import { type IClockSettings } from '../types.ts'
 export default function playNotification (
   settings: IClockSettings,
   type: null | 'sworker' | 'browser',
-  isHourly: boolean
+  alertString: string
 ): void {
-  let notifText = ''
-  if (isHourly) {
-    notifText = `The hourly cave restock will occur in about ${
-      settings.useCustomHourlyDelay
-        ? settings.customHourlyDelay
-        : settings.delay
-    } seconds.`
-  } else notifText = `The next cave shuffle will occur in ${settings.delay} seconds.`
-
   try {
-    if (type === 'sworker') notifyWithSWorker(settings, isHourly, notifText)
-    if (type === 'browser') notifyWithBrowser(settings, isHourly, notifText)
+    if (type === 'sworker') notifyWithSWorker(settings, alertString)
+    if (type === 'browser') notifyWithBrowser(settings, alertString)
   } catch (err) { addToEventLog(err) }
 }
 
 function notifyWithBrowser (
   settings: IClockSettings,
-  isHourly: boolean,
-  notifText: string
+  alertString: string
 ): void {
   const notif = new Notification(
-    isHourly ? 'Incoming Cave Restock' : 'Incoming Cave Shuffle',
-    { body: notifText }
+    'Incoming Cave Shuffle',
+    { body: alertString }
   )
   if (settings.biomeEnabled) {
     notif.addEventListener('click', (e) => {
@@ -38,19 +28,20 @@ function notifyWithBrowser (
       if (settings.biomeOpenType === 'window') window.open(url, '', 'width=900,height=500')
     })
   }
-  setTimeout(() => { notif.close() }, settings.delay * 1000)
+  if (settings.notifAutoDismiss) {
+    setTimeout(() => { notif.close() }, settings.delay * 1000)
+  }
 }
 
 function notifyWithSWorker (
   settings: IClockSettings,
-  isHourly: boolean,
-  notifText: string
+  alertString: string
 ): void {
   navigator.serviceWorker.ready.then(async (serviceWorker) => {
     await serviceWorker.showNotification(
-      isHourly ? 'Incoming Cave Restock' : 'Incoming Cave Shuffle',
+      'Incoming Cave Shuffle',
       {
-        body: notifText,
+        body: alertString,
         data: {
           canJump: settings.biomeEnabled,
           url: `https://dragcave.net/locations/${settings.biomeSelect}`

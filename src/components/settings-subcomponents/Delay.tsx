@@ -48,7 +48,7 @@ export default function Delay (
               <input
                 type="number"
                 value={clockSettings.customHourlyDelay}
-                min="0"
+                min="-60"
                 max="60"
                 id="customHourlyDelay"
                 className="input-delay"

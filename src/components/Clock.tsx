@@ -3,6 +3,7 @@ import { useDocumentTitle } from 'usehooks-ts'
 import useClockTime from '../hooks/useClockTime.ts'
 import { addToEventLog } from '../functions/addToEventLog.ts'
 import workerPing from '../functions/workerPing.ts'
+import getAlertString from '../functions/getAlertString.ts'
 import { type IClockSettings, type TNotifTypes } from '../types.ts'
 
 import PauseSvg from '../assets/pause.svg'
@@ -10,7 +11,7 @@ import PlaySvg from '../assets/play.svg'
 import ShuffleSvg from '../assets/shuffle.svg'
 
 export default function Clock ({ onAlert, clockSettings, notifSupport }: {
-  onAlert: (isHourly: boolean) => void
+  onAlert: (alertString: string) => void
   clockSettings: IClockSettings
   notifSupport: TNotifTypes
 }): JSX.Element {
@@ -34,28 +35,16 @@ export default function Clock ({ onAlert, clockSettings, notifSupport }: {
     }, 2000)
   }
 
-  function doAlert (isHourly: boolean): void {
-    onAlert(isHourly)
+  function doAlert (alertString: string): void {
+    onAlert(alertString)
     addToEventLog('Alarm should go off')
     animateShuffle()
   }
 
   useEffect(() => {
     if (!isPaused) {
-      if (time.minutes === 59) {
-        if (
-          !clockSettings.noHourly &&
-          time.seconds === 60 - (clockSettings.useCustomHourlyDelay
-            ? clockSettings.customHourlyDelay
-            : clockSettings.delay)
-        ) doAlert(true)
-      } else if (
-        (time.minutes + 1) % 5 === 0 &&
-        time.seconds === 60 - clockSettings.delay
-      ) {
-        doAlert(false)
-      }
-
+      const alertString = getAlertString(time, clockSettings)
+      if (alertString !== null) doAlert(alertString)
       if (notifSupport === 'sworker' && time.seconds % 10 === 0) {
         addToEventLog('Checking if SWorker is awake')
         workerPing()

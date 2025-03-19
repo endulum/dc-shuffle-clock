@@ -1,4 +1,4 @@
-import doAlert from '../src/functions/getAlertString.ts';
+import doAlert from '../src/_functions/getAlertString.ts';
 import defaultSettings from '../src/helpers/defaultSettings.ts';
 
 const time = {

@@ -1,4 +1,18 @@
-import useClockSettings from './hooks/useClockSettings.ts'
+export default function App() {
+  return (
+    <>
+      <Clock />
+      <main>
+        <DelayMgmt />
+        <SoundMgmt />
+        <NotifMgmt />
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+/* import useClockSettings from './hooks/useClockSettings.ts'
 import useNotifSettings from './hooks/useNotifSettings.ts'
 import useCustomAudio from './hooks/useCustomAudio.ts'
 
@@ -65,3 +79,4 @@ export default function App (): JSX.Element {
     </>
   )
 }
+ */

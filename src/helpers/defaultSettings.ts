@@ -1,4 +1,4 @@
-import { type IClockSettings } from '../types.ts'
+import { type IClockSettings } from '../types.ts';
 
 const defaultSettings: IClockSettings = {
   delay: 15,
@@ -14,7 +14,7 @@ const defaultSettings: IClockSettings = {
   biomeEnabled: false,
   biomeSelect: '5',
   biomeOpenType: 'window',
-  notifAutoDismiss: false
-}
+  notifAutoDismiss: false,
+};
 
-export default defaultSettings
+export default defaultSettings;

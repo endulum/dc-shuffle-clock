@@ -1,3 +1,9 @@
+import { Clock } from './components/Clock';
+import { DelayMgmt } from './components/DelayMgmt';
+import { SoundMgmt } from './components/SoundMgmt';
+import { NotifMgmt } from './components/NotifMgmt';
+import { Footer } from './components/Footer';
+
 export default function App() {
   return (
     <>

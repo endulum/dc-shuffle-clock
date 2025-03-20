@@ -1,5 +1,5 @@
 import doAlert from '../src/_functions/getAlertString.ts';
-import defaultSettings from '../src/helpers/defaultSettings.ts';
+import defaultSettings from '../src/functions/defaultSettings.ts';
 
 const time = {
   minutes: 4,

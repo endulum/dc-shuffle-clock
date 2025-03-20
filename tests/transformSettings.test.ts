@@ -1,5 +1,5 @@
-import transformSettings from '../src/helpers/transformSettings.ts';
-import defaultSettings from '../src/helpers/defaultSettings.ts';
+import transformSettings from '../src/functions/transformSettings.ts';
+import defaultSettings from '../src/functions/defaultSettings.ts';
 
 describe('transforming unknown data into usable clock settings', () => {
   it('should return all defaults if data is null or not an object', () => {

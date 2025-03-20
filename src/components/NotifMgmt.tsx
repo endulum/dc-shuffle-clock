@@ -1,3 +1,9 @@
+import { SettingSwitch } from './reusable/SettingSwitch';
+
 export function NotifMgmt() {
-  return <p>notif mgmt here</p>;
+  return (
+    <SettingSwitch
+      setting={{ id: 'notifsEnabled', name: 'Notifications', checked: false }}
+    />
+  );
 }

@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 
-import { useLogger } from './useLogger.ts';
 import { type ITime } from '../types.ts';
 
-export function useClock(alert: (time: ITime) => void): {
+export function useClock({
+  onPlay,
+  onPause,
+  onAlert,
+}: {
+  onPlay: () => void;
+  onPause: () => void;
+  onAlert: (time: ITime) => void;
+}): {
   time: ITime;
   isPaused: boolean;
   togglePause: () => void;
 } {
   const [time, setTime] = useState<ITime>({ minutes: 0, seconds: 0 });
   const [isPaused, setIsPaused] = useState<boolean>(true);
-
-  useLogger({ time: JSON.stringify(time), isPaused });
 
   function getTimeNow(): void {
     const date = new Date();
@@ -20,10 +25,13 @@ export function useClock(alert: (time: ITime) => void): {
       seconds: date.getSeconds(),
     };
     setTime(time);
-    if (!isPaused) alert(time);
+    if (!isPaused) onAlert(time);
   }
 
   function togglePause(): void {
+    if (isPaused) onPlay();
+    else onPause();
+
     setIsPaused(!isPaused);
     getTimeNow();
   }

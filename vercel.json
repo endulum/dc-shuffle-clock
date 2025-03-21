@@ -1,7 +1,7 @@
 {
   "git": {
     "deploymentEnabled": {
-      "2025-remake": false
+      "2025-remake": true
     }
   }
 }

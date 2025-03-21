@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDocumentTitle } from 'usehooks-ts';
 
 import { Pause, PlayArrow, Loop } from '@mui/icons-material';
@@ -6,20 +6,27 @@ import { Pause, PlayArrow, Loop } from '@mui/icons-material';
 import { useClock } from '../hooks/useClock';
 import * as messages from '../functions/serviceWorkerMessages';
 
-const unloadEvent = async () => {
+/* const unloadEvent = async () => {
   await messages.pause();
-};
+}; */
+
+let counter: number = 0;
 
 export function Clock() {
   const [isAlerting, setIsAlerting] = useState<boolean>(false);
 
   const { time, isPaused, togglePause } = useClock({
-    onPlay: async () => await messages.play(),
-    onPause: async () => await messages.pause(),
-    onAlert: (time) => {
+    /* onPlay: async () => await messages.play(),
+    onPause: async () => await messages.pause(), */
+    onPause: () => {
+      counter = 0;
+    },
+    onAlert: async (time) => {
       if (time.seconds % 5 === 0) {
         setIsAlerting(true);
         setTimeout(() => setIsAlerting(false), 2020);
+        counter++;
+        await messages.notify(counter);
       }
     },
   });
@@ -32,12 +39,12 @@ export function Clock() {
           .padStart(2, '0')} until next shuffle`
   );
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (window) window.addEventListener('beforeunload', unloadEvent);
     return () => {
       if (window) window.addEventListener('beforeunload', unloadEvent);
     };
-  }, []);
+  }, []); */
 
   return (
     <div className="clock flex-row aic jcc">

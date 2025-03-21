@@ -1,4 +1,4 @@
-// because the service worker is privileged with its own thread,
+/* // because the service worker is privileged with its own thread,
 // we won't rely on the dom to provide alerts. instead,
 // the worker can use a "schedule" to provide alerts.
 
@@ -36,26 +36,31 @@ function startInterval(initialTimeout) {
       counter++;
     }, 5000);
   }, getMsToAlert()); // use initialTimeout here
-}
+} */
 
 self.addEventListener('message', (event) => {
   switch (event.data.type) {
-    case 'start_notifying':
+    case 'notify':
+      self.registration.showNotification(`Alert ${event.data.count}`, {
+        body: `This is the ${event.data.count}th consecutive alert.`,
+      });
+      break;
+    /* case 'start_notifying':
       startInterval();
       break;
     case 'stop_notifying':
       stopInterval();
-      break;
+      break; */
     default:
       console.warn('Unknown event: ', event);
   }
 });
 
-function getMsToAlert() {
+/* function getMsToAlert() {
   const seconds = (() => {
     const date = new Date();
     return date.getSeconds();
   })();
 
   return (5 - (seconds % 5)) * 1000;
-}
+}*/

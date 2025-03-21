@@ -7,8 +7,8 @@ export function useClock({
   onPause,
   onAlert,
 }: {
-  onPlay: () => void;
-  onPause: () => void;
+  onPlay?: () => void;
+  onPause?: () => void;
   onAlert: (time: ITime) => void;
 }): {
   time: ITime;
@@ -29,8 +29,8 @@ export function useClock({
   }
 
   function togglePause(): void {
-    if (isPaused) onPlay();
-    else onPause();
+    if (isPaused && onPlay) onPlay();
+    else if (onPause) onPause();
 
     setIsPaused(!isPaused);
     getTimeNow();

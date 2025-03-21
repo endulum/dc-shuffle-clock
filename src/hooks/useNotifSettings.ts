@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TNotifPerms, TNotifTypes } from '../types';
+import { useLogger } from './useLogger';
 
 export function useNotifState(): {
   permission: TNotifPerms;
@@ -17,6 +18,7 @@ export function useNotifState(): {
   });
 
   const [support, setSupport] = useState<TNotifTypes>(null);
+  useLogger({ support });
 
   async function askPermission(): Promise<void> {
     try {
@@ -31,7 +33,9 @@ export function useNotifState(): {
 
   useEffect(() => {
     if (permission !== 'allowed') return;
-    try {
+    if ('serviceWorker' in navigator) setSupport('sworker');
+    if ('Nofitication' in window) setSupport('browser');
+    /* try {
       // ok, so my intention is to prioritize the Notification API
       // and failsafe to the service worker. some mobile browsers
       // will have (`Notification` in window) be true but throw
@@ -46,7 +50,7 @@ export function useNotifState(): {
       if (err instanceof Error && err.name === 'TypeError') {
         setSupport('sworker');
       }
-    }
+    } */
   }, []);
 
   return { permission, askPermission, support };

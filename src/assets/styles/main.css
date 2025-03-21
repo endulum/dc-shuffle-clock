@@ -132,6 +132,9 @@ main {
     position: absolute;
     opacity: 0;
   }
+}
+
+.switch:not(.unhoverable) {
   &:has(> input[type='checkbox']:focus),
   &:has(> input[type='checkbox']:focus-visible),
   &:hover {

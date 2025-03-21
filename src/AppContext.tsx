@@ -3,7 +3,7 @@ import { createContext, type ChangeEvent } from 'react';
 import { IClockSettings } from './types';
 import { useClockSettings } from './hooks/useClockSettings';
 
-const SettingsContext = createContext(
+const AppContext = createContext(
   {} as {
     clockSettings: IClockSettings;
     handleInput: <T extends ChangeEvent<HTMLInputElement | HTMLSelectElement>>(
@@ -12,11 +12,7 @@ const SettingsContext = createContext(
   }
 );
 
-const SettingsContextProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { clockSettings, setClockSettings } = useClockSettings();
 
   function handleInput<
@@ -52,10 +48,10 @@ const SettingsContextProvider = ({
   }
 
   return (
-    <SettingsContext.Provider value={{ clockSettings, handleInput }}>
+    <AppContext.Provider value={{ clockSettings, handleInput }}>
       {children}
-    </SettingsContext.Provider>
+    </AppContext.Provider>
   );
 };
 
-export { SettingsContext, SettingsContextProvider };
+export { AppContext, AppContextProvider };

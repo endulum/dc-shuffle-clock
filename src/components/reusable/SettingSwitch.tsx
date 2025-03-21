@@ -1,13 +1,13 @@
 import { useContext, useRef } from 'react';
 
-import { SettingsContext } from '../../SettingsContext';
+import { AppContext } from '../../AppContext';
 
 export function SettingSwitch({
   setting,
 }: {
   setting: { id: string; name: string; checked: boolean };
 }) {
-  const { handleInput } = useContext(SettingsContext);
+  const { handleInput } = useContext(AppContext);
   const switchLabel = useRef<HTMLLabelElement>(null);
 
   return (

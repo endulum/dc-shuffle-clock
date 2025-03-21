@@ -41,8 +41,16 @@ function startInterval(initialTimeout) {
 self.addEventListener('message', (event) => {
   switch (event.data.type) {
     case 'notify':
+      const time = (() => {
+        const date = new Date();
+        return { seconds: date.getSeconds(), minutes: date.getMinutes() };
+      })();
       self.registration.showNotification(`Alert ${event.data.count}`, {
-        body: `This is the ${event.data.count}th consecutive alert.`,
+        body: `It is ${time.minutes.toString().padStart(2, '0')}:${time.seconds
+          .toString()
+          .padStart(2, '0')}. This is the ${
+          event.data.count
+        }th consecutive alert.`,
       });
       break;
     /* case 'start_notifying':

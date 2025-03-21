@@ -35,7 +35,7 @@ function startInterval(initialTimeout) {
       });
       counter++;
     }, 5000);
-  }, 1000); // use initialTimeout here
+  }, getMsToAlert()); // use initialTimeout here
 }
 
 self.addEventListener('message', (event) => {
@@ -50,3 +50,12 @@ self.addEventListener('message', (event) => {
       console.warn('Unknown event: ', event);
   }
 });
+
+function getMsToAlert() {
+  const seconds = (() => {
+    const date = new Date();
+    return date.getSeconds();
+  })();
+
+  return (5 - (seconds % 5)) * 1000;
+}

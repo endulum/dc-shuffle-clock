@@ -17,7 +17,7 @@ export function Clock() {
     onPlay: async () => await messages.play(),
     onPause: async () => await messages.pause(),
     onAlert: (time) => {
-      if (time.seconds % 10 === 0) {
+      if (time.seconds % 5 === 0) {
         setIsAlerting(true);
         setTimeout(() => setIsAlerting(false), 2020);
       }

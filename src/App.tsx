@@ -1,3 +1,5 @@
+import 'hacktimer/HackTimer.min';
+
 import { Clock } from './components/Clock';
 import { DelayMgmt } from './components/DelayMgmt';
 import { SoundMgmt } from './components/SoundMgmt';

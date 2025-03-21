@@ -1,10 +1,13 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
+
+import { SettingsContext } from '../../SettingsContext';
 
 export function SettingSwitch({
   setting,
 }: {
   setting: { id: string; name: string; checked: boolean };
 }) {
+  const { handleInput } = useContext(SettingsContext);
   const switchLabel = useRef<HTMLLabelElement>(null);
 
   return (
@@ -24,7 +27,8 @@ export function SettingSwitch({
         type="checkbox"
         role="switch"
         id={setting.id}
-        defaultChecked={setting.checked}
+        checked={setting.checked}
+        onChange={handleInput}
       />
 
       <span className="flex-row aic g-05">

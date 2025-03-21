@@ -4,16 +4,20 @@ import { SoundMgmt } from './components/SoundMgmt';
 import { NotifMgmt } from './components/NotifMgmt';
 import { Footer } from './components/Footer';
 
+import { SettingsContextProvider } from './SettingsContext';
+
 export default function App() {
   return (
     <>
-      <Clock />
-      <main>
-        <DelayMgmt />
-        <SoundMgmt />
-        <NotifMgmt />
-      </main>
-      <Footer />
+      <SettingsContextProvider>
+        <Clock />
+        <main>
+          <DelayMgmt />
+          <SoundMgmt />
+          <NotifMgmt />
+        </main>
+        <Footer />
+      </SettingsContextProvider>
     </>
   );
 }

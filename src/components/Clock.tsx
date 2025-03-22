@@ -17,7 +17,7 @@ export function Clock() {
       setIsAlerting(false);
       counter = 0;
     },
-    onAlert: async (time) => {
+    onTick: async (time) => {
       if (time.seconds % 5 === 0) {
         setIsAlerting(true);
         setTimeout(() => setIsAlerting(false), 2020);

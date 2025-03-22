@@ -5,11 +5,11 @@ import { type ITime } from '../types.ts';
 export function useClock({
   onPlay,
   onPause,
-  onAlert,
+  onTick,
 }: {
   onPlay?: () => void;
   onPause?: () => void;
-  onAlert: (time: ITime) => void;
+  onTick: (time: ITime) => void;
 }): {
   time: ITime;
   isPaused: boolean;
@@ -25,7 +25,7 @@ export function useClock({
       seconds: date.getSeconds(),
     };
     setTime(time);
-    if (!isPaused) onAlert(time);
+    if (!isPaused) onTick(time);
   }
 
   function togglePause(): void {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { TNotifPerms, TNotifTypes } from '../types';
-import { useLogger } from './useLogger';
 
 export function useNotifState(): {
   permission: TNotifPerms;
   askPermission: () => Promise<void>;
   support: TNotifTypes;
+  setSupport: React.Dispatch<React.SetStateAction<TNotifTypes>>;
 } {
   const [permission, setPermission] = useState<TNotifPerms>(() => {
     // something to keep in mind is the
@@ -18,7 +18,6 @@ export function useNotifState(): {
   });
 
   const [support, setSupport] = useState<TNotifTypes>(null);
-  useLogger({ support });
 
   async function askPermission(): Promise<void> {
     try {
@@ -33,25 +32,16 @@ export function useNotifState(): {
 
   useEffect(() => {
     if (permission !== 'allowed') return;
-    if ('serviceWorker' in navigator) setSupport('sworker');
-    if ('Nofitication' in window) setSupport('browser');
-    /* try {
-      // ok, so my intention is to prioritize the Notification API
-      // and failsafe to the service worker. some mobile browsers
-      // will have (`Notification` in window) be true but throw
-      // an error when a real notification is invoked, hence this.
-      // todo: find a "cleaner" way, because dummy notifs are annoying
-      const notif = new Notification('', { silent: true });
-      setTimeout(() => {
-        notif.close();
-      }, 1);
+    if ('Nofitication' in window) {
+      // eslint-disable-next-line no-console
+      console.log('Initializing with native notification support...');
       setSupport('browser');
-    } catch (err) {
-      if (err instanceof Error && err.name === 'TypeError') {
-        setSupport('sworker');
-      }
-    } */
+    } else if ('serviceWorker' in navigator) {
+      // eslint-disable-next-line no-console
+      console.log('Initializing with native notification support...');
+      setSupport('sworker');
+    }
   }, []);
 
-  return { permission, askPermission, support };
+  return { permission, askPermission, support, setSupport };
 }

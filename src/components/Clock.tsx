@@ -6,8 +6,7 @@ import { Pause, PlayArrow, Loop } from '@mui/icons-material';
 import { useClock } from '../hooks/useClock';
 import { notify } from '../functions/notify';
 import { AppContext } from '../AppContext';
-
-let counter: number = 0;
+import getAlertString from '../functions/getAlertString';
 
 export function Clock() {
   const { support, setSupport, clockSettings } = useContext(AppContext);
@@ -15,19 +14,19 @@ export function Clock() {
   const { time, isPaused, togglePause } = useClock({
     onPause: () => {
       setIsAlerting(false);
-      counter = 0;
     },
     onTick: async (time) => {
-      if (time.seconds % 5 === 0) {
+      const string = getAlertString(time, clockSettings);
+      if (string) {
         setIsAlerting(true);
         setTimeout(() => setIsAlerting(false), 2020);
-        counter++;
-        await notify({
-          support,
-          setSupport,
-          string: `This is the ${counter}th consecutive alert.`,
-          settings: clockSettings,
-        });
+        if (clockSettings.notifsEnabled)
+          await notify({
+            string,
+            support,
+            setSupport,
+            settings: clockSettings,
+          });
       }
     },
   });

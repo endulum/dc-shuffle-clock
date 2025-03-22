@@ -22,7 +22,10 @@ export function useNotifState(): {
   async function askPermission(): Promise<void> {
     try {
       const permission = await Notification.requestPermission();
-      if (permission === 'granted') setPermission('allowed');
+      if (permission === 'granted') {
+        setPermission('allowed');
+        initSupport();
+      }
       if (permission === 'denied') setPermission('blocked');
     } catch (e) {
       console.warn(e);
@@ -30,8 +33,7 @@ export function useNotifState(): {
     }
   }
 
-  useEffect(() => {
-    if (permission !== 'allowed') return;
+  function initSupport() {
     if ('Notification' in window) {
       // eslint-disable-next-line no-console
       console.log('Initializing with native notification support...');
@@ -41,6 +43,11 @@ export function useNotifState(): {
       console.log('Initializing with Service Worker support...');
       setSupport('sworker');
     }
+  }
+
+  useEffect(() => {
+    if (permission !== 'allowed') return;
+    initSupport();
   }, []);
 
   return { permission, askPermission, support, setSupport };

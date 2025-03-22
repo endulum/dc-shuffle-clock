@@ -32,13 +32,13 @@ export function useNotifState(): {
 
   useEffect(() => {
     if (permission !== 'allowed') return;
-    if ('Nofitication' in window) {
+    if ('Notification' in window) {
       // eslint-disable-next-line no-console
       console.log('Initializing with native notification support...');
       setSupport('browser');
     } else if ('serviceWorker' in navigator) {
       // eslint-disable-next-line no-console
-      console.log('Initializing with native notification support...');
+      console.log('Initializing with Service Worker support...');
       setSupport('sworker');
     }
   }, []);

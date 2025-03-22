@@ -24,10 +24,10 @@
   gap: 0.25rem;
 }
 
-.align-start {
+.ais {
   align-items: start;
 }
-.align-end {
+.aie {
   align-items: end;
 }
 
@@ -37,10 +37,10 @@
 .jcc {
   justify-content: center;
 }
-.jcstart {
+.jcs {
   justify-content: start;
 }
-.jcend {
+.jce {
   justify-content: end;
 }
 

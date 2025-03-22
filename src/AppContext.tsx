@@ -8,6 +8,7 @@ const AppContext = createContext(
   {} as {
     // settings
     clockSettings: IClockSettings;
+    setClockSettings: React.Dispatch<React.SetStateAction<IClockSettings>>;
     handleInput: <T extends ChangeEvent<HTMLInputElement | HTMLSelectElement>>(
       event: T
     ) => void;
@@ -59,6 +60,7 @@ const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
     <AppContext.Provider
       value={{
         clockSettings,
+        setClockSettings,
         handleInput,
         permission,
         askPermission,

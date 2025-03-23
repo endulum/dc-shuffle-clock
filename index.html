@@ -13,21 +13,19 @@
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
           .register('./sw.js', { scope: '/' })
-          .then((registration) => {
-            console.log('service worker registered');
-          })
-          .catch((e) => {
-            console.warn(e);
-            // alert(e)
-          });
+          .then((registration) => console.log('worker registered'))
+          .catch((e) => console.warn(e));
         navigator.serviceWorker.ready
-          .then((registration) => {
-            console.log('service worker ready');
-          })
-          .catch((e) => {
-            console.warn(e);
-            // alert(e)
-          });
+          .then((registration) => console.log('worker ready'))
+          .catch((e) => console.warn(e));
+
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data.action === 'openBiome' && event.data.url) {
+            setTimeout(() => {
+              window.open(event.data.url, '_blank');
+            }, 100);
+          }
+        });
       }
     </script>
     <script type="module" src="/src/main.tsx"></script>

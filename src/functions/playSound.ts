@@ -1,4 +1,3 @@
-import { addToEventLog } from '../_functions/addToEventLog.ts';
 import { type IClockSettings } from '../types.ts';
 
 export function playSound(
@@ -12,8 +11,5 @@ export function playSound(
     sound = new Audio(`./audio/${settings.soundDefaultSelect}.mp3`);
   }
   sound.volume = settings.soundVolume / 100;
-  sound.play().catch((err) => {
-    console.error(err);
-    addToEventLog(err);
-  });
+  sound.play().catch((err) => console.error(err));
 }

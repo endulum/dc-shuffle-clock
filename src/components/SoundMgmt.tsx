@@ -41,6 +41,7 @@ export function SoundMgmt() {
         <button
           className="setting-play"
           title="Click to test sound"
+          disabled={!clockSettings.soundEnabled}
           onClick={async () => {
             try {
               playSound(clockSettings, customAudio);

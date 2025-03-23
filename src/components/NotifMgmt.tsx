@@ -23,6 +23,11 @@ export function NotifMgmt() {
         <button
           className="setting-play"
           title="Click to test notifications"
+          disabled={
+            !clockSettings.notifsEnabled ||
+            permission !== 'allowed' ||
+            support === null
+          }
           onClick={async () => {
             try {
               await notify({

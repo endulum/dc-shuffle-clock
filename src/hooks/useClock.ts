@@ -16,7 +16,7 @@ export function useClock({
   togglePause: () => void;
 } {
   const [time, setTime] = useState<ITime>({ minutes: 0, seconds: 0 });
-  const [isPaused, setIsPaused] = useState<boolean>(true);
+  const [isPaused, setIsPaused] = useState(true);
 
   function getTimeNow(): void {
     const date = new Date();

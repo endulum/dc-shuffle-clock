@@ -14,7 +14,7 @@ export function Clock() {
   const { support, setSupport, clockSettings, setError } =
     useContext(AppContext);
   const { customAudio } = useCustomAudio();
-  const [isAlerting, setIsAlerting] = useState<boolean>(false);
+  const [isAlerting, setIsAlerting] = useState(false);
   const { time, isPaused, togglePause } = useClock({
     onPause: () => {
       setIsAlerting(false);
@@ -69,9 +69,11 @@ export function Clock() {
     <div className="clock flex-row aic jcc">
       <button
         type="button"
-        className={`clock-button ${
-          isAlerting ? 'alerting' : isPaused ? 'pausing' : 'playing'
-        } p-05`}
+        className={`clock-button ${(() => {
+          if (isAlerting) return 'alerting';
+          if (isPaused) return 'pausing';
+          return 'playing';
+        })()} p-05`}
         title={isPaused ? 'start the clock' : 'pause the clock'}
         aria-pressed={!isPaused}
         onClick={togglePause}

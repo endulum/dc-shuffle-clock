@@ -2,12 +2,14 @@ import { useContext } from 'react';
 
 import { AppContext } from '../AppContext';
 
-export function DelayMgmt() {
+export function DelayManagement() {
   const { clockSettings, handleInput } = useContext(AppContext);
   return (
     <div className="flex-col">
-      <label htmlFor="delay" className="flex-row jcspb w100">
-        <b>Delay:</b>
+      <div className="flex-row jcspb w100">
+        <label htmlFor="delay">
+          <b>Delay:</b>
+        </label>
         <span>
           <input
             id="delay"
@@ -20,7 +22,7 @@ export function DelayMgmt() {
           />
           &nbsp; seconds before shuffle
         </span>
-      </label>
+      </div>
 
       <div className="setting-body w100 mt-05">
         <div

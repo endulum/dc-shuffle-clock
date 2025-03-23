@@ -6,7 +6,7 @@ import { SettingSwitch } from './reusable/SettingSwitch';
 import { SettingBody } from './reusable/SettingBody';
 import { notify } from '../functions/notify';
 
-export function NotifMgmt() {
+export function NotifManagement() {
   const {
     clockSettings,
     handleInput,
@@ -21,6 +21,7 @@ export function NotifMgmt() {
       settingBool={clockSettings.notifsEnabled && permission === 'allowed'}
       buttonComponent={
         <button
+          type="button"
           className="setting-play"
           title="Click to test notifications"
           disabled={

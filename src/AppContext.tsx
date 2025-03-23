@@ -1,6 +1,10 @@
 import { useState, createContext, type ChangeEvent } from 'react';
 
-import { IClockSettings, TNotifPerms, TNotifTypes } from './types';
+import {
+  type IClockSettings,
+  type TNotifPerms,
+  type TNotifTypes,
+} from './types';
 import { useClockSettings } from './hooks/useClockSettings';
 import { useNotifState } from './hooks/useNotifState';
 

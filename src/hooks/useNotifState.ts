@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TNotifPerms, TNotifTypes } from '../types';
+import { type TNotifPerms, type TNotifTypes } from '../types';
 
 export function useNotifState(): {
   permission: TNotifPerms;

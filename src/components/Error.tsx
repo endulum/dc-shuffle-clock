@@ -15,11 +15,7 @@ export function Error() {
     // listen for errors from the service worker too
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
       navigator.serviceWorker.addEventListener('message', (event): void => {
-        if (
-          event.data &&
-          event.data.type === 'error' &&
-          'error' in event.data
-        ) {
+        if (event.data?.type === 'error' && event.data?.error) {
           setError({
             type: 'Error with Service Worker',
             message: event.data.error,
@@ -33,6 +29,7 @@ export function Error() {
     return (
       <div className="error flex-row ais g-05 p-05 w100">
         <button
+          type="button"
           onClick={() => {
             setError(null);
           }}

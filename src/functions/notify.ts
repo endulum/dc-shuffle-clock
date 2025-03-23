@@ -1,4 +1,4 @@
-import { IClockSettings, TNotifTypes } from '../types';
+import { type IClockSettings, type TNotifTypes } from '../types';
 
 export async function notify({
   string,

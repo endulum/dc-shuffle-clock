@@ -8,7 +8,7 @@ import { playSound } from '../functions/playSound';
 import { getAudioString } from '../functions/getAudioString';
 import { useCustomAudio } from '../hooks/useCustomAudio';
 
-export function SoundMgmt() {
+export function SoundManagement() {
   const { clockSettings, setClockSettings, handleInput, setError } =
     useContext(AppContext);
   const { customAudio, initCustomAudio } = useCustomAudio();
@@ -26,11 +26,17 @@ export function SoundMgmt() {
   const handleAudioInput = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files === null || event.target.files.length === 0) return;
     const file = event.target.files[0];
-    const audioString = await getAudioString(file);
-    if (audioString) {
+    try {
+      const audioString = await getAudioString(file);
       localStorage.setItem('customSoundData', audioString);
       initCustomAudio();
       setClockSettings({ ...clockSettings, soundCustomTitle: file.name });
+    } catch (e) {
+      console.error(e);
+      setError({
+        type: 'Error uploading sound',
+        message: e instanceof Error ? e.message : 'See console for details.',
+      });
     }
   };
 
@@ -39,6 +45,7 @@ export function SoundMgmt() {
       settingBool={clockSettings.soundEnabled}
       buttonComponent={
         <button
+          type="button"
           className="setting-play"
           title="Click to test sound"
           disabled={!clockSettings.soundEnabled}
@@ -136,7 +143,7 @@ export function SoundMgmt() {
               </small>
             </div>
           )}
-          <label htmlFor="soundUpload" className="row">
+          <label aria-labelledby="soundUpload">
             <input
               aria-label="upload custom sound as a file"
               type="file"

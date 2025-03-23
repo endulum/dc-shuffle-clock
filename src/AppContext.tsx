@@ -1,8 +1,13 @@
-import { createContext, type ChangeEvent } from 'react';
+import { useState, createContext, type ChangeEvent } from 'react';
 
 import { IClockSettings, TNotifPerms, TNotifTypes } from './types';
 import { useClockSettings } from './hooks/useClockSettings';
 import { useNotifState } from './hooks/useNotifState';
+
+type Error = {
+  type: string;
+  message: string;
+};
 
 const AppContext = createContext(
   {} as {
@@ -17,12 +22,15 @@ const AppContext = createContext(
     askPermission: () => Promise<void>;
     support: TNotifTypes;
     setSupport: React.Dispatch<React.SetStateAction<TNotifTypes>>;
+    error: Error | null;
+    setError: React.Dispatch<React.SetStateAction<Error | null>>;
   }
 );
 
 const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
   const { clockSettings, setClockSettings } = useClockSettings();
   const { permission, askPermission, support, setSupport } = useNotifState();
+  const [error, setError] = useState<Error | null>(null);
 
   function handleInput<
     T extends ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -66,6 +74,8 @@ const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
         askPermission,
         support,
         setSupport,
+        error,
+        setError,
       }}
     >
       {children}

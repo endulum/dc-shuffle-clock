@@ -1,6 +1,7 @@
 import 'hacktimer/HackTimer.min';
 
 import { Clock } from './components/Clock';
+import { Error } from './components/Error';
 import { DelayMgmt } from './components/DelayMgmt';
 import { SoundMgmt } from './components/SoundMgmt';
 import { NotifMgmt } from './components/NotifMgmt';
@@ -13,6 +14,7 @@ export default function App() {
     <>
       <AppContextProvider>
         <Clock />
+        <Error />
         <main>
           <DelayMgmt />
           <SoundMgmt />

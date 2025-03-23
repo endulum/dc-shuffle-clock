@@ -11,30 +11,26 @@ export async function notify({
   support: TNotifTypes;
   setSupport: React.Dispatch<React.SetStateAction<TNotifTypes>>;
 }) {
-  try {
-    if (support === 'sworker') {
-      try {
-        await notifyWithSw(string, settings);
-      } catch {
-        await notifyWithApi(string, settings);
-        console.warn(
-          'Notifying using service worker failed, switching to native notifications...'
-        );
-        setSupport('browser');
-      }
-    } else if (support === 'browser') {
-      try {
-        await notifyWithApi(string, settings);
-      } catch {
-        await notifyWithSw(string, settings);
-        console.warn(
-          'Notifying using native notifications failed, switching to service worker...'
-        );
-        setSupport('sworker');
-      }
+  if (support === 'sworker') {
+    try {
+      await notifyWithSw(string, settings);
+    } catch {
+      await notifyWithApi(string, settings);
+      console.warn(
+        'Notifying using service worker failed, switching to native notifications...'
+      );
+      setSupport('browser');
     }
-  } catch (e) {
-    console.error(e);
+  } else if (support === 'browser') {
+    try {
+      await notifyWithApi(string, settings);
+    } catch {
+      await notifyWithSw(string, settings);
+      console.warn(
+        'Notifying using native notifications failed, switching to service worker...'
+      );
+      setSupport('sworker');
+    }
   }
 }
 

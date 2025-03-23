@@ -21,9 +21,16 @@
 
         navigator.serviceWorker.addEventListener('message', (event) => {
           if (event.data.action === 'openBiome' && event.data.url) {
-            setTimeout(() => {
-              window.open(event.data.url, '_blank');
-            }, 100);
+            try {
+              setTimeout(() => {
+                window.open(event.data.url, '_blank');
+              }, 100);
+            } catch (e) {
+              console.error(e);
+              navigator.serviceWorker.controller.postMessage({
+                error: e.message ?? 'See console for details',
+              });
+            }
           }
         });
       }

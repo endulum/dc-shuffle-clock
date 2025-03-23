@@ -14,6 +14,7 @@ export function NotifMgmt() {
     setSupport,
     permission,
     askPermission,
+    setError,
   } = useContext(AppContext);
   return (
     <SettingBody
@@ -23,12 +24,21 @@ export function NotifMgmt() {
           className="setting-play"
           title="Click to test notifications"
           onClick={async () => {
-            await notify({
-              string: 'This is a test notification.',
-              settings: clockSettings,
-              support,
-              setSupport,
-            });
+            try {
+              await notify({
+                string: 'This is a test notification.',
+                settings: clockSettings,
+                support,
+                setSupport,
+              });
+            } catch (e) {
+              console.error(e);
+              setError({
+                type: 'Error testing shuffle notification',
+                message:
+                  e instanceof Error ? e.message : 'See console for details.',
+              });
+            }
           }}
         >
           <PlayArrow />

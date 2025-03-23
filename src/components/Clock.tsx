@@ -11,7 +11,8 @@ import { playSound } from '../functions/playSound';
 import { useCustomAudio } from '../hooks/useCustomAudio';
 
 export function Clock() {
-  const { support, setSupport, clockSettings } = useContext(AppContext);
+  const { support, setSupport, clockSettings, setError } =
+    useContext(AppContext);
   const { customAudio } = useCustomAudio();
   const [isAlerting, setIsAlerting] = useState<boolean>(false);
   const { time, isPaused, togglePause } = useClock({
@@ -24,13 +25,34 @@ export function Clock() {
         setIsAlerting(true);
         setTimeout(() => setIsAlerting(false), 2020);
         if (clockSettings.notifsEnabled)
-          await notify({
-            string,
-            support,
-            setSupport,
-            settings: clockSettings,
-          });
-        if (clockSettings.soundEnabled) playSound(clockSettings, customAudio);
+          try {
+            await notify({
+              string,
+              support,
+              setSupport,
+              settings: clockSettings,
+            });
+          } catch (e) {
+            console.error(e);
+            setError({
+              type: 'Error creating shuffle notification',
+              message:
+                e instanceof Error ? e.message : 'See console for details.',
+            });
+          }
+
+        if (clockSettings.soundEnabled) {
+          try {
+            playSound(clockSettings, customAudio);
+          } catch (e) {
+            console.error(e);
+            setError({
+              type: 'Error playing shuffle sound',
+              message:
+                e instanceof Error ? e.message : 'See console for details.',
+            });
+          }
+        }
       }
     },
   });

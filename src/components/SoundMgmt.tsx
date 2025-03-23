@@ -9,7 +9,7 @@ import { getAudioString } from '../functions/getAudioString';
 import { useCustomAudio } from '../hooks/useCustomAudio';
 
 export function SoundMgmt() {
-  const { clockSettings, setClockSettings, handleInput } =
+  const { clockSettings, setClockSettings, handleInput, setError } =
     useContext(AppContext);
   const { customAudio, initCustomAudio } = useCustomAudio();
 
@@ -42,7 +42,16 @@ export function SoundMgmt() {
           className="setting-play"
           title="Click to test sound"
           onClick={async () => {
-            playSound(clockSettings, customAudio);
+            try {
+              playSound(clockSettings, customAudio);
+            } catch (e) {
+              console.error(e);
+              setError({
+                type: 'Error testing sound',
+                message:
+                  e instanceof Error ? e.message : 'See console for details.',
+              });
+            }
           }}
         >
           <PlayArrow />

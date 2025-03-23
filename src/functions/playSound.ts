@@ -11,5 +11,5 @@ export function playSound(
     sound = new Audio(`./audio/${settings.soundDefaultSelect}.mp3`);
   }
   sound.volume = settings.soundVolume / 100;
-  sound.play().catch((err) => console.error(err));
+  sound.play();
 }

@@ -6,7 +6,7 @@ import { Pause, PlayArrow, Loop } from '@mui/icons-material';
 import { useClock } from '../hooks/useClock';
 import { notify } from '../functions/notify';
 import { AppContext } from '../AppContext';
-import getAlertString from '../functions/getAlertString';
+// import getAlertString from '../functions/getAlertString';
 
 let counter: number = 0;
 

@@ -8,15 +8,29 @@ import { notify } from '../functions/notify';
 import { AppContext } from '../AppContext';
 import getAlertString from '../functions/getAlertString';
 
+let counter: number = 0;
+
 export function Clock() {
   const { support, setSupport, clockSettings } = useContext(AppContext);
   const [isAlerting, setIsAlerting] = useState<boolean>(false);
   const { time, isPaused, togglePause } = useClock({
     onPause: () => {
       setIsAlerting(false);
+      counter = 0;
     },
     onTick: async (time) => {
-      const string = getAlertString(time, clockSettings);
+      if (time.seconds % 5 === 0) {
+        counter++;
+        setIsAlerting(true);
+        setTimeout(() => setIsAlerting(false), 2020);
+        await notify({
+          string: `Test notif #${counter}`,
+          support,
+          setSupport,
+          settings: clockSettings,
+        });
+      }
+      /* const string = getAlertString(time, clockSettings);
       if (string) {
         setIsAlerting(true);
         setTimeout(() => setIsAlerting(false), 2020);
@@ -27,7 +41,7 @@ export function Clock() {
             setSupport,
             settings: clockSettings,
           });
-      }
+      } */
     },
   });
 

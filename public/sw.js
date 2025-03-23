@@ -7,7 +7,6 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('notificationclick', async (event) => {
-  event.notification.close();
   const { url, canJump } = event.notification.data;
   event.waitUntil(
     (async () => {

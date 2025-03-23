@@ -137,11 +137,9 @@ export function SoundManagement() {
         </div>
         <div className={clockSettings.soundCustomChoice ? '' : 'disabled'}>
           {clockSettings.soundCustomTitle !== '' && (
-            <div className="row">
-              <small>
-                Currently saved: <i>{clockSettings.soundCustomTitle}</i>
-              </small>
-            </div>
+            <small>
+              Currently saved: <i>{clockSettings.soundCustomTitle}</i>
+            </small>
           )}
           <label aria-labelledby="soundUpload">
             <input

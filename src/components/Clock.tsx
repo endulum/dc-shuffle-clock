@@ -7,9 +7,12 @@ import { useClock } from '../hooks/useClock';
 import { notify } from '../functions/notify';
 import { AppContext } from '../AppContext';
 import getAlertString from '../functions/getAlertString';
+import { playSound } from '../functions/playSound';
+import { useCustomAudio } from '../hooks/useCustomAudio';
 
 export function Clock() {
   const { support, setSupport, clockSettings } = useContext(AppContext);
+  const { customAudio } = useCustomAudio();
   const [isAlerting, setIsAlerting] = useState<boolean>(false);
   const { time, isPaused, togglePause } = useClock({
     onPause: () => {
@@ -27,6 +30,7 @@ export function Clock() {
             setSupport,
             settings: clockSettings,
           });
+        if (clockSettings.soundEnabled) playSound(clockSettings, customAudio);
       }
     },
   });

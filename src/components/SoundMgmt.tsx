@@ -4,10 +4,14 @@ import { PlayArrow } from '@mui/icons-material';
 import { AppContext } from '../AppContext';
 import { SettingSwitch } from './reusable/SettingSwitch';
 import { SettingBody } from './reusable/SettingBody';
+import { playSound } from '../functions/playSound';
+import { getAudioString } from '../functions/getAudioString';
+import { useCustomAudio } from '../hooks/useCustomAudio';
 
 export function SoundMgmt() {
   const { clockSettings, setClockSettings, handleInput } =
     useContext(AppContext);
+  const { customAudio, initCustomAudio } = useCustomAudio();
 
   const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
     setClockSettings({
@@ -19,6 +23,17 @@ export function SoundMgmt() {
     });
   };
 
+  const handleAudioInput = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files === null || event.target.files.length === 0) return;
+    const file = event.target.files[0];
+    const audioString = await getAudioString(file);
+    if (audioString) {
+      localStorage.setItem('customSoundData', audioString);
+      initCustomAudio();
+      setClockSettings({ ...clockSettings, soundCustomTitle: file.name });
+    }
+  };
+
   return (
     <SettingBody
       settingBool={clockSettings.soundEnabled}
@@ -27,7 +42,7 @@ export function SoundMgmt() {
           className="setting-play"
           title="Click to test sound"
           onClick={async () => {
-            // todo: play sound
+            playSound(clockSettings, customAudio);
           }}
         >
           <PlayArrow />
@@ -118,9 +133,7 @@ export function SoundMgmt() {
               id="soundUpload"
               accept=".wav,.mp3"
               disabled={!clockSettings.soundCustomChoice}
-              onChange={() => {
-                // todo: handle upload
-              }}
+              onChange={handleAudioInput}
             />
           </label>
         </div>

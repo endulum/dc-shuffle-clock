@@ -86,72 +86,60 @@ export function SoundManagement() {
         />
       </div>
 
-      <div className="flex-col ais g-25">
-        <div className="flex-row g-05">
-          <input
-            type="radio"
-            name="sound"
-            id="soundDefaultChoice"
-            defaultChecked={!clockSettings.soundCustomChoice}
-            onChange={handleToggle}
-          />
-          <label htmlFor="soundDefaultChoice">Use default sound</label>
-        </div>
-        <div
-          className={`flex-row g-05 w100 ${
-            clockSettings.soundCustomChoice ? 'disabled' : ''
-          }`}
+      <div className="sound-grid">
+        {/* select sound */}
+        <input
+          type="radio"
+          name="sound"
+          id="soundDefaultChoice"
+          defaultChecked={!clockSettings.soundCustomChoice}
+          onChange={handleToggle}
+        />
+        <label htmlFor="soundDefaultChoice">Select sound:</label>
+        <label htmlFor="soundDefaultSelect" className="sr-only">
+          Default sound
+        </label>
+        <select
+          className="flg"
+          id="soundDefaultSelect"
+          onChange={handleInput}
+          defaultValue={clockSettings.soundDefaultSelect}
+          disabled={clockSettings.soundCustomChoice}
         >
-          <label htmlFor="soundDefaultSelect">
-            <small>Select sound</small>
-          </label>
-          <select
-            className="flg"
-            id="soundDefaultSelect"
-            onChange={handleInput}
-            defaultValue={clockSettings.soundDefaultSelect}
-            disabled={clockSettings.soundCustomChoice}
-          >
-            {new Array(5)
-              .fill(0)
-              .map((_dummy, index) => `SMS Alert ${index + 1}`)
-              .map((sound) => (
-                <option key={sound} value={sound}>
-                  {sound}
-                </option>
-              ))}
-          </select>
-        </div>
-      </div>
+          {new Array(5)
+            .fill(0)
+            .map((_dummy, index) => `SMS Alert ${index + 1}`)
+            .map((sound) => (
+              <option key={sound} value={sound}>
+                {sound}
+              </option>
+            ))}
+        </select>
 
-      <div className="flex-col ais g-25">
-        <div className="flex-row g-05">
-          <input
-            type="radio"
-            name="sound"
-            id="soundCustomChoice"
-            defaultChecked={clockSettings.soundCustomChoice}
-            onChange={handleToggle}
-          />
-          <label htmlFor="soundCustomChoice">Upload custom sound</label>
-        </div>
-        <div className={clockSettings.soundCustomChoice ? '' : 'disabled'}>
-          {clockSettings.soundCustomTitle !== '' && (
-            <small>
-              Currently saved: <i>{clockSettings.soundCustomTitle}</i>
-            </small>
-          )}
-          <label aria-labelledby="soundUpload">
-            <input
-              aria-label="upload custom sound as a file"
-              type="file"
-              id="soundUpload"
-              accept=".wav,.mp3"
-              disabled={!clockSettings.soundCustomChoice}
-              onChange={handleAudioInput}
-            />
-          </label>
-        </div>
+        {/* upload sound */}
+        <input
+          type="radio"
+          name="sound"
+          id="soundCustomChoice"
+          defaultChecked={clockSettings.soundCustomChoice}
+          onChange={handleToggle}
+        />
+        <label htmlFor="soundCustomChoice">Upload custom:</label>
+        <label htmlFor="soundUpload" className="sr-only">
+          Upload a custom sound
+        </label>
+        <input
+          type="file"
+          id="soundUpload"
+          accept=".wav,.mp3"
+          disabled={!clockSettings.soundCustomChoice}
+          onChange={handleAudioInput}
+        />
+        {clockSettings.soundCustomTitle !== '' && (
+          <small>
+            Currently saved: <i>{clockSettings.soundCustomTitle}</i>
+          </small>
+        )}
       </div>
     </SettingBody>
   );

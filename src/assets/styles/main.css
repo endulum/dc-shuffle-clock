@@ -84,6 +84,15 @@ select {
 input[type='number'] {
   margin: 0 0.25rem;
 }
+label {
+  white-space: nowrap;
+  &.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+}
 
 #root {
   min-height: 100%;
@@ -272,6 +281,23 @@ main {
   margin-bottom: 0;
 }
 
+.sound-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
+  align-items: center;
+  [type='radio'] {
+    grid-column: 1 / 2;
+  }
+  *:not(small, [type='radio']) {
+    grid-column: 2 / 3;
+  }
+  small {
+    grid-column: 2 / 4;
+  }
+}
+
 /* footer */
 
 footer {
@@ -339,6 +365,13 @@ footer {
   .setting {
     .setting-body {
       margin-left: 0.5rem;
+    }
+  }
+
+  .sound-grid {
+    grid-template-columns: auto auto 1fr;
+    *:not(small, [type='radio']) {
+      grid-column: auto;
     }
   }
 }

@@ -108,7 +108,7 @@ export function SoundManagement() {
         >
           {new Array(5)
             .fill(0)
-            .map((_dummy, index) => `SMS Alert ${index + 1}`)
+            .map((_, index) => `SMS Alert ${index + 1}`)
             .map((sound) => (
               <option key={sound} value={sound}>
                 {sound}

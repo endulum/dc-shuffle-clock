@@ -19,7 +19,7 @@ _This tool was coded with ToC compliance in mind. The page makes no requests to 
 
 ### Troubleshooting
 
-**Mobile users:** The Shuffle Clock is prone to be put to sleep by your mobile browser or device if not in focus, resulting in dropped alerts. The mobile environment is more aggressive about putting processes to sleep, and "forcing" the page to bypass mobile sleep is out of my control. If you're experiencing dropped alerts, ensure that you:
+**Mobile users:** Mobile browsers tend to sleep inactive pages when not in focus, resulting in dropped alerts. To minimise this, ensure that you:
 
 - Keep your device on.
 - Keep your device focused on this page, or have it regain focus every shuffle. If you have notifications enabled for the Clock, tapping the notification can quickly restore focus to the Clock's page for you.

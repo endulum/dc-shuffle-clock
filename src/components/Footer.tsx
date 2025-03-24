@@ -1,5 +1,7 @@
 import { GitHub, QuestionAnswer } from '@mui/icons-material';
 
+import { FAQModal } from './FAQModal';
+
 export function Footer() {
   return (
     <footer className="flex-col g-05 tac">
@@ -7,11 +9,13 @@ export function Footer() {
         <b>Cave Shuffle Clock</b> &copy; endulum (μ)
         <br />
         <small>
-          <i>Simple alarm tool for use with Dragon Cave. Just press play.</i>
+          <i>Simple alarm tool for use with Dragon Cave.</i>
         </small>
       </p>
-      <div className="footer-icons flex-row g-05">
+      <div className="footer-links flex-row g-05">
+        <FAQModal />
         <a
+          type="button"
           href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10"
           title="Forum Thread"
           rel="noreferrer"
@@ -20,6 +24,7 @@ export function Footer() {
           <QuestionAnswer aria-hidden />
         </a>
         <a
+          type="button"
           href="https://github.com/endulum/dc-shuffle-clock"
           title="Repository"
           rel="noreferrer"

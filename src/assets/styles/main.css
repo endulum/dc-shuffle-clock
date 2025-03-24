@@ -46,6 +46,11 @@ small {
   font-size: 0.875rem;
 }
 
+button {
+  appearance: none;
+  border: none;
+}
+
 main button {
   background-color: #fafbfc;
   border: 1px solid rgba(27, 31, 35, 0.15);
@@ -314,11 +319,33 @@ footer {
   }
 }
 
-.footer-icons {
-  svg {
-    width: 35px;
-    height: 35px;
-    fill: white;
+.footer-links {
+  button,
+  [type='button'] {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 99px;
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+    &:focus,
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    svg {
+      width: 25px;
+      height: 25px;
+      margin-bottom: 1px;
+      fill: white;
+    }
+    &:has(small) {
+      width: auto;
+      padding: 0 0.75rem;
+    }
   }
 }
 
@@ -348,6 +375,65 @@ footer {
   }
   p {
     margin-top: 0.375rem;
+  }
+}
+
+/* modal */
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.ReactModal__Content {
+  > * + * {
+    margin-bottom: 0.5rem;
+  }
+  button {
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: 5px;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+  ul {
+    list-style: square;
+    padding-left: 1.25rem;
+  }
+}
+
+.faq {
+  button {
+    padding: 0.125rem 0.5rem;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+.faq-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  margin-bottom: 0.25rem;
+  dt,
+  dd {
+    grid-column: 2 / 3;
+  }
+  dd {
+    margin-left: 0.5rem;
+    margin-top: 0.25rem;
+  }
+  dt:last-of-type {
+    margin-bottom: 0;
   }
 }
 

@@ -8,12 +8,15 @@ export function useNotifState(): {
   setSupport: React.Dispatch<React.SetStateAction<TNotifTypes>>;
 } {
   const [permission, setPermission] = useState<TNotifPerms>(() => {
-    // something to keep in mind is the
-    // distinction between window and navigator
     if (!('Notification' in window) && !('serviceWorker' in navigator))
       return 'unsupported';
-    if (Notification.permission === 'denied') return 'blocked';
-    if (Notification.permission === 'granted') return 'allowed';
+    try {
+      if (Notification.permission === 'denied') return 'blocked';
+      if (Notification.permission === 'granted') return 'allowed';
+    } catch (e) {
+      console.error(e);
+      return 'unsupported';
+    }
     return 'pending';
   });
 

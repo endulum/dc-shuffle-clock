@@ -284,3 +284,18 @@ img.white {
         font-size: 3.5rem;
     }
 }
+
+.alert {
+    max-width: 420px;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    border: 1px solid oklch(from crimson calc(l - 0.25) c h);
+    color: oklch(from crimson calc(l - 0.25) c h);
+    background-color: oklch(from crimson calc(l + 0.5) c h);
+    a {
+        color: oklch(from crimson calc(l - 0.25) c h);
+        font-weight: bold;
+    }
+}

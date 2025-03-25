@@ -1,0 +1,15 @@
+{
+  "name": "Cave Shuffle Clock",
+  "icons": [
+    {
+      "src": "vite.svg",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "short_name": "Shuffle Clock",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

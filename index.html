@@ -1,100 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Simple alarm tool for use with Dragon Cave.">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Simple alarm tool for use with Dragon Cave. Just press play."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dc-shuffle-clock.vercel.app" />
+    <meta property="og:site_name" content="Cave Shuffle Clock" />
+    <meta property="og:image" content="/mint.png" />
+    <meta property="og:image:type" content="image/png" />
     <title>Cave Shuffle Clock</title>
-    <link rel="stylesheet" href="./styles/style.css">
-    <!-- <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon"> -->
-    <script src="HackTimer.min.js"></script>
-    <script src="script.js" defer></script>
-</head>
-<body class="flex-center">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('./sw.js', { scope: '/' })
+          .then((registration) => console.log('worker registered'))
+          .catch((e) => console.warn(e));
+        navigator.serviceWorker.ready
+          .then((registration) => console.log('worker ready'))
+          .catch((e) => console.warn(e));
 
-    <div class="clock flex-center">
-        <button type="button" aria-label="pause or play the clock" id="pause-play" class="clock_button"></button>
-        <span aria-label="current minute" id="minutes" class="clock_minutes">00</span>
-        <span aria-label="current second" id="seconds" class="clock_seconds">00</span>
-    </div>
-    
-    <main title="clock preferences">
-
-        <div class="row">
-            <div class="left">
-                <label for="delay-input" class="bold">Delay</label>
-            </div>
-            <div class="right">
-                <p>Warn me <input type="number" aria-label="delay in seconds" id="delay-input" class="input delay_input" min="1" max="59"> seconds before each shuffle.</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="left">
-                <label for="sound-select" class="bold">Sound</label>
-            </div>
-            <div class="right">
-                <select id="sound-select" class="input sound_input"></select>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="left">
-                <label for="volume-input" class="bold">Volume</label>
-            </div>
-            <div class="right volume_row">
-                <input type="range" id="volume-input" class="input volume_input" min="1" max="100">
-                <button type="button" id="test-sound" class="volume_test">Test Sound</button>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="left">
-                <label for="notif-toggle" class="bold">Notify</label>
-            </div>
-            <div class="right notif_options">
-                <button type="button" aria-label="toggle notification" id="notif-toggle" class="bold"></button>
-                <div title="notification jump to biome">
-                    <input type="checkbox" id="jump-toggle" class="input">
-                    <label for="jump-toggle">Jump to biome when clicked</label>
-                    <p id="biome" class="biome_adjust">
-                        Take me to
-                        <select aria-label="biome selection" id="biome-select" class="input"></select>
-                        in a
-                        <select aria-label="tab behavior selection" id="popup-select" class="input">
-                            <option value="tab">new tab</option>
-                            <option value="window">new window</option>
-                        </select>
-                    </p>
-                </div>
-                <div title="notification auto dismiss">
-                    <input type="checkbox" id="dismiss-toggle" class="input">
-                    <label for="dismiss-toggle">Dismiss notification when shuffle occurs</label>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <footer class="flex-center">
-        <span><span class="bold">Cave Shuffle Clock</span> &copy; μ/endulum</span>
-        <small>Simple alarm tool for use with Dragon Cave.</small>
-        <div class="footer_icons">
-            <a href="https://forums.dragcave.net/topic/190954-cave-shuffle-timer-v10/" target="_blank">
-                <img src="./assets/speech.svg" class="white footer_icon" alt="thread" role="img" aria-hidden="true">
-            </a>
-            <a href="https://github.com/endulum/dc-shuffle-clock" target="_blank">
-                <img src="./assets/github.svg" class="white footer_icon" alt="repository" role="img" aria-hidden="true">
-            </a>
-        </div>
-        <div class="eden">
-            Raise your catches at the 
-            <a style="color: white;" href="https://chazza.me/dc/hatchery" target="_blank">
-                <span class="bold">Garden of Eden!</span>
-            </a>
-        </div>
-    </footer>
-
-</body>
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data.action === 'openBiome' && event.data.url) {
+            try {
+              setTimeout(() => {
+                window.open(event.data.url, '_blank');
+              }, 100);
+            } catch (e) {
+              console.error(e);
+              navigator.serviceWorker.controller.postMessage({
+                error: e.message ?? 'See console for details',
+              });
+            }
+          }
+        });
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

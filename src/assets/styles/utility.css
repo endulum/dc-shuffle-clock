@@ -1,0 +1,108 @@
+.flex-row {
+  flex-direction: row;
+}
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row,
+.flex-col {
+  display: flex;
+  align-items: center;
+}
+
+.g-1 {
+  gap: 1rem;
+}
+.g-75 {
+  gap: 0.75rem;
+}
+.g-05 {
+  gap: 0.5rem;
+}
+.g-25 {
+  gap: 0.25rem;
+}
+
+.ais {
+  align-items: start;
+}
+.aie {
+  align-items: end;
+}
+
+.jcspb {
+  justify-content: space-between;
+}
+.jcc {
+  justify-content: center;
+}
+.jcs {
+  justify-content: start;
+}
+.jce {
+  justify-content: end;
+}
+
+.flg {
+  flex-grow: 1;
+}
+
+.stretch {
+  align-self: stretch;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+.mb-1 {
+  margin-bottom: 1rem;
+}
+.mt-0 {
+  margin-top: 0;
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.mt-05 {
+  margin-top: 0.5rem;
+}
+.mb-05 {
+  margin-bottom: 0.5rem;
+}
+.ml-1 {
+  margin-left: 1rem;
+}
+.ml-05 {
+  margin-left: 0.5rem;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+.p-05 {
+  padding: 0.5rem;
+}
+.p-75 {
+  padding: 0.75rem;
+}
+
+.mw-mxc {
+  min-width: max-content;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.h100 {
+  height: 100%;
+}
+
+.tac {
+  text-align: center;
+}
+
+.smaller {
+  font-size: 0.875rem;
+}

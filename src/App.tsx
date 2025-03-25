@@ -1,4 +1,5 @@
 import 'hacktimer/HackTimer.min';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Clock } from './components/Clock';
 import { Error } from './components/Error';
@@ -22,6 +23,7 @@ export default function App() {
         </main>
         <Footer />
       </AppContextProvider>
+      <Analytics />
     </>
   );
 }
